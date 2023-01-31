@@ -10819,3 +10819,33 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+[aria-expanded=true] i {
+  color: #ffffff !important;
+}
+
+.sidebar .nav.sub-menu .nav-item::before {
+  content: "";
+  width: unset !important;
+  height: unset !important;
+  position: unset !important;
+  margin-top: unset !important;
+  border-radius: unset !important;
+  background: unset !important;
+}
+
+.list-wrapper {
+  height: 390px !important;
+  overflow: unset !important;
+  overflow-y: scroll !important;
+}
+
+.card-people {
+  padding-top: unset !important;
+}
+
+.card-people .weather-info {
+  bottom: 1em !important;
+  top: unset !important;
+  right: 24px;
+  color: #ffffff;
+}
