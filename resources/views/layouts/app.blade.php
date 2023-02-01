@@ -294,8 +294,8 @@
                     </a>
                     <div class="collapse" id="ui-basic">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">All Users</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Add Users</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html"><i class="ti-link menu-icon"></i> All Users</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html"><i class="ti-link menu-icon"></i> Add Users</a></li>
                         </ul>
                     </div>
                 </li>
@@ -307,7 +307,7 @@
                 </a>
                 <div class="collapse" id="form-elements">
                     <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">User Logs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html"><i class="ti-link menu-icon"></i> User Logs</a></li>
                     </ul>
                 </div>
                 </li>
@@ -319,7 +319,7 @@
                 </a>
                 <div class="collapse" id="charts">
                     <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html"><i class="ti-link menu-icon"></i> ChartJs</a></li>
                     </ul>
                 </div>
                 </li>
@@ -331,7 +331,7 @@
                 </a>
                 <div class="collapse" id="tables">
                     <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Basic table</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html"><i class="ti-link menu-icon"></i> Basic table</a></li>
                     </ul>
                 </div>
                 </li>

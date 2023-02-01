@@ -1,6 +1,8 @@
 async function getWeather(city) {
     const apiKey = "ff982e30801c664902181711436705c9";
+    // const apiKey = "a77f8ca45c054378b1b225113233101";
     const endpoint = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+    // const endpoint = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`;
     
     const response = await fetch(endpoint);
     if (response.ok) {
@@ -11,7 +13,7 @@ async function getWeather(city) {
     }
     }
     
-    const city = "Baguio";
+    const city = "Baguio City";
     const weatherTemperature = document.querySelector('.weather-tamp');
     const weatherLocation = document.querySelector('.weather-location');
     const weatherType = document.querySelector('.weather-type');
@@ -22,6 +24,7 @@ async function getWeather(city) {
     getWeather(city)
         .then((weather) => {
             if (weather) {
+                // console.log(weather);
                 weatherLocation.innerHTML = weather.name;
                 weatherType.innerHTML = weather.weather[0].description;
                 weatherTemperature.innerHTML = weather.main.temp;

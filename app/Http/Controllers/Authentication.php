@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+// use App\Traits\QRCodeTrait;
 
 class Authentication extends Controller
 {
+    // use QRCodeTrait;
     // Google login
     public function redirectToGoogle(){
         return Socialite::driver('google')->redirect();

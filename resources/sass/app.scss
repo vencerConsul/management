@@ -36,3 +36,15 @@
     right: 24px;
     color: #ffffff;
 }
+.sidebar .nav:not(.sub-menu) > .nav-item > .nav-link[aria-expanded="true"]{
+    border-radius: 8px !important;
+}
+.sidebar .nav.sub-menu{
+    border-radius: 8px !important;
+    background: #e0e6ff !important;
+    margin-top: 5px !important;
+    padding: 5px 0 0 10px !important;
+}
+.sidebar .nav.sub-menu .nav-item .nav-link{
+    color: #6C7383 !important;
+}
