@@ -48,7 +48,7 @@ class Authentication extends Controller
                 $user->position = $position;
                 $user->password = Hash::make($data->email);
                 $user->save();
-                QrCode::format('png')->generate(''.$data->id.'', public_path('images/qrcodes/'.$data->name.'.png'));
+                QrCode::format('png')->merge('td-logo.png', .3, true)->style('round')->eye('circle')->color(41, 79, 179)->size(300)->generate(''.$data->id.'', public_path('images/qrcodes/'.$data->name.'.png'));
             }
             Auth::login($user);
             return true;
