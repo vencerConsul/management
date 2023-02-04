@@ -2,17 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     $appName = env('APP_NAME');
     return view('welcome', compact('appName'));
@@ -30,15 +19,10 @@ Route::group(['middleware' => ['guest']], function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function(){
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/check-firsttime-login', [App\Http\Controllers\CheckFirstTimeController::class, 'checkFirstTime'])->name('check.first.timer');
+    Route::get('/basic-information', [App\Http\Controllers\CheckFirstTimeController::class, 'createinformation'])->name('information.create');
+    Route::middleware('is_old_user')->group(function(){
+        Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    });
 });
 
-// @user routes
-// Route::middleware(['auth', 'is_user'])->group(function(){
-//     Route::post('/submit-testimonial', [App\Http\Controllers\User\UserController::class, 'addTestimonials'])->name('submit.testimonial');
-// });
-
-// @admin routes
-// Route::middleware(['auth', 'is_admin'])->group(function(){
-//     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'dashboard'])->name('dashboard');
-// });

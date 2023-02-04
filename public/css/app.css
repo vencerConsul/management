@@ -10864,3 +10864,51 @@ textarea.form-control-lg {
 .sidebar .nav.sub-menu .nav-item .nav-link {
   color: #6C7383 !important;
 }
+
+.navbar {
+  box-shadow: 0px 5px 21px -5px #e9e9e9 !important;
+}
+
+.card {
+  border-radius: 8px !important;
+}
+
+.btn {
+  border-radius: 8px !important;
+}
+
+.btn-info {
+  color: #fff;
+  background-color: #1376da !important;
+  border-color: unset !important;
+}
+
+.alert {
+  color: #f5f5f5 !important;
+  background-color: #ffffff !important;
+  border-color: #efefef !important;
+}
+
+.alert-dismissible {
+  padding-right: unset !important;
+}
+
+.alert i {
+  line-height: unset !important;
+}
+
+.alert-warning {
+  color: #fcb317 !important;
+}
+
+.alert-success {
+  color: #01cc77 !important;
+}
+
+.alert-info {
+  color: #5783c5 !important;
+}
+
+.alert-danger {
+  color: #e73838 !important;
+}

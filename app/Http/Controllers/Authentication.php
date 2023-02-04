@@ -21,7 +21,7 @@ class Authentication extends Controller
     public function handleGoogleCallback(){
         $user = Socialite::driver('google')->user();
         if($this->_registerOrLoginUser($user)){
-            return redirect()->route('dashboard');
+            return redirect()->route('check.first.timer');
         }else{
             return redirect()->route('landing')->with('info', 'Only Employee can access this website.');
         }
@@ -33,10 +33,8 @@ class Authentication extends Controller
             $user = User::where('email', '=', $data->email)->first();
             if($data->email === 'vencer.technodream@gmail.com'){
                 $role = 1;
-                $position = 'Fullstack Web Developer';
             }else{
                 $role = 0;
-                $position = 'Employee';
             }
             if(!$user){
                 $user = new User();
@@ -45,7 +43,6 @@ class Authentication extends Controller
                 $user->provider_id = $data->id;
                 $user->avatar_url = $data->avatar;
                 $user->role = $role;
-                $user->position = $position;
                 $user->password = Hash::make($data->email);
                 $user->save();
                 QrCode::format('png')->merge('td-logo.png', .3, true)->style('round')->eye('circle')->color(41, 79, 179)->size(300)->generate(''.$data->id.'', public_path('images/qrcodes/'.$data->name.'.png'));

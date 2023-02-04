@@ -16,24 +16,16 @@
 
 {{-- session MESSAGE --}}
 @if(session()->has('info'))
-<div class="alert alert-info" role="alert">
-    <small>{{ session()->get('info') }}</small>
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    <strong>Information!</strong> {{ session()->get('info') }}
+    <i class="ti-close float-right" data-bs-dismiss="alert" aria-label="Close"></i>
 </div>
 @endif
 
 {{-- session MESSAGE --}}
 @if(session()->has('warning'))
-<div class="alert-container">
-    <div class="alert-error">
-        <div class="alert-header">
-            <i class='bx bx-error-circle'></i>
-        </div>
-        <div class="alert-body">
-            <small>{{ session()->get('warning') }}</small>
-        </div>
-        <div class="alert-footer">
-            <button class="alert-close">Ok</button>
-        </div>
-    </div>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Information!</strong> {{ session()->get('warning') }}
+    <i class="ti-close float-right" data-bs-dismiss="alert" aria-label="Close"></i>
 </div>
 @endif
