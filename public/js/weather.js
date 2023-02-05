@@ -25,6 +25,7 @@ async function getWeather(city) {
                 weatherLocation.innerHTML = weather.name;
                 weatherType.innerHTML = weather.weather[0].description;
                 weatherTemperature.innerHTML = weather.main.temp;
+                console.log(weather);
 
                 const id = weather.weather[0].id;
                 let path = "../images/dashboard/weather/"
