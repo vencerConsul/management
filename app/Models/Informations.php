@@ -10,12 +10,9 @@ class Informations extends Model
     use HasFactory;
 
     protected $fillable = [
-        'position',
-        'department',
-        'schedule',
-        'address',
-        'birth_date',
-        'birth_place'
+        'gender', 'date_of_birth', 'address_1', 'address_2', 'title',
+        'department', 'shift_start', 'shift_end', 'contact_number',
+        'emergency_contact_number'
     ];
 
     public function user()

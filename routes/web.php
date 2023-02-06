@@ -19,10 +19,14 @@ Route::group(['middleware' => ['guest']], function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function(){
-    Route::get('/check-firsttime-login', [App\Http\Controllers\CheckFirstTimeController::class, 'checkFirstTime'])->name('check.first.timer');
-    Route::get('/basic-information', [App\Http\Controllers\CheckFirstTimeController::class, 'createinformation'])->name('information.create');
+    Route::get('/check-firsttime-login', [App\Http\Controllers\InformationController::class, 'checkFirstTime'])->name('check.first.timer');
+    Route::get('/basic-information', [App\Http\Controllers\InformationController::class, 'createinformation'])->name('information.create');
+    Route::post('/store-information', [App\Http\Controllers\InformationController::class, 'storeInformation'])->name('information.store');
+    Route::post('/update-information', [App\Http\Controllers\InformationController::class, 'updateInformation'])->name('information.update');
     Route::middleware('is_old_user')->group(function(){
         Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/users', [App\Http\Controllers\UsersController::class, 'users'])->name('users');
+        Route::get('/add-users', [App\Http\Controllers\UsersController::class, 'addUsers'])->name('users.add');
     });
 });
 

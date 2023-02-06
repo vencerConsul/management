@@ -1,17 +1,24 @@
 {{-- ERRORS MESSAGE --}}
 @if ($errors->any())
-<div class="alert alert-danger d-flex align-items-center" role="alert">
-    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-    <div>
-        <ul>
-            @php $counter = 0; @endphp
-            @foreach ($errors->all() as $error)
-                @php $counter++; @endphp
-                  <li><small>{{ $error }}</small></li>
-            @endforeach
-        </ul>
-    </div>
-  </div>
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Warning!</strong>
+    <ul>
+        @php $counter = 0; @endphp
+        @foreach ($errors->all() as $error)
+            @php $counter++; @endphp
+              <li><small>{{ $error }}</small></li>
+        @endforeach
+    </ul>
+    <i class="ti-close close-multi-msg" data-bs-dismiss="alert" aria-label="Close"></i>
+</div>
+@endif
+
+{{-- session MESSAGE --}}
+@if(session()->has('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Success!</strong> {{ session()->get('success') }}
+    <i class="ti-close float-right" data-bs-dismiss="alert" aria-label="Close"></i>
+</div>
 @endif
 
 {{-- session MESSAGE --}}

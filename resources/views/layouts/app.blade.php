@@ -7,6 +7,7 @@
     <title>@yield('title')</title>
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('/images/logo.png')}}">
     <link href="{{ asset('vendors/ti-icons/css/themify-icons.css') }}" rel="stylesheet">
     <link href="{{ asset('css/vertical-layout-light/style.css') }}" rel="stylesheet">
     @auth
@@ -27,67 +28,23 @@
                 <span class="icon-menu"></span>
             </button>
             <ul class="navbar-nav navbar-nav-right">
-                <li class="nav-item dropdown">
-                <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                    <i class="icon-bell mx-0"></i>
-                    <span class="count"></span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                    <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-                    <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                        <div class="preview-icon bg-success">
-                        <i class="ti-info-alt mx-0"></i>
-                        </div>
-                    </div>
-                    <div class="preview-item-content">
-                        <h6 class="preview-subject font-weight-normal">Application Error</h6>
-                        <p class="font-weight-light small-text mb-0 text-muted">
-                        Just now
-                        </p>
-                    </div>
-                    </a>
-                    <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                        <div class="preview-icon bg-warning">
-                        <i class="ti-settings mx-0"></i>
-                        </div>
-                    </div>
-                    <div class="preview-item-content">
-                        <h6 class="preview-subject font-weight-normal">Settings</h6>
-                        <p class="font-weight-light small-text mb-0 text-muted">
-                        Private message
-                        </p>
-                    </div>
-                    </a>
-                    <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                        <div class="preview-icon bg-info">
-                        <i class="ti-user mx-0"></i>
-                        </div>
-                    </div>
-                    <div class="preview-item-content">
-                        <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                        <p class="font-weight-light small-text mb-0 text-muted">
-                        2 days ago
-                        </p>
-                    </div>
-                    </a>
-                </div>
-                </li>
                 <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
                     <img src="{{Auth::user()->avatar_url}}" alt="profile"/>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                    <a href="{{route('information.create')}}" class="dropdown-item">
+                        <i class="ti-marker-alt text-primary"></i>
+                        Profile
+                    </a>
                     <a class="dropdown-item">
-                    <i class="ti-settings text-primary"></i>
-                    Settings
+                        <i class="ti-settings text-primary"></i>
+                        Settings
                     </a>
                     <a class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
-                    <i class="ti-power-off text-primary"></i>
-                    Logout
+                        <i class="ti-power-off text-primary"></i>
+                        Logout
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
@@ -280,8 +237,8 @@
             <!-- partial:partials/_sidebar.html -->
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.html">
+                <li class="nav-item @if(Route::currentRouteName() == 'dashboard') active @endif">
+                    <a href="{{route('dashboard')}}" class="nav-link" href="index.html">
                         <i class="icon-grid menu-icon"></i>
                         <span class="menu-title">Dashboard</span>
                     </a>
@@ -294,8 +251,12 @@
                     </a>
                     <div class="collapse" id="ui-basic">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html"><i class="ti-link menu-icon"></i> All Users</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html"><i class="ti-link menu-icon"></i> Add Users</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('users')}}"><i class="ti-link menu-icon"></i> All Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('users.add')}}"><i class="ti-link menu-icon"></i> Add Users</a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -313,20 +274,21 @@
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-                    <i class="icon-bar-graph menu-icon"></i>
-                    <span class="menu-title">Charts</span>
+                    <i class="ti-alarm-clock menu-icon"></i>
+                    <span class="menu-title">Timesheet</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="charts">
                     <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html"><i class="ti-link menu-icon"></i> ChartJs</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html"><i class="ti-link menu-icon"></i> Logs</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html"><i class="ti-link menu-icon"></i> Reports</a></li>
                     </ul>
                 </div>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
                     <i class="icon-grid-2 menu-icon"></i>
-                    <span class="menu-title">Tables</span>
+                    <span class="menu-title">Profile</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="tables">

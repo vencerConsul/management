@@ -16,12 +16,16 @@ class CreateInformationsTable extends Migration
         Schema::create('informations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('position');
+            $table->enum('gender', ['Male', 'Female']);
+            $table->date('date_of_birth');
+            $table->string('address_1');
+            $table->string('address_2')->nullable();
+            $table->string('title');
             $table->string('department');
-            $table->timestamp('schedule');
-            $table->string('address');
-            $table->timestamp('birth_date');
-            $table->string('birth_place');
+            $table->string('shift_start', 5);
+            $table->string('shift_end', 5);
+            $table->string('contact_number');
+            $table->string('emergency_contact_number');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
