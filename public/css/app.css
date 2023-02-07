@@ -10944,3 +10944,15 @@ select.round:focus {
   border-color: green;
   outline: 0;
 }
+
+table tr.t-row {
+  border: 10px solid #f5f7ff;
+  background: #ffffff;
+}
+table td {
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+table td p {
+  margin-bottom: 0 !important;
+}

@@ -132,3 +132,16 @@ select.round {
   }
 
 //   table
+table {
+    tr.t-row {
+        border: 10px solid #f5f7ff;
+        background: #ffffff;
+    }
+    td{
+        border-top: 0 !important;
+        border-bottom: 0 !important;
+        p{
+            margin-bottom: 0 !important;
+        }
+    }
+}

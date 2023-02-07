@@ -3,8 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $appName = env('APP_NAME');
-    return view('welcome', compact('appName'));
+    return view('welcome');
 })->name('landing');
 
 Auth::routes();
@@ -27,6 +26,7 @@ Route::middleware('auth')->group(function(){
         Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
         Route::get('/users', [App\Http\Controllers\UsersController::class, 'users'])->name('users');
         Route::get('/add-users', [App\Http\Controllers\UsersController::class, 'addUsers'])->name('users.add');
+        Route::get('/show-users', [App\Http\Controllers\UsersController::class, 'showUsers'])->name('users.show');
     });
 });
 

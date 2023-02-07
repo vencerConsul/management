@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ''.$appName.'')
+@section('title', 'Technodream')
 
 @section('content')
 
