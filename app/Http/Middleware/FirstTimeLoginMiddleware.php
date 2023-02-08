@@ -18,7 +18,7 @@ class FirstTimeLoginMiddleware
     public function handle(Request $request, Closure $next)
     {
         if(!Auth::user()->informations){
-            return redirect(route('information.create'))->with('info', 'Access denied.');
+            return redirect(route('information.create'))->with('info', 'Access to the requested resource is denied. Please contact your administrator for assistance.');
         }
         return $next($request);
     }

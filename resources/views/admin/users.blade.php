@@ -20,7 +20,6 @@
         </div>
         <div class="row">
             <div class="col-md-12 grid-margin">
-                @include('layouts.alert')
                 <div class="table-responsive" id="showUsers">
                     
                 </div>

@@ -24,9 +24,7 @@
             <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{asset('/images/logo.png')}}" alt="logo"/></a>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-                <span class="icon-menu"></span>
-            </button>
+                <i class="ti-align-justify navbar-toggler navbar-toggler align-self-center" data-toggle="minimize"></i>
             <ul class="navbar-nav navbar-nav-right">
                 <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
@@ -57,9 +55,7 @@
                 </a>
                 </li>
             </ul>
-            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-                <span class="icon-menu"></span>
-            </button>
+            <i class="ti-align-justify navbar-toggler navbar-toggler-right d-lg-none align-self-center" data-toggle="offcanvas"></i>
             </div>
         </nav>
         <!-- partial -->
@@ -305,6 +301,8 @@
             <!-- end partial -->
         </div>
     </div>
+    
+    @include('layouts.alert')
     @else 
         @yield('content')
     @endauth

@@ -77,16 +77,35 @@
 
 //  informations
 .alert {
-    color: #f5f5f5 !important;
+    font-size: 0.875rem !important;
+    position: fixed !important;
+    top: 5em !important;
+    right: 1em !important;
+    padding: 10px 70px 10px 20px !important;
+    z-index: 10000 !important;
+    color: #747474 !important;
     background-color: #ffffff !important;
     border-color: #efefef !important;
+    border-left: 3px solid #1376da !important;
+    box-shadow: 3px 3px 0px 0px #e7e7e7 !important;
+    max-width: 400px;
+
+    strong{
+        background-color: #00000000 !important;
+    }
+
+    p{
+        margin-bottom: 0 !important;
+    }
 }
-.alert-dismissible {
-    padding-right: unset !important;
-}
-.alert i{
+.alert .close-alert-btn{
     line-height: unset !important;
     cursor: pointer;
+    position: absolute !important;
+    top: 1em !important;
+    font-size: 10px !important;
+    right: 1em !important;
+    margin-right: 0 !important;
 }
 .close-multi-msg {
     position: absolute;
