@@ -14,8 +14,8 @@ class CreateInformationsTable extends Migration
     public function up()
     {
         Schema::create('informations', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->uuid('id')->primary();
+            $table->uuid('user_id');
             $table->enum('gender', ['Male', 'Female']);
             $table->date('date_of_birth');
             $table->string('address_1');

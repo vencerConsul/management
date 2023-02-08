@@ -10819,6 +10819,11 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.navbar {
+  box-shadow: none !important;
+  border-bottom: 1px solid #ebebeb;
+}
+
 [aria-expanded=true] i {
   color: #ffffff !important;
 }
@@ -10863,10 +10868,6 @@ textarea.form-control-lg {
 
 .sidebar .nav.sub-menu .nav-item .nav-link {
   color: #6C7383 !important;
-}
-
-.navbar {
-  box-shadow: 0px 5px 21px -5px #e9e9e9 !important;
 }
 
 .sidebar .nav:not(.sub-menu) > .nav-item.active {
@@ -10948,6 +10949,8 @@ select.round:focus {
 table tr.t-row {
   border: 10px solid #f5f7ff;
   background: #ffffff;
+  border-right: 0;
+  border-left: 0;
 }
 table td {
   border-top: 0 !important;
@@ -10955,4 +10958,7 @@ table td {
 }
 table td p {
   margin-bottom: 0 !important;
+}
+table td .show-options {
+  cursor: pointer;
 }

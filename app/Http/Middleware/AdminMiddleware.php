@@ -21,7 +21,7 @@ class AdminMiddleware
             if(Auth::user()->role == 1){
                 return $next($request);
             }else{
-                return redirect(route('landing'))->with('warning', 'Access Denied');
+                return redirect(route('dashboard'))->with('warning', 'Access Denied');
             }
         }else{
             return redirect(route('landing'))->with('warning', 'Login first.');

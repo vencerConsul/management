@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Informations extends Model
 {
     use HasFactory;
+    use Uuid;
 
     protected $fillable = [
         'gender', 'date_of_birth', 'address_1', 'address_2', 'title',

@@ -14,8 +14,8 @@ class CreateAttendanceLogsTable extends Migration
     public function up()
     {
         Schema::create('attendance_logs', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->uuid('id')->primary();
+            $table->uuid('user_id');
             $table->timestamp('log_in')->nullable();
             $table->timestamp('log_out')->nullable();
             $table->timestamps();
