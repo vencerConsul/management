@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function(){
         Route::get('/show-users/{search}', [App\Http\Controllers\UsersController::class, 'showUsers'])->name('users.show');
         Route::get('/users/{userID}', [App\Http\Controllers\UsersController::class, 'manageUsers'])->name('users.manage');
         Route::post('/users/{userID}', [App\Http\Controllers\UsersController::class, 'approveUsers'])->name('users.approve');
+        Route::post('/users-update/{userID}', [App\Http\Controllers\UsersController::class, 'updateUsers'])->name('users.update');
     });
 });
 

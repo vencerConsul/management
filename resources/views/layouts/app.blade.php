@@ -322,9 +322,9 @@
     <script src="{{ asset('js/Chart.roundedBarCharts.js') }}" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.2/axios.min.js"></script>
     @yield('scripts')
-    @if(\Route::currentRouteName() == 'dashboard')
-    <script src="{{ asset('js/weather.js') }}" defer></script>
-    @endif
+        @if(\Route::currentRouteName() == 'dashboard')
+        <script src="{{ asset('js/weather.js') }}" defer></script>
+        @endif
     @endauth
 </body>
 </html>

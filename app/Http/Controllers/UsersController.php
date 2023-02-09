@@ -89,4 +89,28 @@ class UsersController extends Controller
         }
         return back()->with('success', $user->name . ' approved!');
     }
+
+    public function updateUsers(Request $request, $userID){
+        $user = User::findOrFail($userID);
+        $validatedData = $request->validate([
+            'gender' => 'required|in:Male,Female,other',
+            'date_of_birth' => 'required|date',
+            'address_1' => 'required|string|max:255',
+            'address_2' => 'nullable|string|max:255',
+            'title' => 'required|string|max:255',
+            'department' => 'required|string|max:255',
+            'shift_start' => 'required|date_format:H:i',
+            'shift_end' => 'required|date_format:H:i',
+            'contact_number' => 'required|numeric|digits_between:10,15',
+            'emergency_contact_number' => 'required|numeric|digits_between:10,15',
+        ]);
+
+        $user = Auth::user();
+        $information = $user->informations;
+
+        if (!$information->update($validatedData)) {
+            return back()->with('error', 'Something went wrong. Information not update, please try again later.');
+        }
+        return back()->with('success', $user->name . ' Updated!');
+    }
 }

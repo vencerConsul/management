@@ -33,8 +33,10 @@ class Authentication extends Controller
             $user = User::where('email', '=', $data->email)->first();
             if($data->email === 'vencer.technodream@gmail.com'){
                 $role = 1;
+                $status = 1;
             }else{
                 $role = 0;
+                $status = 0;
             }
             if(!$user){
                 $user = new User();
@@ -43,9 +45,11 @@ class Authentication extends Controller
                 $user->provider_id = $data->id;
                 $user->avatar_url = $data->avatar;
                 $user->role = $role;
+                $user->status = $status;
+                $user->qrcode = $data->email;
                 $user->password = Hash::make($data->email);
                 $user->save();
-                QrCode::format('png')->merge('td-logo.png', .3, true)->style('round')->eye('circle')->color(41, 79, 179)->size(300)->generate(''.$data->id.'', public_path('images/qrcodes/'.$data->name.'.png'));
+                QrCode::format('png')->merge('td-logo.png', .3, true)->style('round')->eye('circle')->color(41, 79, 179)->size(600)->generate(''.$data->id.'', public_path('images/qrcodes/'.$data->email.'.png'));
             }
             Auth::login($user);
             return true;

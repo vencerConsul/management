@@ -27,6 +27,7 @@ class User extends Authenticatable
         'mode',
         'role',
         'status',
+        'qrcode',
         'position',
         'avatar_url',
     ];
