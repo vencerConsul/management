@@ -10898,7 +10898,7 @@ textarea.form-control-lg {
   color: #747474 !important;
   background-color: #ffffff !important;
   border-color: #efefef !important;
-  border-left: 3px solid #1376da !important;
+  border-left: 5px solid #1376da !important;
   box-shadow: 3px 3px 0px 0px #e7e7e7 !important;
   max-width: 400px;
 }
@@ -10977,4 +10977,25 @@ table td p {
 }
 table td .show-options {
   cursor: pointer;
+}
+
+.user-status {
+  position: relative;
+}
+.user-status .approved {
+  background: #ffffff;
+  border-left: 5px solid #1376da !important;
+  font-weight: 600;
+  border: 1px solid #f1f1f1;
+  border-radius: 0.25rem;
+}
+.user-status .pending {
+  background: #ffffff;
+  border-left: 5px solid #1376da !important;
+  font-weight: 600;
+  border: 1px solid #f1f1f1;
+  border-radius: 0.25rem;
+}
+.user-status .approved {
+  background: #ffffff;
 }

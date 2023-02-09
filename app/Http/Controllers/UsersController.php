@@ -81,4 +81,12 @@ class UsersController extends Controller
 
         return view('admin.manage-users', compact('user'));
     }
+
+    public function approveUsers($userID){
+        $user = User::findOrFail($userID);
+        if(!$user->update(['status' => 1])){
+            return back()->with('error', 'Somthing went wrong. Please try agin later');
+        }
+        return back()->with('success', $user->name . ' approved!');
+    }
 }
