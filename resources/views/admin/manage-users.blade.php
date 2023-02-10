@@ -141,11 +141,3 @@
     </div>
 </div>
 @endsection
-
-@section('scripts')
-    <script>
-        setTimeout(() => {
-            document.querySelector('.alert').style.display = 'none';
-        }, 5000);
-    </script>
-@endsection

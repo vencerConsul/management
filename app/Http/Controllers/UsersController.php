@@ -18,13 +18,14 @@ class UsersController extends Controller
         return view('admin.users');
     }
 
-    public function showUsers($search){
-        if($search == '' || $search == 'undefined'){
-            $users = User::with('informations')->where('email', '!=', 'vencer.technodream@gmail.com')->get();
-        }else{
-            $users = User::with('informations')->where('email', '!=', 'vencer.technodream@gmail.com')->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")->get();
-        }
-
+    public function showUsers(Request $request, User $usersResult){
+        $input = $request->search_input;
+        $search = $usersResult->newQuery();
+        $search->where(function($query) use($input) {
+            $query->with('informations')->where('email', '!=', 'vencer.technodream@gmail.com')->where('name', 'like', "%{$input}%")->orWhere('email', 'like', "%{$input}%");
+        });
+        $users = $search->paginate(10, ['*'], 'page', 1);
+        // dd($users);
         if($users->count() > 0){
             $html = '<table class="table">
             <thead>
@@ -72,7 +73,8 @@ class UsersController extends Controller
         
 
         return response()->json([
-            'data' => $html,
+            'table' => $html,
+            'pagination' => $users
         ], 200);
     }
 

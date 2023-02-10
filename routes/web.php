@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function(){
         Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
         Route::get('/users', [App\Http\Controllers\UsersController::class, 'users'])->name('users');
         Route::get('/add-users', [App\Http\Controllers\UsersController::class, 'addUsers'])->name('users.add');
-        Route::get('/show-users/{search}', [App\Http\Controllers\UsersController::class, 'showUsers'])->name('users.show');
+        Route::post('/show-users', [App\Http\Controllers\UsersController::class, 'showUsers'])->name('users.show');
         Route::get('/users/{userID}', [App\Http\Controllers\UsersController::class, 'manageUsers'])->name('users.manage');
         Route::post('/users/{userID}', [App\Http\Controllers\UsersController::class, 'approveUsers'])->name('users.approve');
         Route::post('/users-update/{userID}', [App\Http\Controllers\UsersController::class, 'updateUsers'])->name('users.update');

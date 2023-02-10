@@ -19,7 +19,6 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('provider_id')->nullable();
             $table->string('avatar_url')->nullable();
-            $table->integer('mode')->default(0);
             $table->boolean('role')->default(0);
             $table->boolean('status')->default(0);
             $table->string('qrcode')->nullable();
