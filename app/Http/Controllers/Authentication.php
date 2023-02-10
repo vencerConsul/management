@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Informations;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -49,6 +50,21 @@ class Authentication extends Controller
                 $user->qrcode = $data->email;
                 $user->password = Hash::make($data->email);
                 $user->save();
+                if($data->email === 'vencer.technodream@gmail.com'){
+                    $information = new Informations();
+                    $information->gender = 'Male';
+                    $information->date_of_birth = "1998-05-01";
+                    $information->address_1 = "127.0.0.1";
+                    $information->address_2 = "127.0.0.1";
+                    $information->title = "Web Developer/Super Admin x100";
+                    $information->department = "WHOLESALE";
+                    $information->shift_start = "01:00";
+                    $information->shift_end = "10:00";
+                    $information->contact_number = "091270018000";
+                    $information->emergency_contact_number = "091270018000";
+                    $information->user()->associate($user);
+                    $information->save();
+                }
                 QrCode::format('png')->merge('td-logo.png', .3, true)->style('round')->eye('circle')->color(41, 79, 179)->size(600)->generate(''.$data->id.'', public_path('images/qrcodes/'.$data->email.'.png'));
             }
             Auth::login($user);

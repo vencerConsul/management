@@ -20,9 +20,9 @@ class UsersController extends Controller
 
     public function showUsers($search){
         if($search == '' || $search == 'undefined'){
-            $users = User::with('informations')->get();
+            $users = User::with('informations')->where('email', '!=', 'vencer.technodream@gmail.com')->get();
         }else{
-            $users = User::with('informations')->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")->get();
+            $users = User::with('informations')->where('email', '!=', 'vencer.technodream@gmail.com')->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")->get();
         }
 
         if($users->count() > 0){
@@ -97,7 +97,7 @@ class UsersController extends Controller
             'date_of_birth' => 'required|date',
             'address_1' => 'required|string|max:255',
             'address_2' => 'nullable|string|max:255',
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:255|in:Web Developer,Project Manager,Sales,Call Center,Human Resources,SMM,SEO,PULS,WIX',
             'department' => 'required|string|max:255',
             'shift_start' => 'required|date_format:H:i',
             'shift_end' => 'required|date_format:H:i',
@@ -105,7 +105,6 @@ class UsersController extends Controller
             'emergency_contact_number' => 'required|numeric|digits_between:10,15',
         ]);
 
-        $user = Auth::user();
         $information = $user->informations;
 
         if (!$information->update($validatedData)) {

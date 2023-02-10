@@ -42,7 +42,7 @@ class InformationController extends Controller
             'date_of_birth' => 'required|date',
             'address_1' => 'required|string|max:255',
             'address_2' => 'nullable|string|max:255',
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:255|in:Web Developer,Project Manager,Sales,Call Center,Human Resources,SMM,SEO,PULS,WIX',
             'department' => 'required|string|max:255',
             'shift_start' => 'required|date_format:H:i',
             'shift_end' => 'required|date_format:H:i',

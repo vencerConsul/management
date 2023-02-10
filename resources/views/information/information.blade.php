@@ -49,8 +49,8 @@
                                         <label class="col-sm-3 col-form-label">Gender</label>
                                         <div class="col-sm-9">
                                             <select class="form-control round" name="gender" value="{{ old('gender') ?? $information->gender ?? '' }}">
-                                                <option value="Male">Male</option>
-                                                <option value="Female">Female</option>
+                                                <option value="Male" {{ $information->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                                                <option value="Female" {{ $information->gender == 'Female' ? 'selected' : '' }}>Female</option>
                                             </select>
                                         </div>
                                     </div>
@@ -91,13 +91,15 @@
                                         <label class="col-sm-3 col-form-label">Title</label>
                                         <div class="col-sm-9">
                                             <select class="form-control round" name="title" value="{{old('title') ?? $information->title ?? ''}}">
-                                                <option>Web Developer</option>
-                                                <option>Project Manager</option>
-                                                <option>Sales</option>
-                                                <option>Call Center</option>
-                                                <option>Human Resources</option>
-                                                <option>SMM</option>
-                                                <option>SEO</option>
+                                                <option value="Web Developer" {{ $information->title == 'Web Developer' ? 'selected' : '' }}>Web Developer</option>
+                                                <option value="Project Manager" {{ $information->title == 'Project Manager' ? 'selected' : '' }}>Project Manager</option>
+                                                <option value="Sales" {{ $information->title == 'Sales' ? 'selected' : '' }}>Sales</option>
+                                                <option value="Call Center" {{ $information->title == 'Call Center' ? 'selected' : '' }}>Call Center</option>
+                                                <option value="Human Resources" {{ $information->title == 'Human Resources' ? 'selected' : '' }}>Human Resources</option>
+                                                <option value="WIX" {{ $information->title == 'WIX' ? 'selected' : '' }}>WIX</option>
+                                                <option value="SMM" {{ $information->title == 'SMM' ? 'selected' : '' }}>SMM</option>
+                                                <option value="SEO" {{ $information->title == 'SEO' ? 'selected' : '' }}>SEO</option>
+                                                <option value="PULS" {{ $information->title == 'PULS' ? 'selected' : '' }}>PULS</option>
                                             </select>
                                         </div>
                                     </div>
