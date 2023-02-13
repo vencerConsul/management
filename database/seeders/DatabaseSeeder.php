@@ -16,16 +16,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             $userData = [
                 'name' => 'User' . ($i + 1),
                 'email' => 'user' . ($i + 1) . '@example.com',
                 'password' => bcrypt('password'),
                 'provider_id' => bcrypt('password') . '123' . $i,
                 'role' => 0,
-                'status' => 0,
-                'qrcode' => 'user' . ($i + 1) . '@example.com',
-                'avatar_url' => 'https://via.placeholder.com/150',
+                'status' => 'pending',
+                'qrcode' => 'user' . ($i + 1) . '@example.com.png',
+                'avatar_url' => 'https://via.placeholder.com/800x600.png/'.sprintf('%06X', mt_rand(0, 0xFFFFFF)).'?text=User' .($i + 1),
                 'informations' => [
                     'gender' => ($i % 2 == 0) ? 'Male' : 'Female',
                     'date_of_birth' => '2000-01-01',
@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
                 'qrcode' => $userData['qrcode'],
                 'avatar_url' => $userData['avatar_url'],
             ]);
-            QrCode::format('png')->merge(public_path('td-logo.png'), .3, true)->style('round')->eye('circle')->color(41, 79, 179)->size(600)->generate(''.$userData['provider_id'].'', public_path('images/qrcodes/'.$userData['email'].'.png'));
+            QrCode::format('png')->merge(public_path('td-logo.png'), .3, true)->style('round')->eye('circle')->color(41, 79, 179)->size(600)->generate(''.$userData['provider_id'].'', public_path('images/qrcodes/'.$userData['qrcode']));
             $user->informations()->create([
                 'gender' => $userData['informations']['gender'],
                 'date_of_birth' => $userData['informations']['date_of_birth'],

@@ -2,19 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Informations;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware(['auth', 'is_admin']);
     }
 
-    public function users()
-    {
+    public function unlinkNotExistFiles(){
+        $like = scandir('images/qrcodes');
+        foreach ($like as $thisFile) {
+            $rs = User::where('qrcode', $thisFile)->first();
+            if (!$rs) {
+                if($thisFile != "." && $thisFile != ".."){
+                    unlink('images/qrcodes/'.$thisFile);
+                }
+            }
+        }
+    }
+
+    // MANAGE USER CONTROLLERS unlink("$path/$file");
+    public function users(){
         return view('admin.users');
     }
 
@@ -22,19 +34,21 @@ class UsersController extends Controller
         $input = $request->search_input;
         $search = $usersResult->newQuery();
         $search->where(function($query) use($input) {
-            $query->with('informations')->where('email', '!=', 'vencer.technodream@gmail.com')->where('name', 'like', "%{$input}%")->orWhere('email', 'like', "%{$input}%");
+            $query->with('informations')->where('name', 'like', "%{$input}%")->orWhere('email', 'like', "%{$input}%");
         });
-        $users = $search->paginate(10, ['*'], 'page', 1);
+        $users = $search->where('email', '!=', 'vencer.technodream@gmail.com')->where('status', '!=', 'archived')->orderBy('updated_at', 'DESC')->paginate(7);
         // dd($users);
         if($users->count() > 0){
             $html = '<table class="table">
             <thead>
-            <tr class="t-row">
-                <th>User</th>
+            <tr class="t-row-head">
+                <th>Name / Email</th>
                 <th>Title</th>
                 <th>Department</th>
                 <th>Shift Start</th>
                 <th>Shift Start</th>
+                <th>Status</th>
+                <th>Last Modified</th>
                 <th></th>
             </tr>
             </thead>
@@ -43,24 +57,31 @@ class UsersController extends Controller
             foreach ($users as $user) {
                 $html .= '
                     <tr class="t-row">
-                        <td class="d-flex align-items-center gap-2">
+                        <td class="d-flex align-items-center gap-3">
                             <img src="'.$user->avatar_url.'" alt="image"/>
                             <div>
                             <p>'.$user->name.'</p>
-                            <p>'.$user->email.'</p>
+                            <p style="color: #1376da;">'.$user->email.'</p>
                             </div>
                         </td>
                         <td class="text-capitalize">'.($user->informations ? $user->informations->title : 'No title').'</td>
                         <td class="text-capitalize">'.($user->informations ? $user->informations->department : 'No Department').'</td>
                         <td class="text-uppercase">'.($user->informations ? date('h:i a', strtotime($user->informations->shift_start)) : '--:--').'</td>
                         <td class="text-uppercase">'.($user->informations ? date('h:i a', strtotime($user->informations->shift_end)) : '--:--').'</td>
+                        <td class="text-capitalize">';
+                        if($user->status == 'pending'){
+                            $html .= '<span class="badge bg-warning">'.$user->status.'</span>';
+                        }elseif ($user->status == 'approved') {
+                            $html .= '<span class="badge bg-success">'.$user->status.'</span>';
+                        }
+                        $html .= '</td>
+                        <td class="text-capitalize">
+                            <p>'.($user->informations ? date('F j, Y', strtotime($user->updated_at)) : '--:--').'</p>
+                            <small class="text-capitalize">'.($user->informations ? $user->updated_at->diffForHumans() : '--:--').'</small>
+                        </td>
                         <td>
                         <div class="dropup">
-                            <i class="ti-align-right show-options"  data-bs-toggle="dropdown" aria-expanded="false"></i>
-                            <ul class="dropdown-menu">
-                                <li><small><a href="'.route('users.manage', $user->id).'" class="dropdown-item" href="#">Manage User</a></small></li>
-                                <li><small><a href="'.route('users.manage', $user->id).'" class="dropdown-item" href="#">Delete User</a></small></li>
-                            </ul>
+                            <a href="'.route('users.manage', $user->id).'"><i class="ti-angle-double-right show-options"></i></a>
                         </div>
                         </td>
                     </tr>';
@@ -68,9 +89,17 @@ class UsersController extends Controller
             $html .= '</tbody>
             </table>';
         }else{
-            $html = 'No Users Found';
+            $html = '<div class="v-100 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <img class="img-fluid" src="'.asset('/images/logo.png').'" alt="logo">
+                    <h3 class="font-weight-normal mt-4">No User found</h3>
+                    <p>I\'m sorry, but the specified user could not be found.</p>
+                    <p>Please provide additional details or clarify your request for further assistance.</p>
+                </div>
+            </div>
+        </div>';
         }
-        
 
         return response()->json([
             'table' => $html,
@@ -79,14 +108,15 @@ class UsersController extends Controller
     }
 
     public function manageUsers($userID){
-        $user = User::with('informations')->findOrFail($userID);
+        $user = User::where('status', '!=', 'archived')->with('informations')->findOrFail($userID);
 
         return view('admin.manage-users', compact('user'));
     }
 
-    public function approveUsers($userID){
+    public function approveUsers(Request $request, $userID){
         $user = User::findOrFail($userID);
-        if(!$user->update(['status' => 1])){
+        $update = $user->update(['status' => 'approved']);
+        if(!$update){
             return back()->with('error', 'Somthing went wrong. Please try agin later');
         }
         return back()->with('success', $user->name . ' approved!');
@@ -107,11 +137,129 @@ class UsersController extends Controller
             'emergency_contact_number' => 'required|numeric|digits_between:10,15',
         ]);
 
-        $information = $user->informations;
+        if($user->informations){
+            $information = $user->informations;
 
-        if (!$information->update($validatedData)) {
-            return back()->with('error', 'Something went wrong. Information not update, please try again later.');
+            if (!$information->update($validatedData)) {
+                return back()->with('error', 'Something went wrong. Information not update, please try again later.');
+            }
+            return back()->with('success', $user->name . ' Updated!');
+        }else{
+            $userInformation = new Informations($validatedData);
+
+            if (!$user->informations()->save($userInformation)) {
+                return back()->with('error', 'Something went wrong. Information not save, please try again later.');
+            }
+            return back()->with('success', 'Your Information saved.');
         }
-        return back()->with('success', $user->name . ' Updated!');
+        
+    }
+    
+    // ARCHIVE CONTROLLERS
+    public function archive(){
+        return view('admin.archive-users');
+    }
+
+    public function showUsersArchive(Request $request, User $usersResult){
+        $input = $request->search_input;
+        $search = $usersResult->newQuery();
+        $search->where(function($query) use($input) {
+            $query->with('informations')->where('name', 'like', "%{$input}%")->orWhere('email', 'like', "%{$input}%");
+        });
+        $users = $search->where('status', 'archived')->orderBy('updated_at', 'DESC')->paginate(7);
+        // dd($users);
+        if($users->count() > 0){
+            $html = '<table class="table">
+            <thead>
+            <tr class="t-row-head">
+                <th>Name / Email</th>
+                <th>Title</th>
+                <th>Department</th>
+                <th>Shift Start</th>
+                <th>Shift Start</th>
+                <th>Status</th>
+                <th>Last Modified</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>';
+            
+            foreach ($users as $user) {
+                $html .= '
+                    <tr class="t-row">
+                        <td class="d-flex align-items-center gap-3">
+                            <img src="'.$user->avatar_url.'" alt="image"/>
+                            <div>
+                            <p>'.$user->name.'</p>
+                            <p style="color: #1376da;">'.$user->email.'</p>
+                            </div>
+                        </td>
+                        <td class="text-capitalize">'.($user->informations ? $user->informations->title : 'No title').'</td>
+                        <td class="text-capitalize">'.($user->informations ? $user->informations->department : 'No Department').'</td>
+                        <td class="text-uppercase">'.($user->informations ? date('h:i a', strtotime($user->informations->shift_start)) : '--:--').'</td>
+                        <td class="text-uppercase">'.($user->informations ? date('h:i a', strtotime($user->informations->shift_end)) : '--:--').'</td>
+                        <td class="text-capitalize"><span class="badge bg-info">'.$user->status.'</span></td>
+                        <td class="text-capitalize">
+                            <p>'.($user->informations ? date('F j, Y', strtotime($user->updated_at)) : '--:--').'</p>
+                            <small class="text-capitalize">'.($user->informations ? $user->updated_at->diffForHumans() : '--:--').'</small>
+                        </td>
+                        <td>
+                        <div>
+                            <form action="'.route('users.unarchive', $user->id).'" method="POST">
+                                <input type="hidden" name="_token" value="'.csrf_token().'">
+                                <button type="submit" class="btn btn-sm btn-success"><i class="ti-back-left"></i> Unarchive</button>
+                            </form>
+                        </div>
+                        </td>
+                    </tr>';
+            }
+            $html .= '</tbody>
+            </table>';
+        }else{
+            $html = '<div class="v-100 text-center">
+            <div class="card">
+                    <div class="card-body">
+                        <img class="img-fluid" src="'.asset('/images/logo.png').'" alt="logo">
+                        <h3 class="font-weight-normal mt-4">No User found</h3>
+                        <p>I\'m sorry, but the specified user could not be found.</p>
+                        <p>Please provide additional details or clarify your request for further assistance.</p>
+                    </div>
+                </div>
+            </div>';
+        }
+
+        return response()->json([
+            'table' => $html,
+            'pagination' => $users
+        ], 200);
+    }
+
+    public function unarchiveUsers(Request $request, $userID){
+        $user = User::where('id', $userID)->first();
+        if(!$user){
+            return back()->with('error', 'No record found.');
+        }
+        $user->update(['status' => 'approved']);
+        return redirect(route('users'))->with('success', $user->name .' has successfully restored from its archived state.');
+    }
+
+    // DANGER CONTROLLERS
+    public function archiveUsers(Request $request, $userID){
+        $user = User::where('email', $request->email_confirmation)->where('id', $userID)->first();
+        if(!$user){
+            return back()->with('error', 'No record found with this email.');
+        }
+        $user->update(['status' => 'archived']);
+        return redirect(route('users'))->with('success', $request->email_confirmation .' moved to archived.');
+    }
+
+    public function deleteUsers(Request $request, $userID){
+        $user = User::where('email', $request->email_confirmation)->where('id', $userID)->first();
+        if(!$user){
+            return back()->with('error', 'No record found with this email.');
+        }
+        $user->delete();
+        $this->unlinkNotExistFiles();
+        return redirect(route('users'))->with('success', $request->email_confirmation .' is no longer available or has been permanently removed.');
     }
 }

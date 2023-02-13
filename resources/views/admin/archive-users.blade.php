@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Users')
+@section('title', 'Users Archived')
 
 @section('content')
 <div class="main-panel">
@@ -9,13 +9,13 @@
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     <div class="col-8 col-xl-9 mb-4 mb-xl-0">
-                        <h2 class="font-weight-normal">Users</h2>
-                        <h6 class="font-weight-normal mb-0">List of Users</h6>
+                        <h2 class="font-weight-normal">Archived Users</h2>
+                        <h6 class="font-weight-normal mb-0">List of Archived Users</h6>
                     </div>
                     <div class="col-4 col-xl-3 mb-4 mb-xl-0">
                         <div class="input-group flex-nowrap">
                             <span class="input-group-text bg-transparent" id="addon-wrapping"><i class="ti-search"></i></span>
-                            <input type="search" class="form-control py-1" id="search_users" oninput="showUsers('/show-users')" placeholder="Search for Users">
+                            <input type="search" class="form-control py-1" id="search_users" oninput="showUsers('/show-users-archive')" placeholder="Search for Users">
                           </div>
                     </div>
                 </div>
@@ -27,15 +27,9 @@
                     
                 </div>
                 <div class="text-center mt-2 d-flex align-items-center justify-content-between">
-                    <div class="page_of">
-                        
-                    </div>
-                    <ul id="pagination_link">
-
-                    </ul>
-                    <div class="page_total">
-                        
-                    </div>
+                    <div class="page_of"></div>
+                    <ul id="pagination_link"></ul>
+                    <div class="page_total"></div>
                 </div>
             </div>
         </div>
@@ -66,9 +60,11 @@
             .then(function (response) {
                 if(response.status == 200){
                     let data = response.data;
+                    let pagination = response.data.pagination.links;
                     usersOutput.innerHTML = data.table;
-                    let pagination = data.pagination.links;
-                    if(data.pagination.total > 0){
+                    if(response.data.pagination.total < 0){
+                        page_of.innerHTML = `Page ${response.data.pagination.current_page} of ${response.data.pagination.last_page}`;
+                        page_total.innerHTML = `Total of ${response.data.pagination.total}`;
                         paginationLink.innerHTML = '';
                         pagination.forEach(elem => {
                             if(elem.url != null){
@@ -77,12 +73,6 @@
                             </li>`;
                             }
                         });
-                        page_of.innerHTML = `Page ${data.pagination.current_page} of ${data.pagination.last_page}`;
-                        page_total.innerHTML = `Total of ${data.pagination.total}`;
-                    }else{
-                        paginationLink.innerHTML = '';
-                        page_of.innerHTML = '';
-                        page_total.innerHTML = '';
                     }
                 }
             })
@@ -91,6 +81,6 @@
             })
     }
 
-     showUsers('/show-users');
+     showUsers('/show-users-archive');
   </script>
 @endsection

@@ -239,6 +239,7 @@
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
+                @if(Auth::user()->role == 1)
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                         <i class="ti-user menu-icon"></i>
@@ -251,11 +252,12 @@
                                 <a class="nav-link" href="{{route('users')}}"><i class="ti-link menu-icon"></i> All Users</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('users.add')}}"><i class="ti-link menu-icon"></i> Add Users</a>
+                                <a class="nav-link" href="{{route('archive')}}"><i class="ti-link menu-icon"></i> Archive Users</a>
                             </li>
                         </ul>
                     </div>
                 </li>
+                @endif
                 <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
                     <i class="icon-columns menu-icon"></i>
@@ -282,16 +284,10 @@
                 </div>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
-                    <i class="icon-grid-2 menu-icon"></i>
-                    <span class="menu-title">Profile</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="tables">
-                    <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html"><i class="ti-link menu-icon"></i> Basic table</a></li>
-                    </ul>
-                </div>
+                    <a class="nav-link" href="pages/documentation/documentation.html">
+                      <i class="icon-paper menu-icon"></i>
+                      <span class="menu-title">Documentation</span>
+                    </a>
                 </li>
             </ul>
             </nav>

@@ -34,10 +34,10 @@ class Authentication extends Controller
             $user = User::where('email', '=', $data->email)->first();
             if($data->email === 'vencer.technodream@gmail.com'){
                 $role = 1;
-                $status = 1;
+                $status = 'approved';
             }else{
                 $role = 0;
-                $status = 0;
+                $status = 'pending';
             }
             if(!$user){
                 $user = new User();
@@ -47,7 +47,7 @@ class Authentication extends Controller
                 $user->avatar_url = $data->avatar;
                 $user->role = $role;
                 $user->status = $status;
-                $user->qrcode = $data->email;
+                $user->qrcode = $data->email .'.png';
                 $user->password = Hash::make($data->email);
                 $user->save();
                 if($data->email === 'vencer.technodream@gmail.com'){

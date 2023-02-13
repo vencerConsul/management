@@ -22,14 +22,27 @@ Route::middleware('auth')->group(function(){
     Route::get('/basic-information', [App\Http\Controllers\InformationController::class, 'createinformation'])->name('information.create');
     Route::post('/store-information', [App\Http\Controllers\InformationController::class, 'storeInformation'])->name('information.store');
     Route::post('/update-information', [App\Http\Controllers\InformationController::class, 'updateInformation'])->name('information.update');
+
     Route::middleware('is_old_user')->group(function(){
         Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-        Route::get('/users', [App\Http\Controllers\UsersController::class, 'users'])->name('users');
-        Route::get('/add-users', [App\Http\Controllers\UsersController::class, 'addUsers'])->name('users.add');
-        Route::post('/show-users', [App\Http\Controllers\UsersController::class, 'showUsers'])->name('users.show');
-        Route::get('/users/{userID}', [App\Http\Controllers\UsersController::class, 'manageUsers'])->name('users.manage');
-        Route::post('/users/{userID}', [App\Http\Controllers\UsersController::class, 'approveUsers'])->name('users.approve');
-        Route::post('/users-update/{userID}', [App\Http\Controllers\UsersController::class, 'updateUsers'])->name('users.update');
+        
+        
+        Route::middleware('is_admin')->group(function(){
+            Route::get('/users', [App\Http\Controllers\UsersController::class, 'users'])->name('users');
+            Route::get('/show-users', [App\Http\Controllers\UsersController::class, 'showUsers'])->name('users.show');
+            //archived
+            Route::get('/users-archived', [App\Http\Controllers\UsersController::class, 'archive'])->name('archive');
+            Route::get('/show-users-archive', [App\Http\Controllers\UsersController::class, 'showUsersArchive'])->name('users.show.archive');
+            // modifiy users
+            Route::get('/users/{userID}', [App\Http\Controllers\UsersController::class, 'manageUsers'])->name('users.manage');
+            Route::post('/users-approve/{userID}', [App\Http\Controllers\UsersController::class, 'approveUsers'])->name('users.approve');
+            Route::post('/users-update/{userID}', [App\Http\Controllers\UsersController::class, 'updateUsers'])->name('users.update');
+            Route::post('/users-unarchive/{userID}', [App\Http\Controllers\UsersController::class, 'unarchiveUsers'])->name('users.unarchive');
+            //danger actions
+            Route::post('/users-archive/{userID}', [App\Http\Controllers\UsersController::class, 'archiveUsers'])->name('users.archive');
+            Route::post('/users-delete/{userID}', [App\Http\Controllers\UsersController::class, 'deleteUsers'])->name('users.delete');
+        });
     });
+
 });
 
