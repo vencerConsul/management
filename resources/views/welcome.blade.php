@@ -4,8 +4,15 @@
 
 @section('content')
 
-<div class="container-scroller">
-  <div class="container-fluid page-body-wrapper full-page-wrapper">
+<div class="container-scroller bg-dark">
+    <div class="row">
+        <div class="col-lg-8">
+            
+        </div>
+    </div>
+</div>
+
+{{-- <div class="container-fluid page-body-wrapper full-page-wrapper">
     <div class="content-wrapper d-flex align-items-center auth px-0">
       <div class="row w-100 mx-0">
         <div class="col-lg-4 mx-auto">
@@ -55,8 +62,5 @@
         </div>
       </div>
     </div>
-    <!-- content-wrapper ends -->
-  </div>
-  <!-- page-body-wrapper ends -->
-</div>
+  </div> --}}
 @endsection
