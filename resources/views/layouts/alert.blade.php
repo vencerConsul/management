@@ -1,6 +1,6 @@
 {{-- ERRORS MESSAGE --}}
 @if ($errors->any())
-<div class="alert alert-dismissible fade show" role="alert">
+<div class="alert alert-dismissible fade show a-error" role="alert">
     <div class="d-flex align-items-center">
         {{-- <strong class="alert-danger"><i class="ti-close"></i></strong> --}}
         <div>
@@ -20,7 +20,7 @@
 
 {{-- session MESSAGE --}}
 @if(session()->has('success'))
-<div class="alert alert-dismissible fade show" role="alert">
+<div class="alert alert-dismissible fade show a-success" role="alert">
     <div class="d-flex align-items-center">
         <strong class="alert-success"><i class="ti-check"></i></strong>
         <div>
@@ -34,7 +34,7 @@
 
 {{-- session MESSAGE --}}
 @if(session()->has('info'))
-<div class="alert alert-dismissible fade show" role="alert">
+<div class="alert alert-dismissible fade show a-info" role="alert">
     <div class="d-flex align-items-center">
         <strong class="alert-info"><i class="ti-info-alt"></i></strong>
         <div>
@@ -48,7 +48,7 @@
 
 {{-- session MESSAGE --}}
 @if(session()->has('warning'))
-<div class="alert alert-dismissible fade show" role="alert">
+<div class="alert alert-dismissible fade show a-warning" role="alert">
     <div class="d-flex align-items-center">
         <strong class="alert-warning"><i class="ti-hand-stop"></i></strong>
         <div>
@@ -62,7 +62,7 @@
 
 {{-- session MESSAGE --}}
 @if(session()->has('error'))
-<div class="alert alert-dismissible fade show" role="alert">
+<div class="alert alert-dismissible fade show a-error" role="alert">
     <div class="d-flex align-items-center">
         <strong class="alert-danger"><i class="ti-hand-stop"></i></strong>
         <div>

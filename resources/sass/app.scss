@@ -12,20 +12,56 @@
 *{
     font-family: 'Raleway', sans-serif;
 }
+body{
+    background: #f5f7ff !important;
+}
+
+// home
+.__home_bg{
+    background: url('../../public/images/home/home-bg.png') no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
 
 // navbar
 .navbar{
     box-shadow: none !important;
-    border-bottom: 1px solid #ebebeb;
+    border-bottom: none !important;
+    background: transparent !important;
+    
+    .navbar-menu-wrapper{
+        background: transparent !important;
+    }
+    .navbar-brand-wrapper{
+        background: transparent !important;
+    }
 }
 .cursor-p{
     cursor: pointer;
 }
 
 // sidebar
-a.nav-link:hover i {
-    color: #1376da !important;
+.sidebar{
+    border-radius: 0 100px 0 0 !important;
+
+    .profile.align-self-center img {
+        border-radius: 50%;
+        width: 100%;
+        padding: 0 20px;
+    }
 }
+.sub-menu .nav-item{
+
+    &:hover i{
+        color: #080808 !important;
+    }
+    &:hover .nav-link{
+        color: #080808 !important;
+    }
+}
+// a.nav-link:hover i {
+//     color: #1376da !important;
+// }
 [aria-expanded="true"] i{
     color: #ffffff !important;
 }
@@ -46,11 +82,28 @@ a.nav-link:hover i {
 .card-people{
     padding-top: unset !important;
 }
-.card-people .weather-info {
+.weather-info {
     bottom: 1em !important;
     top: unset !important;
     right: 24px;
     color: #ffffff;
+
+    
+    h1{
+        font-size: 65px;
+        sup{
+            font-size: 30px;
+        }
+    }
+    h4{
+        font-size: 30px;
+    }
+    h6{
+        font-size: 20px;
+    }
+}
+.sidebar .nav:not(.sub-menu){
+    margin-top: 4.45rem !important;
 }
 .sidebar .nav:not(.sub-menu) > .nav-item > .nav-link[aria-expanded="true"]{
     border-radius: 8px !important;
@@ -71,7 +124,8 @@ a.nav-link:hover i {
 
 // card
 .card{
-    border-radius: 8px !important;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
+    background: #ffffff63 !important;
 }
 
 // buttons
@@ -95,8 +149,7 @@ a.nav-link:hover i {
     color: #747474 !important;
     background-color: #ffffff !important;
     border-color: #efefef !important;
-    border-left: 5px solid #1376da !important;
-    box-shadow: 3px 3px 0px 0px #e7e7e7 !important;
+    box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
     max-width: 400px;
 
     strong{
@@ -137,9 +190,25 @@ a.nav-link:hover i {
     color: #e73838 !important;
 }
 
+.a-success{
+    border-left: 2px solid #00880b !important;
+}
+.a-error{
+    border-left: 2px solid #ff6b6b !important;
+}
+.a-info{
+    border-left: 2px solid #307ff7 !important;
+}
+.a-warning{
+    border-left: 2px solid #ee842e !important;
+}
+
 // inputs, select, texarea
 select.form-control, select.asColorPicker-input, .dataTables_wrapper select, .jsgrid .jsgrid-table .jsgrid-filter-row select, .select2-container--default select.select2-selection--single, .select2-container--default .select2-selection--single select.select2-search__field, select.typeahead, select.tt-query, select.tt-hint{
     color: #464646 !important;
+}
+select, input, textarea{
+    background-color: #f5f7ff !important;
 }
 select.round {
     background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%), radial-gradient(#ddd 70%, transparent 72%);
@@ -168,6 +237,7 @@ select.round {
     input#search_users {
         border: 0;
         border-radius: 0 30px 30px 0;
+        background-color: #ffffff !important;
     }
     span#addon-wrapping {
         border: 0;
@@ -262,6 +332,12 @@ img.mu-profile {
 .col-lg-2.mu-container {
     border-right: 1px solid #f1f1f1;
 }
+hr.hr-divider {
+    background: #b9b9b9 !important;
+    height: 1px;
+    width: 100%;
+    border: 0;
+}
 
 .manage-users{
     .mu-title{
@@ -276,13 +352,6 @@ img.mu-profile {
         width: 100%;
         border: 0;
     }
-    // input, select{
-    //     background: none;
-    //     outline: 0 !important;
-    //     border-bottom: 1px solid #dfdfdf !important;
-    //     border-radius: 0;
-    //     border: 0;
-    // }
     .danger-zone{
         border: 1px solid #f5bfbf;
     }
