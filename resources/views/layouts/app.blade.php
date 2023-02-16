@@ -10,6 +10,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('/images/logo.png')}}">
     <link href="{{ asset('vendors/ti-icons/css/themify-icons.css') }}" rel="stylesheet">
     <link href="{{ asset('css/vertical-layout-light/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     @auth
     <link href="{{ asset('vendors/feather/feather.css') }}" rel="stylesheet">
     @endauth
@@ -18,41 +19,11 @@
     @auth 
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
-        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="{{asset('/images/logo.png')}}" class="mr-2" alt="logo"/></a>
-                <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{asset('/images/logo.png')}}" alt="logo"/></a>
-            </div>
-            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-                <i class="ti-align-justify navbar-toggler navbar-toggler align-self-center" data-toggle="minimize"></i>
-            <ul class="navbar-nav navbar-nav-right">
-                <li class="nav-item nav-profile dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                    <img src="{{Auth::user()->avatar_url}}" alt="profile"/>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                    <a href="{{route('information.create')}}" class="dropdown-item">
-                        <i class="ti-settings text-primary"></i>
-                        Settings
-                    </a>
-                    <a class="dropdown-item" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                        <i class="ti-power-off text-primary"></i>
-                        Logout
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-                </div>
-                </li>
-            </ul>
-            <i class="ti-align-justify navbar-toggler navbar-toggler-right d-lg-none align-self-center" data-toggle="offcanvas"></i>
-            </div>
-        </nav>
+        
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <!-- SIDEBAR -->
-            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <nav class="sidebar sidebar-offcanvas" id="sidebar" data-aos="fade-right" data-aos-delay="200">
             <ul class="nav">
                 <div class="profile align-self-center text-center">
                     <img src="{{Auth::user()->avatar_url}}" alt="profile"/>
@@ -117,7 +88,12 @@
                 </a>
                 <div class="collapse" id="form-elements">
                     <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html"><i class="ti-link menu-icon"></i> User Logs</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('attendance')}}"><i class="ti-link menu-icon"></i> My Attendance</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('attendance.logs')}}"><i class="ti-link menu-icon"></i> Attendance Logs</a>
+                        </li>
                     </ul>
                 </div>
                 </li>
@@ -140,29 +116,25 @@
                       <span class="menu-title">Documentation</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="pages/documentation/documentation.html">
-                      <i class="icon-paper menu-icon"></i>
-                      <span class="menu-title">Documentation</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="pages/documentation/documentation.html">
-                      <i class="icon-paper menu-icon"></i>
-                      <span class="menu-title">Documentation</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="pages/documentation/documentation.html">
-                      <i class="icon-paper menu-icon"></i>
-                      <span class="menu-title">Documentation</span>
-                    </a>
-                </li>
             </ul>
             </nav>
 
             <!-- partial -->
-            @yield('content')
+            <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+                <div class="container">
+                    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                        <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="{{asset('/images/logo.png')}}" class="mr-2" alt="logo"/></a>
+                        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{asset('/images/logo.png')}}" alt="logo"/></a>
+                    </div>
+                    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                        
+                    <i class="ti-align-justify navbar-toggler navbar-toggler-right d-lg-none align-self-center" data-toggle="offcanvas"></i>
+                    </div>
+                </div>
+            </nav>
+            <div class="main-panel">
+                @yield('content')
+            </div>
             <!-- end partial -->
         </div>
     </div>
@@ -188,8 +160,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.2/axios.min.js"></script>
     @yield('scripts')
         @if(\Route::currentRouteName() == 'dashboard')
-        <script src="{{ asset('js/weather.js') }}" defer></script>
+            <script src="{{ asset('js/weather.js') }}" defer></script>
         @endif
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
     @endauth
 </body>
 </html>

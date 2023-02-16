@@ -3,39 +3,37 @@
 @section('title', 'Users')
 
 @section('content')
-<div class="main-panel">
-    <div class="content-wrapper">
-        <div class="row">
-            <div class="col-md-12 grid-margin">
-                <div class="row">
-                    <div class="col-8 col-xl-9 mb-4 mb-xl-0">
-                        <h2 class="font-weight-normal">Users</h2>
-                        <h6 class="font-weight-normal mb-0">List of Users</h6>
-                    </div>
-                    <div class="col-4 col-xl-3 mb-4 mb-xl-0">
-                        <div class="input-group flex-nowrap">
-                            <span class="input-group-text bg-transparent" id="addon-wrapping"><i class="ti-search"></i></span>
-                            <input type="search" class="form-control py-1" id="search_users" oninput="showUsers('/show-users')" placeholder="Search for Users">
-                          </div>
-                    </div>
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-12 grid-margin">
+            <div class="row">
+                <div class="col-5 col-xl-9 mb-4 mb-xl-0">
+                    <h2 class="font-weight-normal" data-aos="fade-up" data-aos-delay="100">Users</h2>
+                    <h6 class="font-weight-normal mb-0" data-aos="fade-up" data-aos-delay="200">List of Users</h6>
+                </div>
+                <div class="col-7 col-xl-3 mb-8">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text bg-transparent" id="addon-wrapping"><i class="ti-search"></i></span>
+                        <input type="search" class="form-control py-1" id="search_users" oninput="showUsers('/show-users')" placeholder="Search for Users">
+                        </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 grid-margin">
-                <div class="table-responsive" id="showUsers">
+    </div>
+    <div class="row">
+        <div class="col-md-12 grid-margin">
+            <div class="table-responsive" id="showUsers">
+                
+            </div>
+            <div class="text-center mt-2 d-flex align-items-center justify-content-between">
+                <div class="page_of">
                     
                 </div>
-                <div class="text-center mt-2 d-flex align-items-center justify-content-between">
-                    <div class="page_of">
-                        
-                    </div>
-                    <ul id="pagination_link">
+                <ul id="pagination_link">
 
-                    </ul>
-                    <div class="page_total">
-                        
-                    </div>
+                </ul>
+                <div class="page_total">
+                    
                 </div>
             </div>
         </div>

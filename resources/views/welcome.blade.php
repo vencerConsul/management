@@ -4,7 +4,7 @@
 
 @section('content')
 @include('layouts.alert')
-<div class="container-scroller bg-dark">
+<div class="container-scroller bg-dark __home">
     <div class="row">
         <div class="col-lg-8 vh-100 bg-light pr-0">
             <div class="h-100">

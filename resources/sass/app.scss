@@ -1,5 +1,5 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&display=swap');
 
 // Variables
 @import 'variables';
@@ -10,24 +10,40 @@
 
 // override
 *{
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 body{
     background: #f5f7ff !important;
 }
 
 // home
-.__home_bg{
-    background: url('../../public/images/home/home-bg.png') no-repeat;
-    background-size: cover;
-    background-position: center center;
+.__home{
+    .card{
+        box-shadow: none !important;
+    }
+    .__home_bg{
+        background: url('../../public/images/home/home-bg.png') no-repeat;
+        background-size: cover;
+        background-position: center center;
+    }
 }
+
+.page-body-wrapper{
+    padding-top: 0 !important;
+}
+.main-panel{
+    margin-left: 235px;
+}
+
 
 // navbar
 .navbar{
+    display: none;
     box-shadow: none !important;
     border-bottom: none !important;
-    background: transparent !important;
+    background: #ffffff !important;
+    transition: 0.3s;
+    margin-top: -200px;
     
     .navbar-menu-wrapper{
         background: transparent !important;
@@ -40,9 +56,18 @@ body{
     cursor: pointer;
 }
 
+.sidebar-offcanvas{
+    height: 100%;
+    top: 0 !important;
+    max-height: unset !important;
+}
 // sidebar
 .sidebar{
-    border-radius: 0 100px 0 0 !important;
+    position: fixed;
+    top: 0;
+    border-radius: 0 100px 100px 0;
+    min-height: unset !important;
+    height: 100vh !important;
 
     .profile.align-self-center img {
         border-radius: 50%;
@@ -142,8 +167,8 @@ body{
 .alert {
     font-size: 0.875rem !important;
     position: fixed !important;
-    top: 5em !important;
-    right: 1em !important;
+    top: 2em !important;
+    right: 3em !important;
     padding: 10px 70px 10px 20px !important;
     z-index: 10000 !important;
     color: #747474 !important;
@@ -158,6 +183,17 @@ body{
 
     p{
         margin-bottom: 0 !important;
+    }
+
+    ul{
+        list-style: none;
+
+        li{
+            i{
+                font-size: 12px;
+                margin-right: 0;
+            }
+        }
     }
 }
 .alert .close-alert-btn{
@@ -377,4 +413,18 @@ li.page-item a {
 }
 .page-item.active .page-link{
     border-radius: 8px;
+}
+
+
+@media (max-width: 991px){
+    .navbar{
+        margin-top: 0;
+        transition: 0.3s;
+    }
+    .sidebar{
+        border-radius: 0;
+    }
+    .page-body-wrapper{
+        padding-top: 60px !important;
+    }
 }

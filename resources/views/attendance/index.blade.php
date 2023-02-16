@@ -1,20 +1,20 @@
 @extends('layouts.app')
 
-@section('title', 'Users Archived')
+@section('title', 'Attendance')
 
 @section('content')
 <div class="content-wrapper">
     <div class="row">
         <div class="col-md-12 grid-margin">
             <div class="row">
-                <div class="col-8 col-xl-9 mb-4 mb-xl-0">
-                    <h2 class="font-weight-normal" data-aos="fade-up" data-aos-delay="100">Archived Users</h2>
-                    <h6 class="font-weight-normal mb-0" data-aos="fade-up" data-aos-delay="200">List of Archived Users</h6>
+                <div class="col-5 col-xl-9 mb-4 mb-xl-0">
+                    <h2 class="font-weight-normal" data-aos="fade-up" data-aos-delay="100">Attendance</h2>
+                    <h6 class="font-weight-normal mb-0" data-aos="fade-up" data-aos-delay="200">List of Users Log for today</h6>
                 </div>
-                <div class="col-4 col-xl-3 mb-4 mb-xl-0">
+                <div class="col-7 col-xl-3 mb-8">
                     <div class="input-group flex-nowrap">
                         <span class="input-group-text bg-transparent" id="addon-wrapping"><i class="ti-search"></i></span>
-                        <input type="search" class="form-control py-1" id="search_users" oninput="showUsers('/show-users-archive')" placeholder="Search for Users">
+                        <input type="search" class="form-control py-1" id="search_users" oninput="showUsers('/show-users')" placeholder="Search for Users">
                         </div>
                 </div>
             </div>
@@ -26,9 +26,15 @@
                 
             </div>
             <div class="text-center mt-2 d-flex align-items-center justify-content-between">
-                <div class="page_of"></div>
-                <ul id="pagination_link"></ul>
-                <div class="page_total"></div>
+                <div class="page_of">
+                    
+                </div>
+                <ul id="pagination_link">
+
+                </ul>
+                <div class="page_total">
+                    
+                </div>
             </div>
         </div>
     </div>
@@ -58,11 +64,9 @@
             .then(function (response) {
                 if(response.status == 200){
                     let data = response.data;
-                    let pagination = response.data.pagination.links;
                     usersOutput.innerHTML = data.table;
-                    if(response.data.pagination.total < 0){
-                        page_of.innerHTML = `Page ${response.data.pagination.current_page} of ${response.data.pagination.last_page}`;
-                        page_total.innerHTML = `Total of ${response.data.pagination.total}`;
+                    let pagination = data.pagination.links;
+                    if(data.pagination.total > 0){
                         paginationLink.innerHTML = '';
                         pagination.forEach(elem => {
                             if(elem.url != null){
@@ -71,6 +75,12 @@
                             </li>`;
                             }
                         });
+                        page_of.innerHTML = `Page ${data.pagination.current_page} of ${data.pagination.last_page}`;
+                        page_total.innerHTML = `Total of ${data.pagination.total}`;
+                    }else{
+                        paginationLink.innerHTML = '';
+                        page_of.innerHTML = '';
+                        page_total.innerHTML = '';
                     }
                 }
             })
@@ -79,6 +89,6 @@
             })
     }
 
-     showUsers('/show-users-archive');
+     showUsers('/show-users');
   </script>
 @endsection

@@ -41,7 +41,7 @@ class UsersController extends Controller
         if($users->count() > 0){
             $html = '<table class="table">
             <thead>
-            <tr class="t-row-head">
+            <tr class="t-row-head" data-aos="fade-up" data-aos-delay="100">
                 <th>Name / Email</th>
                 <th>Title</th>
                 <th>Department</th>
@@ -53,10 +53,12 @@ class UsersController extends Controller
             </tr>
             </thead>
             <tbody>';
-            
+
+            $delay = 1;
             foreach ($users as $user) {
+                $delay++;
                 $html .= '
-                    <tr class="t-row">
+                    <tr class="t-row" data-aos="fade-up" data-aos-delay="'.$delay.'00">
                         <td class="d-flex align-items-center gap-3">
                             <img src="'.$user->avatar_url.'" alt="image"/>
                             <div>
@@ -171,7 +173,7 @@ class UsersController extends Controller
         if($users->count() > 0){
             $html = '<table class="table">
             <thead>
-            <tr class="t-row-head">
+            <tr class="t-row-head" data-aos="fade-up" data-aos-delay="100">
                 <th>Name / Email</th>
                 <th>Title</th>
                 <th>Department</th>
@@ -183,10 +185,12 @@ class UsersController extends Controller
             </tr>
             </thead>
             <tbody>';
-            
+
+            $delay = 1;
             foreach ($users as $user) {
+                $delay++;
                 $html .= '
-                    <tr class="t-row">
+                    <tr class="t-row" data-aos="fade-up" data-aos-delay="'.$delay.'00">
                         <td class="d-flex align-items-center gap-3">
                             <img src="'.$user->avatar_url.'" alt="image"/>
                             <div>

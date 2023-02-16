@@ -26,12 +26,12 @@ async function getWeather(city) {
                 weatherLocation.innerHTML = weather.name;
                 weatherType.innerHTML = weather.weather[0].description;
                 weatherTemperature.innerHTML = weather.main.temp;
-                console.log( weather.weather[0].description);
+                
                 const id = weather.weather[0].id;
                 let path = "../images/dashboard/weather/"
-
+                console.log(id);
                 if(id == 800){
-                    weatherImg.setAttribute('src', path + 'clear.jpg');
+                    weatherImg.setAttribute('src', path + 'clear.png');
                 }else if(id >= 200 && id <= 232){
                     weatherImg.setAttribute('src', path + 'thunderstorms.png')  ;
                 }else if(id >= 600 && id <= 622){
@@ -39,7 +39,11 @@ async function getWeather(city) {
                 }else if(id >= 701 && id <= 781){
                     weatherImg.setAttribute('src', path + 'rain.png');
                 }else if(id >= 801 && id <= 804){
-                    weatherImg.setAttribute('src', path + 'cloud.png');
+                    if(id == 802){
+                        weatherImg.setAttribute('src', path + 'cloud.png');
+                    }else if(id == 803){
+                        weatherImg.setAttribute('src', path + 'clear.png');
+                    }
                 }
 
             } else {

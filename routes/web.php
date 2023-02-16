@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function(){
 
     Route::middleware('is_old_user')->group(function(){
         Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendance');
         
         
         Route::middleware('is_admin')->group(function(){
@@ -41,6 +42,8 @@ Route::middleware('auth')->group(function(){
             //danger actions
             Route::post('/users-archive/{userID}', [App\Http\Controllers\UsersController::class, 'archiveUsers'])->name('users.archive');
             Route::post('/users-delete/{userID}', [App\Http\Controllers\UsersController::class, 'deleteUsers'])->name('users.delete');
+            // attendance
+            Route::get('/attendance-logs', [App\Http\Controllers\HandleAttendanceController::class, 'index'])->name('attendance.logs');
         });
     });
 
