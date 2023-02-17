@@ -16,6 +16,7 @@
     @endauth
 </head>
 <body>
+    
     @auth 
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
@@ -138,10 +139,11 @@
             <!-- end partial -->
         </div>
     </div>
-    @else 
+    @else
         @yield('content')
     @endauth
-    
+    @include('layouts.alert')
+
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}" defer></script>
     <script src="{{ asset('js/off-canvas.js') }}" defer></script>
@@ -161,11 +163,10 @@
         @if(\Route::currentRouteName() == 'dashboard')
             <script src="{{ asset('js/weather.js') }}" defer></script>
         @endif
-        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-        <script>
-            AOS.init();
-        </script>
     @endauth
-    @include('layouts.alert')
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 </body>
 </html>

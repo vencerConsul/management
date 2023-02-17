@@ -2,7 +2,6 @@
 @if ($errors->any())
 <div class="alert alert-dismissible a-error" role="alert" data-aos="fade-left" data-aos-delay="400">
     <div class="d-flex align-items-center">
-        {{-- <strong class="alert-danger"><i class="ti-close"></i></strong> --}}
         <div>
             <strong>Error</strong>
             <ul>
@@ -20,7 +19,7 @@
 
 {{-- session MESSAGE --}}
 @if(session()->has('success'))
-<div class="alert alert-dismissible a-success" role="alert" data-aos="fade-left" data-aos-delay="400">
+<div class="alert alert-dismissible a-success" role="alert">
     <div class="d-flex align-items-center">
         <strong class="alert-success"><i class="ti-check"></i></strong>
         <div>
@@ -34,7 +33,7 @@
 
 {{-- session MESSAGE --}}
 @if(session()->has('info'))
-<div class="alert alert-dismissible a-info" role="alert" data-aos="fade-left" data-aos-delay="400">
+<div class="alert alert-dismissible a-info" role="alert">
     <div class="d-flex align-items-center">
         <strong class="alert-info"><i class="ti-info-alt"></i></strong>
         <div>
