@@ -21,34 +21,6 @@
                     <h3 class="mt-4">{{$user->name}}</h3>
                     <p>{{$user->email}}</p>
                     <small class="mu-title">{{($user->informations ? $user->informations->title : 'No title yet')}}</small>
-                    <p class="mt-4 font-weight-bold">Registration Status</p>
-                    @if($user->informations)
-                        @if($user->status == 'pending')
-                        <form action="{{route('users.approve', $user->id)}}" method="POST">
-                            @csrf
-                            <p class="mt-1">Pending <i class="ti-pencil text-info cursor-p" data-bs-toggle="modal" data-bs-target="#approval_modal"></i></p>
-                            <div class="modal fade" id="approval_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                    <div class="modal-header border-0 d-flex justify-content-end">
-                                        <i class="ti-close cursor-p" data-bs-dismiss="modal"></i>
-                                    </div>
-                                    <div class="modal-body d-flex flex-column align-items-center">
-                                        <img class="mu-profile" src="{{$user->avatar_url}}" alt="{{$user->name}}">
-                                        <h3 class="mt-4">{{$user->name}}</h3>
-                                        <p> The user's status is "pending"</p>
-                                        <button type="submit" class="btn btn-info">Approve</button>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        @else 
-                        <small class="p-2 text-center text-dark approved">Approved <i class="ti-check text-success"></i></small>
-                        @endif
-                    @else
-                        <small class="p-2 text-center text-dark pending">Information (pending)</small>
-                    @endif
                     <hr class="hr-divider">
                     <img class="w-25" src="{{asset('/images/qrcodes/' . $user->qrcode)}}" alt="{{$user->name}}">
                     <a href="{{asset('/images/qrcodes/' . $user->qrcode)}}" class="btn btn-info btn-sm mt-2 text-light" download>Download <i class="ti-download"></i></a>
@@ -144,6 +116,107 @@
                 </div>
             </div>
 
+            {{-- assign role section --}}
+            <h3 class="font-weight-normal my-4" data-aos="fade-up" data-aos-delay="400">Role and Status</h3>
+            <div class="card py-4 assign-role" data-aos="fade-up" data-aos-delay="500">
+                <div class="card-body">
+                    <form action="{{route('users.assign', $user->id)}}" method="POST">
+                        @csrf
+                        <div class="d-flex justify-content-between align-items-center my-2">
+                            <div>
+                                <p class="font-weight-bold">Assign User Role</p>
+                                <p>Assigning User Role as Admin or User</p>
+                            </div>
+                            <button type="button" role="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#assign_role">Assign Role</button>
+                            <div class="modal fade" id="assign_role" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header border-0 d-flex justify-content-end">
+                                        <i class="ti-close cursor-p" data-bs-dismiss="modal"></i>
+                                    </div>
+                                    <div class="modal-body pt-0 d-flex flex-column align-items-center text-center">
+                                        <h3 class="py-4">Choose Role</h3>
+                                        <div class="w-100 d-flex justify-content-center gap-4 align-items-center">
+                                            <div class="radio-icon">
+                                                <input type="radio" id="icon1" name="role" value="admin">
+                                                <label for="icon1">
+                                                  <i class="ti-shield"></i>
+                                                </label>
+                                                <small>Admin</small>
+                                            </div>
+                                            <div class="radio-icon">
+                                                <input type="radio" id="icon2" name="role" value="user" checked>
+                                                <label for="icon2">
+                                                  <i class="ti-user"></i>
+                                                </label>
+                                                <small>User</small>
+                                            </div>
+                                        </div>
+                                        <hr class="hr-divider">
+                                        <button type="submit" class="btn btn-info mt-2">Update</button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <hr class="hr-divider">
+                    <div class="d-flex justify-content-between align-items-center my-2">
+                        <div>
+                            <p class="font-weight-bold">Update Status</p>
+                            @if($user->informations)
+                                @if($user->status == 'pending')
+                                    <p>User status still <span class="text-warning">Pending</span></p>
+                                    <form action="{{route('users.approve', $user->id)}}" method="POST">
+                                        @csrf
+                                        <div class="modal fade" id="approval_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header border-0 d-flex justify-content-end">
+                                                    <i class="ti-close cursor-p" data-bs-dismiss="modal"></i>
+                                                </div>
+                                                <div class="modal-body d-flex flex-column align-items-center">
+                                                    <img class="mu-profile" src="{{$user->avatar_url}}" alt="{{$user->name}}">
+                                                    <h3 class="mt-4">{{$user->name}}</h3>
+                                                    <p>User status still <span class="text-warning">Pending</span></p>
+                                                    <button type="submit" class="btn btn-info">Approve</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                @else
+                                    <p class="text-dark approved">Approved <i class="ti-check text-success"></i></p>
+                                    <form action="{{route('users.approve', $user->id)}}" method="POST">
+                                        @csrf
+                                        <div class="modal fade" id="topending_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header border-0 d-flex justify-content-end">
+                                                    <i class="ti-close cursor-p" data-bs-dismiss="modal"></i>
+                                                </div>
+                                                <div class="modal-body d-flex flex-column align-items-center">
+                                                    <img class="mu-profile" src="{{$user->avatar_url}}" alt="{{$user->name}}">
+                                                    <h3 class="mt-4">{{$user->name}}</h3>
+                                                    <p>User status still <span class="text-success">Approved</span></p>
+                                                    <button type="submit" class="btn btn-info">Set to Pending</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form> 
+                                @endif
+                            @else
+                                <p class="text-center text-dark pending">Information (pending)</p>
+                            @endif
+                        </div>
+                        <button type="button" role="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="{{($user->status == 'pending' ? '#approval_modal' : '#topending_modal')}}">
+                            {{($user->status == 'pending' ? 'Update Status' : 'Set to Pending')}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             {{-- danger section --}}
             <h3 class="font-weight-normal my-4" data-aos="fade-up" data-aos-delay="400">Danger Zone</h3>
             <div class="card py-4 danger-zone" data-aos="fade-up" data-aos-delay="500">
@@ -207,7 +280,24 @@
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+    <script>
+        const radioIcons = document.querySelectorAll('.radio-icon');
+
+        radioIcons.forEach(icon => {
+        icon.addEventListener('click', () => {
+            radioIcons.forEach(otherIcon => {
+            if (otherIcon !== icon) {
+                otherIcon.querySelector('input[type="radio"]').checked = false;
+            }
+            });
+        });
+        });
+    </script>
 @endsection

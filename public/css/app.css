@@ -11186,8 +11186,41 @@ hr.hr-divider {
   width: 100%;
   border: 0;
 }
+.manage-users .assign-role {
+  border: 1px solid #80c0f5;
+}
 .manage-users .danger-zone {
   border: 1px solid #f5bfbf;
+}
+.manage-users .radio-icon {
+  display: inline-block;
+  position: relative;
+}
+.manage-users .radio-icon input[type=radio] {
+  position: absolute;
+  visibility: hidden;
+}
+.manage-users .radio-icon label {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.manage-users .radio-icon label i {
+  display: flex;
+  padding: 20px;
+  height: 100px;
+  font-size: 35px;
+  border-radius: 50%;
+  background: rgba(229, 229, 229, 0.4196078431);
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+}
+.manage-users .radio-icon input[type=radio]:checked + label i {
+  color: #ffffff;
+  background: #146dc5;
 }
 
 ul#pagination_link {

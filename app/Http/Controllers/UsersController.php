@@ -115,13 +115,44 @@ class UsersController extends Controller
         return view('admin.manage-users', compact('user'));
     }
 
-    public function approveUsers(Request $request, $userID){
+    public function assignRoles(Request $request, $userID){
         $user = User::findOrFail($userID);
-        $update = $user->update(['status' => 'approved']);
+        $validatedData = $request->validate([
+            'role' => 'required|in:admin,user'
+        ]);
+
+        switch ($request->role) {
+            case 'user':
+                $role = 0;
+            break;
+            case 'admin':
+                $role = 1;
+            break;
+        }
+
+        $update = $user->update(['role' => $role]);
         if(!$update){
             return back()->with('error', 'Somthing went wrong. Please try agin later');
         }
-        return back()->with('success', $user->name . ' approved!');
+        return back()->with('success', $user->name . ' Set to ' . $request->role);
+    }
+
+    public function approveUsers(Request $request, $userID){
+        $user = User::findOrFail($userID);
+        if($user->status == 'pending'){
+            $update = $user->update(['status' => 'approved']);
+            if(!$update){
+                return back()->with('error', 'Somthing went wrong. Please try agin later');
+            }
+            return back()->with('success', $user->name . ' approved!');
+        }else{
+            $update = $user->update(['status' => 'pending']);
+            if(!$update){
+                return back()->with('error', 'Somthing went wrong. Please try agin later');
+            }
+            return back()->with('success', $user->name . ' Set to pending.');
+        }
+        
     }
 
     public function updateUsers(Request $request, $userID){
@@ -156,7 +187,6 @@ class UsersController extends Controller
         }
         
     }
-    
     // ARCHIVE CONTROLLERS
     public function archive(){
         return view('admin.archive-users');
@@ -246,7 +276,6 @@ class UsersController extends Controller
         $user->update(['status' => 'approved']);
         return redirect(route('users'))->with('success', $user->name .' has successfully restored from its archived state.');
     }
-
     // DANGER CONTROLLERS
     public function archiveUsers(Request $request, $userID){
         $user = User::where('email', $request->email_confirmation)->where('id', $userID)->first();

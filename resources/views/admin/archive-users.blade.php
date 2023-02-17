@@ -25,7 +25,7 @@
             <div class="table-responsive" id="showUsers">
                 
             </div>
-            <div class="text-center mt-2 d-flex align-items-center justify-content-between">
+            <div class="text-center mt-2 d-flex align-items-center justify-content-between" data-aos="fade-down" data-aos-delay="900">
                 <div class="page_of"></div>
                 <ul id="pagination_link"></ul>
                 <div class="page_total"></div>

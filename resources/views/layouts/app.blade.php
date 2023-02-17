@@ -23,13 +23,13 @@
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <!-- SIDEBAR -->
-            <nav class="sidebar sidebar-offcanvas" id="sidebar" data-aos="fade-right" data-aos-delay="200">
+            <nav class="sidebar sidebar-offcanvas" id="sidebar" data-aos="fade-right" data-aos-delay="100">
             <ul class="nav">
                 <div class="profile align-self-center text-center">
-                    <img src="{{Auth::user()->avatar_url}}" alt="profile"/>
-                    <p class="my-2">{{Auth::user()->name}}</p>
+                    <img src="{{Auth::user()->avatar_url}}" alt="profile" data-aos="fade-up" data-aos-delay="200"/>
+                    <p class="my-2" data-aos="fade-up" data-aos-delay="300">{{Auth::user()->name}}</p>
                 </div>
-                <li class="nav-item">
+                <li class="nav-item" data-aos="fade-up" data-aos-delay="400">
                     <a class="nav-link" data-toggle="collapse" href="#__profile" aria-expanded="false" aria-controls="__profile">
                         <i class="ti-user menu-icon"></i>
                         <span class="menu-title">Manage Profile</span>
@@ -55,20 +55,20 @@
                     </div>
                 </li>
                 <hr class="hr-divider">
-                <li class="nav-item @if(Route::currentRouteName() == 'dashboard') active @endif">
+                <li class="nav-item @if(Route::currentRouteName() == 'dashboard') active @endif" data-aos="fade-up" data-aos-delay="500">
                     <a href="{{route('dashboard')}}" class="nav-link" href="index.html">
                         <i class="icon-grid menu-icon"></i>
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
                 @if(Auth::user()->role == 1)
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <li class="nav-item" data-aos="fade-up" data-aos-delay="600">
+                    <a class="nav-link" data-toggle="collapse" href="#manage__users" aria-expanded="false" aria-controls="manage__users">
                         <i class="ti-user menu-icon"></i>
                             <span class="menu-title">Manage Users</span>
                         <i class="menu-arrow"></i>
                     </a>
-                    <div class="collapse" id="ui-basic">
+                    <div class="collapse" id="manage__users">
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('users')}}"><i class="ti-link menu-icon"></i> All Users</a>
@@ -80,13 +80,13 @@
                     </div>
                 </li>
                 @endif
-                <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+                <li class="nav-item" data-aos="fade-up" data-aos-delay="700">
+                <a class="nav-link" data-toggle="collapse" href="#__attendance" aria-expanded="false" aria-controls="__attendance">
                     <i class="icon-columns menu-icon"></i>
                     <span class="menu-title">Attendance</span>
                     <i class="menu-arrow"></i>
                 </a>
-                <div class="collapse" id="form-elements">
+                <div class="collapse" id="__attendance">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('attendance')}}"><i class="ti-link menu-icon"></i> My Attendance</a>
@@ -97,20 +97,20 @@
                     </ul>
                 </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+                <li class="nav-item" data-aos="fade-up" data-aos-delay="800">
+                    <a class="nav-link" data-toggle="collapse" href="#__timesheet" aria-expanded="false" aria-controls="__timesheet">
                         <i class="ti-alarm-clock menu-icon"></i>
                         <span class="menu-title">Timesheet</span>
                         <i class="menu-arrow"></i>
                     </a>
-                    <div class="collapse" id="charts">
+                    <div class="collapse" id="__timesheet">
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html"><i class="ti-link menu-icon"></i> Logs</a></li>
                             <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html"><i class="ti-link menu-icon"></i> Reports</a></li>
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" data-aos="fade-up" data-aos-delay="900">
                     <a class="nav-link" href="pages/documentation/documentation.html">
                       <i class="icon-paper menu-icon"></i>
                       <span class="menu-title">Documentation</span>
@@ -138,11 +138,10 @@
             <!-- end partial -->
         </div>
     </div>
-    
-    @include('layouts.alert')
     @else 
         @yield('content')
     @endauth
+    
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}" defer></script>
     <script src="{{ asset('js/off-canvas.js') }}" defer></script>
@@ -167,5 +166,6 @@
             AOS.init();
         </script>
     @endauth
+    @include('layouts.alert')
 </body>
 </html>

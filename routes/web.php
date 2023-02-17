@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function(){
             Route::get('/show-users-archive', [App\Http\Controllers\UsersController::class, 'showUsersArchive'])->name('users.show.archive');
             // modifiy users
             Route::get('/users/{userID}', [App\Http\Controllers\UsersController::class, 'manageUsers'])->name('users.manage');
+            Route::post('/users-assign/{userID}', [App\Http\Controllers\UsersController::class, 'assignRoles'])->name('users.assign');
             Route::post('/users-approve/{userID}', [App\Http\Controllers\UsersController::class, 'approveUsers'])->name('users.approve');
             Route::post('/users-update/{userID}', [App\Http\Controllers\UsersController::class, 'updateUsers'])->name('users.update');
             Route::post('/users-unarchive/{userID}', [App\Http\Controllers\UsersController::class, 'unarchiveUsers'])->name('users.unarchive');

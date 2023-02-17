@@ -39,10 +39,14 @@ async function getWeather(city) {
                 }else if(id >= 701 && id <= 781){
                     weatherImg.setAttribute('src', path + 'rain.png');
                 }else if(id >= 801 && id <= 804){
-                    if(id == 802){
-                        weatherImg.setAttribute('src', path + 'cloud.png');
+                    if(id == 801){
+                        weatherImg.setAttribute('src', path + 'thunderstorms.png');
+                    }else if(id == 802){
+                        weatherImg.setAttribute('src', path + 'rain.png');
                     }else if(id == 803){
                         weatherImg.setAttribute('src', path + 'clear.png');
+                    }else if(id == 804){
+                        weatherImg.setAttribute('src', path + 'snow.png'); 
                     }
                 }
 
