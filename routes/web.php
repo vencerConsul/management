@@ -2,15 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('landing');
-
 Auth::routes();
 Route::match(['get'], 'login', function(){ return redirect('/'); })->name('login');
 Route::match(['get'], 'register', function(){ return redirect('/'); })->name('register');
 
 Route::group(['middleware' => ['guest']], function () {
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('landing');
     Route::get('auth/google', [App\Http\Controllers\Authentication::class, 'redirectToGoogle'])->name('login.google'); // google auth
     Route::get('login/google/callback', [App\Http\Controllers\Authentication::class, 'handleGoogleCallback']); // google callback route
 });
@@ -27,22 +26,21 @@ Route::middleware('auth')->group(function(){
         Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
         Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendance');
         
-        
         Route::middleware('is_admin')->group(function(){
             Route::get('/users', [App\Http\Controllers\UsersController::class, 'users'])->name('users');
-            Route::get('/show-users', [App\Http\Controllers\UsersController::class, 'showUsers'])->name('users.show');
+            Route::get('/show-users', [App\Http\Controllers\UsersController::class, 'showUsers'])->name('users.show'); // api call
             //archived
             Route::get('/users-archived', [App\Http\Controllers\UsersController::class, 'archive'])->name('archive');
-            Route::get('/show-users-archive', [App\Http\Controllers\UsersController::class, 'showUsersArchive'])->name('users.show.archive');
+            Route::get('/show-users-archive', [App\Http\Controllers\UsersController::class, 'showUsersArchive'])->name('users.show.archive'); // api call
             // modifiy users
             Route::get('/users/{userID}', [App\Http\Controllers\UsersController::class, 'manageUsers'])->name('users.manage');
-            Route::post('/users-assign/{userID}', [App\Http\Controllers\UsersController::class, 'assignRoles'])->name('users.assign');
-            Route::post('/users-approve/{userID}', [App\Http\Controllers\UsersController::class, 'approveUsers'])->name('users.approve');
             Route::post('/users-update/{userID}', [App\Http\Controllers\UsersController::class, 'updateUsers'])->name('users.update');
-            Route::post('/users-unarchive/{userID}', [App\Http\Controllers\UsersController::class, 'unarchiveUsers'])->name('users.unarchive');
+            Route::post('/asign-user-role/{userID}', [App\Http\Controllers\UsersController::class, 'assignUserRoles'])->name('users.assign.role');
+            Route::post('/users-update-status/{userID}', [App\Http\Controllers\UsersController::class, 'updateUserStatus'])->name('users.update.status');
             //danger actions
             Route::post('/users-archive/{userID}', [App\Http\Controllers\UsersController::class, 'archiveUsers'])->name('users.archive');
             Route::post('/users-delete/{userID}', [App\Http\Controllers\UsersController::class, 'deleteUsers'])->name('users.delete');
+            Route::post('/users-unarchive/{userID}', [App\Http\Controllers\UsersController::class, 'unarchiveUsers'])->name('users.unarchive');
             // attendance
             Route::get('/attendance-logs', [App\Http\Controllers\HandleAttendanceController::class, 'index'])->name('attendance.logs');
         });

@@ -25,7 +25,7 @@ class UsersController extends Controller
         }
     }
 
-    // MANAGE USER CONTROLLERS unlink("$path/$file");
+    // MANAGE USER CONTROLLERS 
     public function users(){
         return view('admin.users');
     }
@@ -115,9 +115,9 @@ class UsersController extends Controller
         return view('admin.manage-users', compact('user'));
     }
 
-    public function assignRoles(Request $request, $userID){
+    public function assignUserRoles(Request $request, $userID){
         $user = User::findOrFail($userID);
-        $validatedData = $request->validate([
+        $request->validate([
             'role' => 'required|in:admin,user'
         ]);
 
@@ -137,20 +137,20 @@ class UsersController extends Controller
         return back()->with('success', $user->name . ' Set to ' . $request->role);
     }
 
-    public function approveUsers(Request $request, $userID){
+    public function updateUserStatus(Request $request, $userID){
         $user = User::findOrFail($userID);
         if($user->status == 'pending'){
             $update = $user->update(['status' => 'approved']);
             if(!$update){
                 return back()->with('error', 'Somthing went wrong. Please try agin later');
             }
-            return back()->with('success', $user->name . ' approved!');
+            return back()->with('success', $user->name . ' approved!!');
         }else{
             $update = $user->update(['status' => 'pending']);
             if(!$update){
                 return back()->with('error', 'Somthing went wrong. Please try agin later');
             }
-            return back()->with('success', $user->name . ' Set to pending.');
+            return back()->with('success', $user->name . ' Set to pending..');
         }
         
     }
