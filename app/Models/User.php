@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(AttendanceLogs::class);
     }
+
+    public function timesheets()
+    {
+        return $this->hasMany(TimeSheet::class);
+    }
 }

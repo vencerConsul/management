@@ -10831,8 +10831,8 @@ body {
   box-shadow: none !important;
 }
 .__home .__home_bg {
-  background: url(/images/home-bg.png?2772726c06138ee88ce939d995824c6c) no-repeat;
-  background-size: cover;
+  background: url(/images/home-bg.png?2772726c06138ee88ce939d995824c6c) no-repeat !important;
+  background-size: cover !important;
   background-position: center center;
 }
 
@@ -10879,8 +10879,14 @@ body {
 }
 .sidebar .profile.align-self-center img {
   border-radius: 50%;
-  width: 100%;
-  padding: 0 20px;
+  height: 120px;
+  width: 120px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.sidebar .session-timeout {
+  box-shadow: none !important;
+  border: 1px solid #f1f1f1;
 }
 
 .sub-menu .nav-item:hover i {
@@ -10957,18 +10963,19 @@ body {
 }
 
 .card {
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
   background: rgba(255, 255, 255, 0.3882352941) !important;
 }
 
 .btn {
-  border-radius: 30px !important;
+  border-radius: 8px !important;
 }
 
 .btn-info {
   color: #fff;
   background-color: #146dc5 !important;
   border-color: unset !important;
+  border-radius: 8px !important;
 }
 
 .alert {
@@ -11049,10 +11056,6 @@ body {
 
 select.form-control, select.asColorPicker-input, .dataTables_wrapper select, .jsgrid .jsgrid-table .jsgrid-filter-row select, .select2-container--default select.select2-selection--single, .select2-container--default .select2-selection--single select.select2-search__field, select.typeahead, select.tt-query, select.tt-hint {
   color: #464646 !important;
-}
-
-select, input, textarea {
-  background-color: #f5f7ff !important;
 }
 
 select.round {
@@ -11244,6 +11247,67 @@ li.page-item a {
 }
 
 .page-item.active .page-link {
+  border-radius: 8px;
+}
+
+.__total_user_log_container .__total_user_log {
+  width: 200px;
+  height: 200px;
+  background: rgba(19, 118, 218, 0.2705882353);
+  border-radius: 50%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid #fff;
+}
+.__total_user_log_container .__total_user_log p {
+  font-size: 50px;
+  font-weight: 900;
+}
+.__total_user_log_container .__time_adjustment_request_list {
+  padding: 20px;
+  background: #e8eff7;
+  border-radius: 8px;
+}
+.__total_user_log_container .__time_adjustment_request_list img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.__user_timesheet_container .__total_user_log {
+  width: 200px;
+  height: 200px;
+  background: rgba(19, 118, 218, 0.2705882353);
+  border-radius: 50%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border: 5px solid #fff;
+}
+.__user_timesheet_container .__total_user_log p {
+  font-size: 50px;
+  font-weight: 900;
+}
+.__user_timesheet_container .__time_adjustment_request_container i {
+  cursor: pointer;
+  background: rgba(19, 118, 218, 0.2117647059);
+  padding: 10px;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+.__user_timesheet_container .__time_adjustment_request_container i:hover {
+  background: #1376da;
+  color: #ffffff;
+}
+.__user_timesheet_container .__time_adjustment_request_container .__time_adjustment_request_list {
+  padding: 20px;
+  background: #e8eff7;
   border-radius: 8px;
 }
 

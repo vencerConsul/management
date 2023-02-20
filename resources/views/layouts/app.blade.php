@@ -21,99 +21,116 @@
         <div class="container-scroller">
             <div class="container-fluid page-body-wrapper">
                 <nav class="sidebar sidebar-offcanvas" id="sidebar" data-aos="fade-right" data-aos-delay="100">
-                    <ul class="nav">
-                        <div class="profile align-self-center text-center">
-                            <img src="{{Auth::user()->avatar_url}}" alt="profile" data-aos="fade-up" data-aos-delay="200"/>
-                            <p class="my-2" data-aos="fade-up" data-aos-delay="300">{{Auth::user()->name}}</p>
-                        </div>
-                        <li class="nav-item" data-aos="fade-up" data-aos-delay="400">
-                            <a class="nav-link" data-toggle="collapse" href="#__profile" aria-expanded="false" aria-controls="__profile">
-                                <i class="ti-more menu-icon"></i>
-                                <span class="menu-title">Manage Profile</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="collapse" id="__profile">
-                                <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{route('information.create')}}">
-                                            <i class="ti-link menu-icon"></i> Settings
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#" onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
-                                            <i class="ti-power-off menu-icon text-primary"></i> Logout
-                                        </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <hr class="hr-divider">
-                        <li class="nav-item @if(Route::currentRouteName() == 'dashboard') active @endif" data-aos="fade-up" data-aos-delay="500">
-                            <a href="{{route('dashboard')}}" class="nav-link" href="index.html">
-                                <i class="icon-grid menu-icon"></i>
-                                <span class="menu-title">Dashboard</span>
-                            </a>
-                        </li>
-                        @if(Auth::user()->role == 1)
-                        <li class="nav-item" data-aos="fade-up" data-aos-delay="600">
-                            <a class="nav-link" data-toggle="collapse" href="#manage__users" aria-expanded="false" aria-controls="manage__users">
-                                <i class="ti-user menu-icon"></i>
-                                    <span class="menu-title">Manage Users</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="collapse" id="manage__users">
-                                <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{route('users')}}"><i class="ti-link menu-icon"></i> All Users</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{route('archive')}}"><i class="ti-link menu-icon"></i> Archive Users</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        @endif
-                        <li class="nav-item" data-aos="fade-up" data-aos-delay="700">
-                        <a class="nav-link" data-toggle="collapse" href="#__attendance" aria-expanded="false" aria-controls="__attendance">
-                            <i class="icon-columns menu-icon"></i>
-                            <span class="menu-title">Attendance</span>
+                <ul class="nav">
+                    <div class="profile align-self-center text-center">
+                        <img src="{{Auth::user()->avatar_url}}" alt="profile" data-aos="fade-up" data-aos-delay="200"/>
+                        <p class="my-2" data-aos="fade-up" data-aos-delay="300">{{Auth::user()->name}}</p>
+                    </div>
+                    <li class="nav-item" data-aos="fade-up" data-aos-delay="400">
+                        <a class="nav-link" data-toggle="collapse" href="#__profile" aria-expanded="false" aria-controls="__profile">
+                            <i class="ti-more menu-icon"></i>
+                            <span class="menu-title">Manage Profile</span>
                             <i class="menu-arrow"></i>
                         </a>
-                        <div class="collapse" id="__attendance">
+                        <div class="collapse" id="__profile">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{route('attendance')}}"><i class="ti-link menu-icon"></i> My Attendance</a>
+                                    <a class="nav-link" href="{{route('information.create')}}">
+                                        <i class="ti-link menu-icon"></i> Settings
+                                    </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{route('attendance.logs')}}"><i class="ti-link menu-icon"></i> Attendance Logs</a>
+                                    <a class="nav-link" href="#" onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                        <i class="ti-power-off menu-icon text-primary"></i> Logout
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
                                 </li>
                             </ul>
                         </div>
-                        </li>
-                        <li class="nav-item" data-aos="fade-up" data-aos-delay="800">
-                            <a class="nav-link" data-toggle="collapse" href="#__timesheet" aria-expanded="false" aria-controls="__timesheet">
-                                <i class="ti-alarm-clock menu-icon"></i>
-                                <span class="menu-title">Timesheet</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="collapse" id="__timesheet">
-                                <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html"><i class="ti-link menu-icon"></i> Logs</a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html"><i class="ti-link menu-icon"></i> Reports</a></li>
-                                </ul>
+                    </li>
+                    <hr class="hr-divider">
+                    <li class="nav-item @if(Route::currentRouteName() == 'dashboard') active @endif" data-aos="fade-up" data-aos-delay="500">
+                        <a href="{{route('dashboard')}}" class="nav-link" href="index.html">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                    </li>
+                    @if(Auth::user()->role == 1)
+                    <li class="nav-item" data-aos="fade-up" data-aos-delay="600">
+                        <a class="nav-link" data-toggle="collapse" href="#manage__users" aria-expanded="false" aria-controls="manage__users">
+                            <i class="ti-user menu-icon"></i>
+                                <span class="menu-title">Manage Users</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="manage__users">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{route('users')}}"><i class="ti-link menu-icon"></i> All Users</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{route('archive')}}"><i class="ti-link menu-icon"></i> Archive Users</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    @endif
+                    <li class="nav-item" data-aos="fade-up" data-aos-delay="800">
+                        <a class="nav-link" data-toggle="collapse" href="#__timesheet" aria-expanded="false" aria-controls="__timesheet">
+                            <i class="ti-alarm-clock menu-icon"></i>
+                            <span class="menu-title">Timesheet</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="__timesheet">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="{{route('timesheet')}}"><i class="ti-link menu-icon"></i> Timesheet</a></li>
+                                @if(Auth::user()->role == 1)
+                                <li class="nav-item"> <a class="nav-link" href="{{route('timesheet.logs')}}"><i class="ti-link menu-icon"></i> Timesheet Logs</a></li>
+                                @endif
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item" data-aos="fade-up" data-aos-delay="700">
+                    <a class="nav-link" data-toggle="collapse" href="#__attendance" aria-expanded="false" aria-controls="__attendance">
+                        <i class="icon-columns menu-icon"></i>
+                        <span class="menu-title">Attendance</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="__attendance">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('attendance')}}"><i class="ti-link menu-icon"></i> My Attendance</a>
+                            </li>
+                            @if(Auth::user()->role == 1)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('attendance.logs')}}"><i class="ti-link menu-icon"></i> Attendance Logs</a>
+                            </li>
+                            @endif
+                        </ul>
+                    </div>
+                    </li>
+                    <li class="nav-item" data-aos="fade-up" data-aos-delay="900">
+                        <a class="nav-link" href="pages/documentation/documentation.html">
+                        <i class="icon-paper menu-icon"></i>
+                        <span class="menu-title">Documentation</span>
+                        </a>
+                    </li>
+                    <hr class="hr-divider">
+                </ul>
+                <div class="p-2">
+                    <div class="card p-0 session-timeout">
+                        <div class="card-body p-3">
+                            <small>Stay secure with automatic session timeout. Session will expire if inactive.</small>
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <div class="p-3 shadow-sm hours">0</div>
+                                <div class="p-3 shadow-sm minutes">0</div>
+                                <div class="p-3 shadow-sm seconds">0</div>
                             </div>
-                        </li>
-                        <li class="nav-item" data-aos="fade-up" data-aos-delay="900">
-                            <a class="nav-link" href="pages/documentation/documentation.html">
-                            <i class="icon-paper menu-icon"></i>
-                            <span class="menu-title">Documentation</span>
-                            </a>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
+                </div>
                 </nav>
 
                 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -140,6 +157,7 @@
     @endguest
     
     @include('layouts.alert')
+    
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}" defer></script>
     <script src="{{ asset('js/off-canvas.js') }}" defer></script>
@@ -148,6 +166,69 @@
     <script> AOS.init(); </script>
     @auth
     <script src="{{ asset('js/axios.js') }}"></script>
+    <script>
+        window.onload = function() {
+            var sessionTimeout = {{ config('session.lifetime') }} * 60; 
+            var countdownTimer = setInterval(function() {
+                sessionTimeout--;
+                var hours = Math.floor(sessionTimeout / 3600);
+                var minutes = Math.floor((sessionTimeout % 3600) / 60);
+                var seconds = sessionTimeout % 60;
+                document.querySelector('.hours').innerHTML = (hours < 10 ? '0' : '') + hours;
+                document.querySelector('.minutes').innerHTML = (minutes < 10 ? '0' : '') + minutes;
+                document.querySelector('.seconds').innerHTML = (seconds < 10 ? '0' : '') + seconds;
+                if (sessionTimeout <= 0) {
+                    clearInterval(countdownTimer);
+                    sessionTimeOutModal();
+                }
+            }, 1000);
+            function sessionTimeOutModal(){
+                // Create the modal
+                const modal = document.createElement('div');
+                modal.classList.add('modal', 'fade');
+                modal.setAttribute('id', 'session_time_out');
+                modal.setAttribute('data-bs-backdrop', 'static');
+                modal.setAttribute('data-bs-keyboard', 'false');
+                modal.setAttribute('tabindex', '-1');
+                modal.setAttribute('aria-hidden', 'true');
+                const modalDialog = document.createElement('div');
+                modalDialog.classList.add('modal-dialog');
+                const modalContent = document.createElement('div');
+                modalContent.classList.add('modal-content');
+                const modalBody = document.createElement('div');
+                modalBody.classList.add('modal-body', 'pb-0', 'd-flex', 'flex-column', 'align-items-center', 'text-center');
+                const modalTitle = document.createElement('h3');
+                modalTitle.classList.add('py-4');
+                modalTitle.textContent = 'Your Session Expired';
+                modalBody.appendChild(modalTitle);
+                const modalText = document.createElement('div');
+                modalText.classList.add('w-100', 'd-flex', 'justify-content-center', 'gap-4', 'align-items-center');
+                const modalParagraph = document.createElement('p');
+                modalParagraph.textContent = 'Your session has expired. Don\'t worry, just log back in to pick up where you left off.';
+                modalText.appendChild(modalParagraph);
+                modalBody.appendChild(modalText);
+                const modalDivider = document.createElement('hr');
+                modalDivider.classList.add('hr-divider');
+                modalBody.appendChild(modalDivider);
+                const modalFooter = document.createElement('div');
+                modalFooter.classList.add('text-center', 'mb-4');
+                const modalButton = document.createElement('a');
+                modalButton.setAttribute('href', window.location.href);
+                modalButton.setAttribute('data-bs-dismiss', 'modal');
+                modalButton.classList.add('btn', 'btn-info', 'mt-2');
+                modalButton.textContent = 'Okay';
+                modalFooter.appendChild(modalButton);
+                modalContent.appendChild(modalBody);
+                modalContent.appendChild(modalFooter);
+                modalDialog.appendChild(modalContent);
+                modal.appendChild(modalDialog);
+                document.body.appendChild(modal);
+                const modal_popup = document.getElementById('session_time_out');
+                const modalInstance = new bootstrap.Modal(modal_popup);
+                modalInstance.show();
+            }
+        }
+    </script>
         @if(\Route::currentRouteName() == 'dashboard')
             <script src="{{ asset('js/weather.js') }}" defer></script>
         @endif

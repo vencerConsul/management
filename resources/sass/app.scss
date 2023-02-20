@@ -22,8 +22,8 @@ body{
         box-shadow: none !important;
     }
     .__home_bg{
-        background: url('../../public/images/home/home-bg.png') no-repeat;
-        background-size: cover;
+        background: url('../../public/images/home/home-bg.png') no-repeat !important;
+        background-size: cover !important;
         background-position: center center;
     }
 }
@@ -68,12 +68,20 @@ body{
     border-radius: 0 100px 100px 0;
     min-height: unset !important;
     height: 100vh !important;
-    transition: 1s cubic-bezier(0.64, 0.01, 0, 0.88) !important;
+    
+    .nav{
+        margin-bottom: 10px !important;
+    }
 
     .profile.align-self-center img {
         border-radius: 50%;
-        width: 100%;
-        padding: 0 20px;
+        height: 120px;
+        width: 120px;
+        object-fit: cover;
+    }
+    .session-timeout{
+        box-shadow: none !important;
+        border: 1px solid #f1f1f1;
     }
 }
 .sub-menu .nav-item{
@@ -150,18 +158,19 @@ body{
 
 // card
 .card{
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
     background: #ffffff63 !important;
 }
 
 // buttons
 .btn{
-    border-radius: 30px !important;
+    border-radius: 8px !important;
 }
 .btn-info {
     color: #fff;
     background-color: #146dc5 !important;
     border-color: unset !important;
+    border-radius: 8px !important;
 }
 
 //  informations
@@ -244,9 +253,9 @@ body{
 select.form-control, select.asColorPicker-input, .dataTables_wrapper select, .jsgrid .jsgrid-table .jsgrid-filter-row select, .select2-container--default select.select2-selection--single, .select2-container--default .select2-selection--single select.select2-search__field, select.typeahead, select.tt-query, select.tt-hint{
     color: #464646 !important;
 }
-select, input, textarea{
-    background-color: #f5f7ff !important;
-}
+// select, input, textarea{
+//     background-color: #f5f7ff !important;
+// }
 select.round {
     background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%), radial-gradient(#ddd 70%, transparent 72%);
     background-position: calc(100% - 20px) calc(20px + 2px), calc(100% - 15px) calc(20px + 2px), calc(100% - 10px) 14px;
@@ -454,6 +463,83 @@ li.page-item a {
     border-radius: 8px;
 }
 
+
+// timesheet admin
+.__total_user_log_container{
+    .__total_user_log {
+        width: 200px;
+        height: 200px;
+        background: #1376da45;
+        border-radius: 50%;
+        box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 5px solid #fff;
+        
+        p{
+            font-size: 50px;
+            font-weight: 900;
+        }
+    }
+
+    .__time_adjustment_request_list {
+        padding: 20px;
+        background: #e8eff7;
+        border-radius: 8px;
+
+        img{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+}
+
+// timesheet users
+.__user_timesheet_container{
+    .__total_user_log {
+        width: 200px;
+        height: 200px;
+        background: #1376da45;
+        border-radius: 50%;
+        box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        border: 5px solid #fff;
+        
+        p{
+            font-size: 50px;
+            font-weight: 900;
+        }
+    }
+
+    .__time_adjustment_request_container{
+
+        i{
+            cursor: pointer;
+            background: rgba(19, 118, 218, 0.2117647059);
+            padding: 10px;
+            border-radius: 50%;
+            transition: 0.3s;
+
+            &:hover{
+                background: #1376da;
+                color: #ffffff;
+            }
+        }
+
+        .__time_adjustment_request_list {
+            padding: 20px;
+            background: #e8eff7;
+            border-radius: 8px;
+
+        }
+    }
+}
 
 @media (max-width: 991px){
     .navbar{

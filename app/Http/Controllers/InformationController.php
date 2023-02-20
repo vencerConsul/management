@@ -77,10 +77,13 @@ class InformationController extends Controller
 
         $user = Auth::user();
         $information = $user->informations;
-
-        if (!$information->update($validatedData)) {
-            return back()->with('error', 'Something went wrong. Information not update, please try again later.');
+        if($user->role == 1){
+            if (!$information->update($validatedData)) {
+                return back()->with('error', 'Something went wrong. Information not update, please try again later.');
+            }
+            return back()->with('success', 'Your Information updated.');
+        }else{
+            return back()->with('warning', 'To update your information, please approach an administrator as only they have the authority to make changes.');
         }
-        return back()->with('success', 'Your Information updated.');
     }
 }

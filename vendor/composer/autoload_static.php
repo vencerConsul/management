@@ -560,6 +560,7 @@ class ComposerStaticInitc1bbaf0b765570713d28097353376cff
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Models\\AttendanceLogs' => __DIR__ . '/../..' . '/app/Models/AttendanceLogs.php',
         'App\\Models\\Informations' => __DIR__ . '/../..' . '/app/Models/Informations.php',
+        'App\\Models\\TimeSheet' => __DIR__ . '/../..' . '/app/Models/TimeSheet.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
