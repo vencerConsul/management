@@ -23,17 +23,17 @@ Route::middleware('auth')->group(function(){
     Route::post('/update-information', [App\Http\Controllers\InformationController::class, 'updateInformation'])->name('information.update');
 
     Route::middleware('is_old_user')->group(function(){
-        Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard'); // view
         Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendance');
         
         Route::middleware('is_admin')->group(function(){
-            Route::get('/users', [App\Http\Controllers\UsersController::class, 'users'])->name('users');
-            Route::get('/show-users', [App\Http\Controllers\UsersController::class, 'showUsers'])->name('users.show'); // api call
+            Route::get('/users', [App\Http\Controllers\UsersController::class, 'users'])->name('users'); // view
+            Route::get('/load-users', [App\Http\Controllers\UsersController::class, 'loadUsers']); // api call
             //archived
-            Route::get('/users-archived', [App\Http\Controllers\UsersController::class, 'archive'])->name('archive');
-            Route::get('/show-users-archive', [App\Http\Controllers\UsersController::class, 'showUsersArchive'])->name('users.show.archive'); // api call
+            Route::get('/users-archived', [App\Http\Controllers\UsersController::class, 'archive'])->name('archive'); // view
+            Route::get('/load-users-archive', [App\Http\Controllers\UsersController::class, 'loadUsersArchive']); // api call
             // modifiy users
-            Route::get('/users/{userID}', [App\Http\Controllers\UsersController::class, 'manageUsers'])->name('users.manage');
+            Route::get('/manage/{userID}', [App\Http\Controllers\UsersController::class, 'manageUsers'])->name('users.manage'); // view
             Route::post('/users-update/{userID}', [App\Http\Controllers\UsersController::class, 'updateUsers'])->name('users.update');
             Route::post('/asign-user-role/{userID}', [App\Http\Controllers\UsersController::class, 'assignUserRoles'])->name('users.assign.role');
             Route::post('/users-update-status/{userID}', [App\Http\Controllers\UsersController::class, 'updateUserStatus'])->name('users.update.status');

@@ -79,6 +79,6 @@
             })
     }
 
-     showUsers('/show-users-archive');
+     showUsers('/load-users-archive');
   </script>
 @endsection

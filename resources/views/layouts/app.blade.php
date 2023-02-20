@@ -21,99 +21,99 @@
         <div class="container-scroller">
             <div class="container-fluid page-body-wrapper">
                 <nav class="sidebar sidebar-offcanvas" id="sidebar" data-aos="fade-right" data-aos-delay="100">
-                <ul class="nav">
-                    <div class="profile align-self-center text-center">
-                        <img src="{{Auth::user()->avatar_url}}" alt="profile" data-aos="fade-up" data-aos-delay="200"/>
-                        <p class="my-2" data-aos="fade-up" data-aos-delay="300">{{Auth::user()->name}}</p>
-                    </div>
-                    <li class="nav-item" data-aos="fade-up" data-aos-delay="400">
-                        <a class="nav-link" data-toggle="collapse" href="#__profile" aria-expanded="false" aria-controls="__profile">
-                            <i class="ti-more menu-icon"></i>
-                            <span class="menu-title">Manage Profile</span>
+                    <ul class="nav">
+                        <div class="profile align-self-center text-center">
+                            <img src="{{Auth::user()->avatar_url}}" alt="profile" data-aos="fade-up" data-aos-delay="200"/>
+                            <p class="my-2" data-aos="fade-up" data-aos-delay="300">{{Auth::user()->name}}</p>
+                        </div>
+                        <li class="nav-item" data-aos="fade-up" data-aos-delay="400">
+                            <a class="nav-link" data-toggle="collapse" href="#__profile" aria-expanded="false" aria-controls="__profile">
+                                <i class="ti-more menu-icon"></i>
+                                <span class="menu-title">Manage Profile</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="__profile">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{route('information.create')}}">
+                                            <i class="ti-link menu-icon"></i> Settings
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#" onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                            <i class="ti-power-off menu-icon text-primary"></i> Logout
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <hr class="hr-divider">
+                        <li class="nav-item @if(Route::currentRouteName() == 'dashboard') active @endif" data-aos="fade-up" data-aos-delay="500">
+                            <a href="{{route('dashboard')}}" class="nav-link" href="index.html">
+                                <i class="icon-grid menu-icon"></i>
+                                <span class="menu-title">Dashboard</span>
+                            </a>
+                        </li>
+                        @if(Auth::user()->role == 1)
+                        <li class="nav-item" data-aos="fade-up" data-aos-delay="600">
+                            <a class="nav-link" data-toggle="collapse" href="#manage__users" aria-expanded="false" aria-controls="manage__users">
+                                <i class="ti-user menu-icon"></i>
+                                    <span class="menu-title">Manage Users</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="manage__users">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{route('users')}}"><i class="ti-link menu-icon"></i> All Users</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{route('archive')}}"><i class="ti-link menu-icon"></i> Archive Users</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        @endif
+                        <li class="nav-item" data-aos="fade-up" data-aos-delay="700">
+                        <a class="nav-link" data-toggle="collapse" href="#__attendance" aria-expanded="false" aria-controls="__attendance">
+                            <i class="icon-columns menu-icon"></i>
+                            <span class="menu-title">Attendance</span>
                             <i class="menu-arrow"></i>
                         </a>
-                        <div class="collapse" id="__profile">
+                        <div class="collapse" id="__attendance">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{route('information.create')}}">
-                                        <i class="ti-link menu-icon"></i> Settings
-                                    </a>
+                                    <a class="nav-link" href="{{route('attendance')}}"><i class="ti-link menu-icon"></i> My Attendance</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#" onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                                        <i class="ti-power-off menu-icon text-primary"></i> Logout
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+                                    <a class="nav-link" href="{{route('attendance.logs')}}"><i class="ti-link menu-icon"></i> Attendance Logs</a>
                                 </li>
                             </ul>
                         </div>
-                    </li>
-                    <hr class="hr-divider">
-                    <li class="nav-item @if(Route::currentRouteName() == 'dashboard') active @endif" data-aos="fade-up" data-aos-delay="500">
-                        <a href="{{route('dashboard')}}" class="nav-link" href="index.html">
-                            <i class="icon-grid menu-icon"></i>
-                            <span class="menu-title">Dashboard</span>
-                        </a>
-                    </li>
-                    @if(Auth::user()->role == 1)
-                    <li class="nav-item" data-aos="fade-up" data-aos-delay="600">
-                        <a class="nav-link" data-toggle="collapse" href="#manage__users" aria-expanded="false" aria-controls="manage__users">
-                            <i class="ti-user menu-icon"></i>
-                                <span class="menu-title">Manage Users</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="manage__users">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{route('users')}}"><i class="ti-link menu-icon"></i> All Users</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{route('archive')}}"><i class="ti-link menu-icon"></i> Archive Users</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    @endif
-                    <li class="nav-item" data-aos="fade-up" data-aos-delay="700">
-                    <a class="nav-link" data-toggle="collapse" href="#__attendance" aria-expanded="false" aria-controls="__attendance">
-                        <i class="icon-columns menu-icon"></i>
-                        <span class="menu-title">Attendance</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="__attendance">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('attendance')}}"><i class="ti-link menu-icon"></i> My Attendance</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('attendance.logs')}}"><i class="ti-link menu-icon"></i> Attendance Logs</a>
-                            </li>
-                        </ul>
-                    </div>
-                    </li>
-                    <li class="nav-item" data-aos="fade-up" data-aos-delay="800">
-                        <a class="nav-link" data-toggle="collapse" href="#__timesheet" aria-expanded="false" aria-controls="__timesheet">
-                            <i class="ti-alarm-clock menu-icon"></i>
-                            <span class="menu-title">Timesheet</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="__timesheet">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html"><i class="ti-link menu-icon"></i> Logs</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html"><i class="ti-link menu-icon"></i> Reports</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item" data-aos="fade-up" data-aos-delay="900">
-                        <a class="nav-link" href="pages/documentation/documentation.html">
-                        <i class="icon-paper menu-icon"></i>
-                        <span class="menu-title">Documentation</span>
-                        </a>
-                    </li>
-                </ul>
+                        </li>
+                        <li class="nav-item" data-aos="fade-up" data-aos-delay="800">
+                            <a class="nav-link" data-toggle="collapse" href="#__timesheet" aria-expanded="false" aria-controls="__timesheet">
+                                <i class="ti-alarm-clock menu-icon"></i>
+                                <span class="menu-title">Timesheet</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="__timesheet">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html"><i class="ti-link menu-icon"></i> Logs</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html"><i class="ti-link menu-icon"></i> Reports</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item" data-aos="fade-up" data-aos-delay="900">
+                            <a class="nav-link" href="pages/documentation/documentation.html">
+                            <i class="icon-paper menu-icon"></i>
+                            <span class="menu-title">Documentation</span>
+                            </a>
+                        </li>
+                    </ul>
                 </nav>
 
                 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">

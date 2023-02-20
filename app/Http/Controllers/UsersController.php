@@ -30,7 +30,7 @@ class UsersController extends Controller
         return view('admin.users');
     }
 
-    public function showUsers(Request $request, User $usersResult){
+    public function loadUsers(Request $request, User $usersResult){
         $input = $request->search_input;
         $search = $usersResult->newQuery();
         $search->where(function($query) use($input) {
@@ -192,7 +192,7 @@ class UsersController extends Controller
         return view('admin.archive-users');
     }
 
-    public function showUsersArchive(Request $request, User $usersResult){
+    public function loadUsersArchive(Request $request, User $usersResult){
         $input = $request->search_input;
         $search = $usersResult->newQuery();
         $search->where(function($query) use($input) {

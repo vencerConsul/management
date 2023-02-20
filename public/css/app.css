@@ -10875,6 +10875,7 @@ body {
   border-radius: 0 100px 100px 0;
   min-height: unset !important;
   height: 100vh !important;
+  transition: 1s cubic-bezier(0.64, 0.01, 0, 0.88) !important;
 }
 .sidebar .profile.align-self-center img {
   border-radius: 50%;
