@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function(){
     Route::middleware('is_old_user')->group(function(){
         Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
         Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendance');
+        Route::get('/timesheet', [App\Http\Controllers\TimeSheetController::class, 'index'])->name('timesheet');
         
         Route::middleware('is_admin')->group(function(){
             Route::get('/users', [App\Http\Controllers\UsersController::class, 'users'])->name('users');
@@ -43,6 +44,9 @@ Route::middleware('auth')->group(function(){
             Route::post('/users-unarchive/{userID}', [App\Http\Controllers\UsersController::class, 'unarchiveUsers'])->name('users.unarchive');
             // attendance
             Route::get('/attendance-logs', [App\Http\Controllers\HandleAttendanceController::class, 'index'])->name('attendance.logs');
+            //timesheet
+            Route::get('/timesheet-logs', [App\Http\Controllers\HandleTimeSheetController::class, 'index'])->name('timesheet.logs');
+            Route::get('/time-sheet-users-logs', [App\Http\Controllers\HandleTimeSheetController::class, 'loadTimeSheet']); // api call
         });
     });
 

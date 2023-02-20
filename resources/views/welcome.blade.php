@@ -7,10 +7,9 @@
     <div class="row">
         <div class="col-lg-8 vh-100 bg-light pr-0">
             <div class="h-100">
-                <div class="card bg-primary rounded-0 h-100 p-0 __home_bg">
+                <div class="card rounded-0 h-100 p-0 __home_bg">
                     <div class="card-body border-0 d-flex align-items-center justify-content-center flex-column">
-                      <img class="w-25" src="{{asset('images/logo.png')}}" alt="logo">
-                      <img class="w-75" src="{{asset('images/home/hero.png')}}" alt="logo">
+                      <img class="w-50" src="{{asset('images/home/hero.png')}}" alt="logo">
                     </div>
                 </div>
             </div>
@@ -19,6 +18,7 @@
           <div class="p-3 h-100 align-middle d-flex align-items-center justify-content-center">
             <div class="card bg-transparent rounded p-0 w-100">
               <div class="card-body p-4 border-0">
+                <img class="w-25" src="{{asset('images/logo.png')}}" alt="logo">
                 <h3 class="display-2">Sign in</h3>
                 <form action="{{route('login')}}" method="POST">
                   @csrf

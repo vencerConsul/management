@@ -22,7 +22,7 @@
     </div>
     <div class="row">
         <div class="col-lg-4 grid-margin">
-            <video id="preview"></video>
+            <video id="scanner"></video>
         </div>
         <div class="col-md-8 grid-margin">
             <div class="table-responsive" id="showUsers">
@@ -39,24 +39,28 @@
 @endsection
 
 @section('scripts')
-    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <script src="{{asset('js/instascan.js')}}"></script>
     <script>
-        window.onload = function() {
-            let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-            scanner.addListener('scan', function (content) {
-                console.log(content);
+
+        function initScanner() {
+            var scanner = new Instascan.Scanner({ video: document.getElementById('scanner') });
+            scanner.addListener('scan', function(content) {
+                alert('Scanned content: ' + content);
             });
             Instascan.Camera.getCameras().then(function (cameras) {
                 if (cameras.length > 0) {
-                    scanner.start(cameras[0]);
+                scanner.start(cameras[0]);
                 } else {
-                    console.error('No cameras found.');
+                console.error('No cameras found.');
                 }
             }).catch(function (e) {
                 console.error(e);
             });
-        };
-
+        }
+        
+        window.onload = function() {
+            initScanner();
+        }
         
 
 

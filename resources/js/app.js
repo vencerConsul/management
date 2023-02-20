@@ -6,3 +6,4 @@ if(document.querySelector('.alert')){
         document.querySelector('.alert').style.display = 'none';
     }, 10000);
 }
+
