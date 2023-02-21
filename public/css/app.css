@@ -11313,6 +11313,25 @@ li.page-item a {
   border-radius: 8px;
 }
 
+.__online_users_content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+  background: #e8eff7;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.__online_users_content img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
 @media (max-width: 991px) {
   .navbar {
     margin-top: 0;

@@ -541,6 +541,25 @@ li.page-item a {
     }
 }
 
+// online users
+.__online_users_content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 10px;
+    background: #e8eff7;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+
+    img{
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
 @media (max-width: 991px){
     .navbar{
         margin-top: 0;

@@ -94,11 +94,67 @@
       </div>
     </div>
     <div class="col-md-4 grid-margin">
-      <div class="card h-100" data-aos="fade-up" data-aos-delay="500">
+      <div class="card __online_users" data-aos="fade-up" data-aos-delay="500">
           <div class="card-body">
-          awd
+            <h4 class="mb-4" data-aos="fade-up" data-aos-delay="450">Online Users</h4>
+
+            <div class="__online_users_list text-center"></div>
+            
           </div>
       </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script defer>
+  window.onload = ()=>{
+      const onlineUserOutput = document.querySelector('.__online_users_list');
+      // const channel = Echo.channel(`public.onlineusers.1`)
+
+      // channel.subscribed(() => {
+      //   console.log('You are now online.');
+      // }).listen('.online-users', (event) => {
+      //   if(event.online){
+      //     loadUserOnline();
+      //   }
+      // })
+
+
+      const channel = Echo.join(`online-users`)
+
+      channel.here((users) => {
+          var usersArr = [];
+          users.forEach(item => {
+            usersArr.push(item.id)
+          });
+          loadUserOnline(usersArr)
+      })
+      channel.joining((user) => {
+          console.log(user);
+      })
+      channel.leaving((user) => {
+        console.log(user);
+      })
+      channel.error((error) => {
+          console.error(error);
+      });
+
+
+      // get all user online
+      async function loadUserOnline(data){
+
+        await axios.post('/load-user-online', data)
+            .then(function (response) {
+                if(response.status == 200){
+                    onlineUserOutput.innerHTML = response.data.online_users;
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+      }
+      loadUserOnline()
+  }
+</script>
 @endsection

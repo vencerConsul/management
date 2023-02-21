@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserOnline;
 use App\Http\Controllers\Controller;
 use App\Models\Informations;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +22,13 @@ class InformationController extends Controller
             return redirect()->route('information.create');
         }
 
+        // $isOnline = User::where('id', $user->id)->update(['online' => 1]);
+        // if($isOnline){
+        //     event(new UserOnline($isOnline));
+        // }else{
+        //     return back()->with('error', 'Something went wrong.');
+        // }
+        
         return redirect()->route('dashboard');
     }
 

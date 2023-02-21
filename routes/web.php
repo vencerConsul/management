@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\UserOnline;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
@@ -17,6 +18,7 @@ Route::group(['middleware' => ['guest']], function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function(){
+
     Route::get('/check-firsttime-login', [App\Http\Controllers\InformationController::class, 'checkFirstTime'])->name('check.first.timer');
     Route::get('/basic-information', [App\Http\Controllers\InformationController::class, 'createinformation'])->name('information.create');
     Route::post('/store-information', [App\Http\Controllers\InformationController::class, 'storeInformation'])->name('information.store');
@@ -24,6 +26,9 @@ Route::middleware('auth')->group(function(){
 
     Route::middleware('is_old_user')->group(function(){
         Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard'); // view
+
+        Route::post('/load-user-online', [App\Http\Controllers\DashboardController::class, 'loadUsersOnline']); // view
+
         Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendance');
         Route::get('/timesheet', [App\Http\Controllers\TimeSheetController::class, 'index'])->name('timesheet');
         
