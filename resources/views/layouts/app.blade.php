@@ -229,6 +229,23 @@
             }
         }
     </script>
+    <script defer>
+        window.onload = ()=>{
+            Echo.join(`chat`)
+            .here((users) => {
+                console.log(users);
+            })
+            .joining((user) => {
+                console.log(user.name);
+            })
+            .leaving((user) => {
+                console.log(user.name);
+            })
+            .error((error) => {
+                console.error(error);
+            });
+        }
+    </script>
         @if(\Route::currentRouteName() == 'dashboard')
             <script src="{{ asset('js/weather.js') }}" defer></script>
         @endif
