@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('provider_id')->nullable();
             $table->string('avatar_url')->nullable();
             $table->boolean('role')->default(0);
+            $table->boolean('online')->default(0);
             $table->string('status')->default('pending');
             $table->string('qrcode')->nullable();
             $table->timestamp('email_verified_at')->nullable();

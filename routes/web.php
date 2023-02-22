@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function(){
     Route::middleware('is_old_user')->group(function(){
         Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard'); // view
 
-        Route::post('/load-user-online', [App\Http\Controllers\DashboardController::class, 'loadUsersOnline']); // view
+        Route::get('/load-user-online', [App\Http\Controllers\DashboardController::class, 'loadUsersOnline']); // view
 
         Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendance');
         Route::get('/timesheet', [App\Http\Controllers\TimeSheetController::class, 'index'])->name('timesheet');

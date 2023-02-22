@@ -14,7 +14,7 @@ class UserOnline implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private $user;
+    protected $user;
 
     /**
      * Create a new event instance.

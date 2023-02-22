@@ -119,32 +119,17 @@
       //     loadUserOnline();
       //   }
       // })
-
-
-      const channel = Echo.join(`online-users`)
-
-      channel.here((users) => {
-          var usersArr = [];
-          users.forEach(item => {
-            usersArr.push(item.id)
-          });
-          loadUserOnline(usersArr)
-      })
-      channel.joining((user) => {
-          console.log(user);
-      })
-      channel.leaving((user) => {
-        console.log(user);
-      })
-      channel.error((error) => {
-          console.error(error);
+      Echo.channel('public.onlineusers.1')
+      .listen('.online-users', (event) => {
+        if(event.online){
+          loadUserOnline();
+        }
       });
 
-
       // get all user online
-      async function loadUserOnline(data){
+      async function loadUserOnline(){
 
-        await axios.post('/load-user-online', data)
+        await axios.get('/load-user-online')
             .then(function (response) {
                 if(response.status == 200){
                     onlineUserOutput.innerHTML = response.data.online_users;

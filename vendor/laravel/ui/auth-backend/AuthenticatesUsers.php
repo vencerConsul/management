@@ -130,7 +130,12 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        
+        $isOnline = User::where('id', $user->id)->update(['online' => 1]);
+        if($isOnline){
+            event(new UserOnline($isOnline));
+        }else{
+            return back()->with('error', 'Something went wrong.');
+        }
     }
 
     /**
@@ -166,19 +171,25 @@ trait AuthenticatesUsers
      */
     public function logout(Request $request)
     {
-        $this->guard()->logout();
+        $isOnline = User::where('id', Auth::id())->update(['online' => 0]);
+        if($isOnline){
+            event(new UserOnline($isOnline));
+            $this->guard()->logout();
 
-        $request->session()->invalidate();
+            $request->session()->invalidate();
 
-        $request->session()->regenerateToken();
+            $request->session()->regenerateToken();
 
-        if ($response = $this->loggedOut($request)) {
-            return $response;
+            if ($response = $this->loggedOut($request)) {
+                return $response;
+            }
+
+            return $request->wantsJson()
+                ? new JsonResponse([], 204)
+                : redirect('/');
+        }else{
+            return back()->with('error', 'Something went wrong.');
         }
-
-        return $request->wantsJson()
-            ? new JsonResponse([], 204)
-            : redirect('/');
     }
 
     /**

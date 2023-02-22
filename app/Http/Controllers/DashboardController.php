@@ -19,9 +19,8 @@ class DashboardController extends Controller
         return view('dashboard');
     }
 
-    public function loadUsersOnline(Request $request){
-        // dd($request->all());
-        $users = User::with('informations')->orderBy('updated_at', 'DESC')->whereIn('id', $request->all())->get();
+    public function loadUsersOnline(){
+        $users = User::with('informations')->orderBy('updated_at', 'DESC')->where('online', 1)->get();
         $html = '';
         if($users->count() > 0){
             foreach ($users as $row) {
