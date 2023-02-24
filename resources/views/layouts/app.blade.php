@@ -167,8 +167,7 @@
     @auth
     <script src="{{ asset('js/axios.js') }}"></script>
     <script>
-        window.onload = function() {
-            var sessionTimeout = {{ config('session.lifetime') }} * 60; 
+        var sessionTimeout = {{ config('session.lifetime') }} * 60; 
             var countdownTimer = setInterval(function() {
                 sessionTimeout--;
                 var hours = Math.floor(sessionTimeout / 3600);
@@ -179,55 +178,12 @@
                 document.querySelector('.seconds').innerHTML = (seconds < 10 ? '0' : '') + seconds;
                 if (sessionTimeout <= 0) {
                     clearInterval(countdownTimer);
-                    sessionTimeOutModal();
+                    loggedOut();
                 }
             }, 1000);
-            function sessionTimeOutModal(){
-                // Create the modal
-                const modal = document.createElement('div');
-                modal.classList.add('modal', 'fade');
-                modal.setAttribute('id', 'session_time_out');
-                modal.setAttribute('data-bs-backdrop', 'static');
-                modal.setAttribute('data-bs-keyboard', 'false');
-                modal.setAttribute('tabindex', '-1');
-                modal.setAttribute('aria-hidden', 'true');
-                const modalDialog = document.createElement('div');
-                modalDialog.classList.add('modal-dialog');
-                const modalContent = document.createElement('div');
-                modalContent.classList.add('modal-content');
-                const modalBody = document.createElement('div');
-                modalBody.classList.add('modal-body', 'pb-0', 'd-flex', 'flex-column', 'align-items-center', 'text-center');
-                const modalTitle = document.createElement('h3');
-                modalTitle.classList.add('py-4');
-                modalTitle.textContent = 'Your Session Expired';
-                modalBody.appendChild(modalTitle);
-                const modalText = document.createElement('div');
-                modalText.classList.add('w-100', 'd-flex', 'justify-content-center', 'gap-4', 'align-items-center');
-                const modalParagraph = document.createElement('p');
-                modalParagraph.textContent = 'Your session has expired. Don\'t worry, just log back in to pick up where you left off.';
-                modalText.appendChild(modalParagraph);
-                modalBody.appendChild(modalText);
-                const modalDivider = document.createElement('hr');
-                modalDivider.classList.add('hr-divider');
-                modalBody.appendChild(modalDivider);
-                const modalFooter = document.createElement('div');
-                modalFooter.classList.add('text-center', 'mb-4');
-                const modalButton = document.createElement('a');
-                modalButton.setAttribute('href', window.location.href);
-                modalButton.setAttribute('data-bs-dismiss', 'modal');
-                modalButton.classList.add('btn', 'btn-info', 'mt-2');
-                modalButton.textContent = 'Okay';
-                modalFooter.appendChild(modalButton);
-                modalContent.appendChild(modalBody);
-                modalContent.appendChild(modalFooter);
-                modalDialog.appendChild(modalContent);
-                modal.appendChild(modalDialog);
-                document.body.appendChild(modal);
-                const modal_popup = document.getElementById('session_time_out');
-                const modalInstance = new bootstrap.Modal(modal_popup);
-                modalInstance.show();
+            function loggedOut(){
+                document.getElementById('logout-form').submit();
             }
-        }
     </script>
         @if(\Route::currentRouteName() == 'dashboard')
             <script src="{{ asset('js/weather.js') }}" defer></script>

@@ -19,12 +19,12 @@ class DatabaseSeeder extends Seeder
         for ($i = 0; $i < 50; $i++) {
             $userData = [
                 'name' => 'User' . ($i + 1),
-                'email' => 'user' . ($i + 1) . '@example.com',
+                'email' => 'user' . ($i + 1) . '@technodream.com',
                 'password' => bcrypt('password'),
                 'provider_id' => bcrypt('password') . '123' . $i,
                 'role' => 0,
                 'status' => 'pending',
-                'qrcode' => 'user' . ($i + 1) . '@example.com.png',
+                'qrcode' => 'user' . ($i + 1) . '@technodream.com.png',
                 'avatar_url' => 'https://via.placeholder.com/800x600.png/'.sprintf('%06X', mt_rand(0, 0xFFFFFF)).'?text=User' .($i + 1),
                 'informations' => [
                     'gender' => ($i % 2 == 0) ? 'Male' : 'Female',

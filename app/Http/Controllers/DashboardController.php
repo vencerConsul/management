@@ -20,21 +20,29 @@ class DashboardController extends Controller
     }
 
     public function loadUsersOnline(){
-        $users = User::with('informations')->orderBy('updated_at', 'DESC')->where('online', 1)->get();
+        // $users = User::with('informations')->orderBy('updated_at', 'DESC')->where('online', 1)->get();
+        $users = User::with('informations')->orderBy('online', 'DESC')->get();
+        
         $html = '';
         if($users->count() > 0){
             foreach ($users as $row) {
                 $html .= '<div class="__online_users_content">
                                 <div class="d-flex align-items-center gap-3">
-                                    <img class="img-fluid" src="'.$row->avatar_url.'" alt="'.$row->name.'">
+                                    <img class="img-fluid '.($row->online ? 'online' : '').'" src="'.$row->avatar_url.'" alt="'.$row->name.'">
                                     <div class="text-left">
                                         <p class="m-0">'.$row->name.'</p>
                                         <small>'.$row->informations->title.'</small>
                                     </div>
                                 </div>
-                            <div>
-                                <i class="ti-pulse text-success"></i>
-                            </div>
+                            <div class="d-flex align-items-center gap-2">';
+                                if($row->online){
+                                    $html .= '<small>Alive</small>
+                                    <i class="ti-pulse text-success"></i>';
+                                }else{
+                                    $html .= '<small>Dead</small>
+                                    <i class="ti-pulse text-secondary"></i>';
+                                }
+                    $html .='</div>
                         </div>';
             }
         }else{

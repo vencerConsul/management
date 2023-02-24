@@ -95,9 +95,8 @@
     </div>
     <div class="col-md-4 grid-margin">
       <div class="card __online_users" data-aos="fade-up" data-aos-delay="500">
+          <div class="card-header bg-transparent border-0" data-aos="fade-up" data-aos-delay="450"><h4 class="mt-4">Users</h4></div>
           <div class="card-body">
-            <h4 class="mb-4" data-aos="fade-up" data-aos-delay="450">Online Users</h4>
-
             <div class="__online_users_list text-center"></div>
             
           </div>
