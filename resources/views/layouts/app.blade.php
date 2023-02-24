@@ -166,6 +166,7 @@
     <script> AOS.init(); </script>
     @auth
     <script src="{{ asset('js/axios.js') }}"></script>
+    <script src="{{asset('js/instascan.js')}}"></script>
     <script>
         var sessionTimeout = {{ config('session.lifetime') }} * 60; 
             var countdownTimer = setInterval(function() {

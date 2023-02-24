@@ -22,7 +22,7 @@
     </div>
     <div class="row">
         <div class="col-lg-4 grid-margin">
-            <video id="scanner"></video>
+            <div id="reader" width="100%"></div>
         </div>
         <div class="col-md-8 grid-margin">
             <div class="table-responsive" id="showUsers">
@@ -39,78 +39,79 @@
 @endsection
 
 @section('scripts')
-    <script src="{{asset('js/instascan.js')}}"></script>
-    <script>
+    <script src="{{asset('/js/scanner.js')}}" type="text/javascript"></script>
+    <script type="text/javascript">
 
-        function initScanner() {
-            var scanner = new Instascan.Scanner({ video: document.getElementById('scanner') });
-            scanner.addListener('scan', function(content) {
-                alert('Scanned content: ' + content);
-            });
-            Instascan.Camera.getCameras().then(function (cameras) {
-                if (cameras.length > 0) {
-                scanner.start(cameras[0]);
-                } else {
-                console.error('No cameras found.');
-                }
-            }).catch(function (e) {
-                console.error(e);
-            });
-        }
-        
-        window.onload = function() {
-            initScanner();
-        }
+    function onScanSuccess(decodedText, decodedResult) {
+        console.log(`Code matched = ${decodedText}`, decodedResult);
+        speakMsg(decodedText)
+        html5QrcodeScanner.clear()
+    }
+
+    function onScanFailure(error) {
+    //   console.warn(`Code scan error = ${error}`);
+    }
+
+    let html5QrcodeScanner = new Html5QrcodeScanner(
+    "reader",
+    { fps: 10, qrbox: {width: 300, height: 300} },false);
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
         
 
+    function speakMsg(messageToSpeak){
+        var synth = window.speechSynthesis;
+        voices = synth.getVoices();
+        var toSpeak = new SpeechSynthesisUtterance(messageToSpeak);
+        toSpeak.voice=voices[6];
+        synth.speak(toSpeak);
+    }
 
-
-        let page = 0;
+        // let page = 0;
         
-        async function showUsers(url){
-            let usersOutput = document.querySelector('#showUsers');
-            let searchInput = document.querySelector('#search_users');
-            const paginationLink = document.querySelector('#pagination_link')
-            const page_of = document.querySelector('.page_of')
-            const page_total = document.querySelector('.page_total')
+        // async function showUsers(url){
+        //     let usersOutput = document.querySelector('#showUsers');
+        //     let searchInput = document.querySelector('#search_users');
+        //     const paginationLink = document.querySelector('#pagination_link')
+        //     const page_of = document.querySelector('.page_of')
+        //     const page_total = document.querySelector('.page_total')
 
-            usersOutput.innerHTML = `<div class="text-center">
-                <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-                </div>`;
+        //     usersOutput.innerHTML = `<div class="text-center">
+        //         <div class="spinner-border" role="status">
+        //             <span class="visually-hidden">Loading...</span>
+        //         </div>
+        //         </div>`;
 
-            let URL = searchInput.value == '' ? url : url + `?search_input=${searchInput.value}`
+        //     let URL = searchInput.value == '' ? url : url + `?search_input=${searchInput.value}`
 
-            await axios.get(URL)
-                .then(function (response) {
-                    if(response.status == 200){
-                        let data = response.data;
-                        usersOutput.innerHTML = data.table;
-                        let pagination = data.pagination.links;
-                        if(data.pagination.total > 0){
-                            paginationLink.innerHTML = '';
-                            pagination.forEach(elem => {
-                                if(elem.url != null){
-                                    paginationLink.innerHTML += `<li style="cursor:pointer;" class="page-item ${elem.active ? 'active' : '' } ">
-                                    <a onclick="showUsers('${elem.url}')" class="page-link">${elem.label}</a>
-                                </li>`;
-                                }
-                            });
-                            page_of.innerHTML = `Page ${data.pagination.current_page} of ${data.pagination.last_page}`;
-                            page_total.innerHTML = `Total of ${data.pagination.total}`;
-                        }else{
-                            paginationLink.innerHTML = '';
-                            page_of.innerHTML = '';
-                            page_total.innerHTML = '';
-                        }
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-        }
+        //     await axios.get(URL)
+        //         .then(function (response) {
+        //             if(response.status == 200){
+        //                 let data = response.data;
+        //                 usersOutput.innerHTML = data.table;
+        //                 let pagination = data.pagination.links;
+        //                 if(data.pagination.total > 0){
+        //                     paginationLink.innerHTML = '';
+        //                     pagination.forEach(elem => {
+        //                         if(elem.url != null){
+        //                             paginationLink.innerHTML += `<li style="cursor:pointer;" class="page-item ${elem.active ? 'active' : '' } ">
+        //                             <a onclick="showUsers('${elem.url}')" class="page-link">${elem.label}</a>
+        //                         </li>`;
+        //                         }
+        //                     });
+        //                     page_of.innerHTML = `Page ${data.pagination.current_page} of ${data.pagination.last_page}`;
+        //                     page_total.innerHTML = `Total of ${data.pagination.total}`;
+        //                 }else{
+        //                     paginationLink.innerHTML = '';
+        //                     page_of.innerHTML = '';
+        //                     page_total.innerHTML = '';
+        //                 }
+        //             }
+        //         })
+        //         .catch(function (error) {
+        //             console.log(error);
+        //         })
+        // }
 
-        showUsers('/show-users');
+        // showUsers('/show-users');
     </script>
 @endsection
