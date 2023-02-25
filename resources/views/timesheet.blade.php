@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <hr class="hr-divider">
-                    <button class="btn btn-lg btn-block btn-info">Break Out</button>
+                    <button class="btn btn-lg btn-block btn-info" id="breakHandle()">Break Out</button>
                     <hr class="hr-divider">
                     <div class="__time_adjustment_request_container mt-4">
                         <div class="d-flex justify-content-between align-items-center my-3">
