@@ -12,7 +12,7 @@
                     <h6 class="font-weight-normal mb-0" data-aos="fade-up" data-aos-delay="200">List of Users Log for today</h6>
                 </div>
                 <div class="col-7 col-xl-3 mb-8">
-                    <div class="input-group flex-nowrap">
+                    <div class="input-group flex-nowrap" data-aos="fade-up" data-aos-delay="100">
                         <span class="input-group-text bg-transparent" id="addon-wrapping"><i class="ti-search"></i></span>
                         <input type="search" class="form-control py-1" id="search_users" oninput="loadUsers('/time-sheet-users-logs')" placeholder="Search for Users">
                     </div>
@@ -99,11 +99,21 @@
             <h4 class="my-4">Users on Break</h4>
             <div class="table-responsive" id="loadUsers">
                 
+                <div class="v-100 text-center" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card">
+                        <div class="card-body">
+                            <img class="img-fluid" src="{{asset('/images/attendance/under-construction.jpg')}}" alt="Under constructiont">
+                            <h3 class="font-weight-normal mt-4">Under Development</h3>
+                            <p>Stay tuned, something great is coming.</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="text-center mt-2 d-flex align-items-center justify-content-between" data-aos="fade-down" data-aos-delay="900">
-                <div class="page_of"></div>
-                <ul id="pagination_link"></ul>
-                <div class="page_total"></div>
+                <div class="page_of" data-aos="fade-right" data-aos-delay="300"></div>
+                <ul id="pagination_link" data-aos="fade-up" data-aos-delay="300"></ul>
+                <div class="page_total" data-aos="fade-left" data-aos-delay="300"></div>
             </div>
         </div>
     </div>
@@ -112,7 +122,7 @@
 @endsection
 
 @section('scripts')
-    <script>
+    {{-- <script>
         let page = 0;
         
         async function loadUsers(url){
@@ -160,5 +170,5 @@
         }
 
         loadUsers('/time-sheet-users-logs');
-    </script>
+    </script> --}}
 @endsection

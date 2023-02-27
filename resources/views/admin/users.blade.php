@@ -12,10 +12,10 @@
                     <h6 class="font-weight-normal mb-0" data-aos="fade-up" data-aos-delay="200">List of Users</h6>
                 </div>
                 <div class="col-7 col-xl-3 mb-8">
-                    <div class="input-group flex-nowrap">
+                    <div class="input-group flex-nowrap" data-aos="fade-up" data-aos-delay="100">
                         <span class="input-group-text bg-transparent" id="addon-wrapping"><i class="ti-search"></i></span>
-                        <input type="search" class="form-control py-1" id="search_users" oninput="showUsers('/show-users')" placeholder="Search for Users">
-                        </div>
+                        <input type="search" class="form-control py-1" id="search_users" oninput="showUsers('/load-users')" placeholder="Search for Users">
+                    </div>
                 </div>
             </div>
         </div>
@@ -26,9 +26,9 @@
                 
             </div>
             <div class="text-center mt-2 d-flex align-items-center justify-content-between">
-                <div class="page_of"></div>
-                <ul id="pagination_link"></ul>
-                <div class="page_total"></div>
+                <div class="page_of" data-aos="fade-right" data-aos-delay="300"></div>
+                <ul id="pagination_link" data-aos="fade-up" data-aos-delay="300"></ul>
+                <div class="page_total" data-aos="fade-left" data-aos-delay="300"></div>
             </div>
         </div>
     </div>

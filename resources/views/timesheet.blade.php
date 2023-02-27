@@ -9,13 +9,7 @@
             <div class="row">
                 <div class="col-5 col-xl-9 mb-4 mb-xl-0">
                     <h2 class="font-weight-normal" data-aos="fade-up" data-aos-delay="100">Timesheet</h2>
-                    <h6 class="font-weight-normal mb-0" data-aos="fade-up" data-aos-delay="200">My Daily Record</h6>
-                </div>
-                <div class="col-7 col-xl-3 mb-8">
-                    <div class="input-group flex-nowrap">
-                        <span class="input-group-text bg-transparent" id="addon-wrapping"><i class="ti-search"></i></span>
-                        <input type="search" class="form-control py-1" id="search_users" oninput="loadUsers('/time-sheet-users-logs')" placeholder="Search for Users">
-                    </div>
+                    <h6 class="font-weight-normal mb-0" data-aos="fade-up" data-aos-delay="200">Time is precious, track it wisely.</h6>
                 </div>
             </div>
         </div>
@@ -28,8 +22,8 @@
                     <div class="d-flex align-items-center justify-content-center flex-column p-4">
                         <h3>Total Break</h3>
                         <div class="__total_user_log">
-                            <p data-aos="fade-in" data-aos-delay="700">23</p>
-                            <small class="mt-4">Mins</small>
+                            <p data-aos="fade-in" data-aos-delay="700" id="totalBreak">0</p>
+                            <small class="mt-4" id="timeType">Sec</small>
                         </div>
                         <p class="p-2">
                             {{ date('l, F j, Y') }}
@@ -58,7 +52,7 @@
                         </div>
                     </div>
                     <hr class="hr-divider">
-                    <button class="btn btn-lg btn-block btn-info" id="breakHandle()">Break Out</button>
+                    <button class="btn btn-lg btn-block btn-info" id="time-button" onclick="toggleTimeSheet()">Break Out</button>
                     <hr class="hr-divider">
                     <div class="__time_adjustment_request_container mt-4">
                         <div class="d-flex justify-content-between align-items-center my-3">
@@ -87,14 +81,14 @@
             </div>
         </div>
         <div class="col-md-8 grid-margin">
-            <h4 class="my-4">Users on Break</h4>
-            <div class="table-responsive" id="loadUsers">
+            <h4 class="my-4" data-aos="fade-up" data-aos-delay="300">Breakdown</h4>
+            <div class="table-responsive" id="loadTimeSheetData">
                 
             </div>
-            <div class="text-center mt-2 d-flex align-items-center justify-content-between" data-aos="fade-down" data-aos-delay="900">
-                <div class="page_of"></div>
-                <ul id="pagination_link"></ul>
-                <div class="page_total"></div>
+            <div class="text-center mt-2 d-flex align-items-center justify-content-between" data-aos="fade-in" data-aos-delay="200">
+                <div class="page_of" data-aos="fade-right" data-aos-delay="300"></div>
+                <ul id="pagination_link" data-aos="fade-up" data-aos-delay="300"></ul>
+                <div class="page_total" data-aos="fade-left" data-aos-delay="300"></div>
             </div>
         </div>
     </div>
@@ -106,33 +100,37 @@
     <script>
         let page = 0;
         
-        async function loadUsers(url){
-            let usersOutput = document.querySelector('#loadUsers');
-            let searchInput = document.querySelector('#search_users');
+        async function loadTimeSheetData(url){
+            const timesheetOutput = document.querySelector('#loadTimeSheetData');
+            const totalBreak = document.querySelector('#totalBreak');
+            const timeType = document.querySelector('#timeType');
             const paginationLink = document.querySelector('#pagination_link')
             const page_of = document.querySelector('.page_of')
             const page_total = document.querySelector('.page_total')
 
-            usersOutput.innerHTML = `<div class="text-center">
+            timesheetOutput.innerHTML = `<div class="text-center">
                 <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
                 </div>`;
 
-            let URL = searchInput.value == '' ? url : url + `?search_input=${searchInput.value}`
+            let URL = url
 
             await axios.get(URL)
                 .then(function (response) {
+                    console.log(response);
+                    let data = response;
                     if(response.status == 200){
-                        let data = response.data;
-                        usersOutput.innerHTML = data.table;
-                        let pagination = data.pagination.links;
-                        if(data.pagination.total > 0){
+                        timesheetOutput.innerHTML = data.data.table;
+                        totalBreak.innerHTML = data.data.breakData.totalBreak;
+                        timeType.innerHTML = data.data.breakData.timeType;
+                        let pagination = data.data.pagination.links;
+                        if(data.data.pagination.total > 7){
                             paginationLink.innerHTML = '';
                             pagination.forEach(elem => {
                                 if(elem.url != null){
                                     paginationLink.innerHTML += `<li style="cursor:pointer;" class="page-item ${elem.active ? 'active' : '' } ">
-                                    <a onclick="loadUsers('${elem.url}')" class="page-link">${elem.label}</a>
+                                    <a onclick="loadTimeSheetData('${elem.url}')" class="page-link">${elem.label}</a>
                                 </li>`;
                                 }
                             });
@@ -149,7 +147,35 @@
                     console.log(error);
                 })
         }
+        loadTimeSheetData('/load-time-sheet-data');
 
-        loadUsers('/time-sheet-users-logs');
+        function toggleTimeSheet() {
+            var button = document.getElementById('time-button');
+            var currentTime = new Date();
+            var dateTime = currentTime.getFullYear() + '-' +
+                            (currentTime.getMonth()+1) + '-' +
+                            currentTime.getDate() + ' ' +
+                            currentTime.getHours() + ':' +
+                            currentTime.getMinutes() + ':' +
+                            currentTime.getSeconds();
+
+            axios.post('/time-sheet/toggle', { dateTime: dateTime })
+                .then(function (response) {
+                    if(response.status == 200){
+                        if (button.innerText === 'Break Out') {
+                            button.innerText = 'Break in';
+                            button.removeEventListener('click', toggleTimeSheet);
+                            button.addEventListener('click', toggleTimeSheet);
+                        } else {
+                            button.innerText = 'Break Out';
+                            button.removeEventListener('click', toggleTimeSheet);
+                        }
+                        loadTimeSheetData('/load-time-sheet-data');
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
     </script>
 @endsection

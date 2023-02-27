@@ -10827,6 +10827,20 @@ body {
   background: #f5f7ff !important;
 }
 
+body::-webkit-scrollbar {
+  width: 6px;
+}
+
+body::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: #f3f3f3;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #1376da;
+}
+
 .__home .card {
   box-shadow: none !important;
 }
@@ -10869,12 +10883,27 @@ body {
   max-height: unset !important;
 }
 
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: #f3f3f3;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #1376da;
+}
+
 .sidebar {
   position: fixed;
   top: 0;
   border-radius: 0 100px 100px 0;
   min-height: unset !important;
   height: 100vh !important;
+  overflow: auto;
 }
 .sidebar .nav {
   margin-bottom: 10px !important;
@@ -10929,16 +10958,16 @@ body {
   color: #ffffff;
 }
 .weather-info h1, .weather-info .h1 {
-  font-size: 65px;
+  font-size: clamp(1rem, -1.7022rem + 4.8039vw, 4.0625rem);
 }
 .weather-info h1 sup, .weather-info .h1 sup {
-  font-size: 30px;
+  font-size: clamp(1rem, 0.2279rem + 1.3725vw, 1.875rem);
 }
 .weather-info h4, .weather-info .h4 {
-  font-size: 30px;
+  font-size: clamp(1rem, 0.2279rem + 1.3725vw, 1.875rem);
 }
 .weather-info h6, .weather-info .h6 {
-  font-size: 20px;
+  font-size: clamp(1rem, 0.7794rem + 0.3922vw, 1.25rem);
 }
 
 .sidebar .nav:not(.sub-menu) {
@@ -11312,8 +11341,20 @@ li.page-item a {
   border-radius: 8px;
 }
 
+.table-responsive::-webkit-scrollbar {
+  display: none;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  display: none;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  display: none;
+}
+
 .__online_users .card-body {
-  height: 710px !important;
+  max-height: 710px !important;
   overflow: auto;
 }
 .__online_users .card-body::-webkit-scrollbar {
@@ -11356,6 +11397,12 @@ li.page-item a {
   border: 3px solid #68bf59 !important;
 }
 
+@media (max-width: 1400px) {
+  .weather-info .d-flex {
+    flex-direction: column;
+    row-gap: 10px;
+  }
+}
 @media (max-width: 991px) {
   .navbar {
     margin-top: 0;
@@ -11366,5 +11413,13 @@ li.page-item a {
   }
   .page-body-wrapper {
     padding-top: 60px !important;
+  }
+}
+@media (max-height: 700px) {
+  .sidebar {
+    border-radius: 0;
+  }
+  .sidebar * {
+    animation: none !important;
   }
 }

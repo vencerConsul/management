@@ -45,49 +45,32 @@
                   <thead>
                     <tr>
                       <th class="pl-0  pb-2 border-bottom"></th>
-                      <th class="border-bottom pb-2">Orders</th>
                       <th class="border-bottom pb-2">Users</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="pl-0">Programmer</td>
-                      <td><p class="mb-0"><span class="font-weight-bold mr-2">65</span>(2.15%)</p></td>
-                      <td class="text-muted">65</td>
-                    </tr>
-                    <tr>
-                      <td class="pl-0">IT</td>
-                      <td><p class="mb-0"><span class="font-weight-bold mr-2">54</span>(3.25%)</p></td>
-                      <td class="text-muted">51</td>
-                    </tr>
-                    <tr>
-                      <td class="pl-0">SEO</td>
-                      <td><p class="mb-0"><span class="font-weight-bold mr-2">22</span>(2.22%)</p></td>
-                      <td class="text-muted">32</td>
-                    </tr>
-                    <tr>
-                      <td class="pl-0">WIX</td>
-                      <td><p class="mb-0"><span class="font-weight-bold mr-2">46</span>(3.27%)</p></td>
-                      <td class="text-muted">15</td>
-                    </tr>
-                    <tr>
-                      <td class="pl-0">CS</td>
-                      <td><p class="mb-0"><span class="font-weight-bold mr-2">17</span>(1.25%)</p></td>
-                      <td class="text-muted">25</td>
-                    </tr>
-                    <tr>
-                      <td class="pl-0">WHOLE SALE</td>
-                      <td><p class="mb-0"><span class="font-weight-bold mr-2">52</span>(3.11%)</p></td>
-                      <td class="text-muted">71</td>
-                    </tr>
-                    <tr>
-                      <td class="pl-0 pb-0">Louisiana</td>
-                      <td class="pb-0"><p class="mb-0"><span class="font-weight-bold mr-2">25</span>(1.32%)</p></td>
-                      <td class="pb-0">14</td>
-                    </tr>
+                    @if($usersByDepartment->count() > 0)
+                      @forEach($usersByDepartment as $deptGroup)
+                      <tr>
+                        <td class="pl-0">{{$deptGroup->department}}</td>
+                        <td class="text-muted">{{$deptGroup->count}}</td>
+                      </tr>
+                      @endforeach
+                    @else 
+                      <img class="w-50 my-4" src="{{asset('images/dashboard/online-users/no-online-users.png')}}" alt="No Department found">
+                      <h4>No Department sssociate with users</h4>';
+                    @endif
                   </tbody>
                 </table>
               </div>
+              @if ($usersByDepartment->hasPages())
+                  @if ($usersByDepartment->currentPage() > 1)
+                      <a href="{{ $usersByDepartment->previousPageUrl() }}" class="btn btn-info">Previous</a>
+                  @endif
+                  @if (!$usersByDepartment->onLastPage())
+                      <a href="{{ $usersByDepartment->nextPageUrl() }}" class="btn btn-info">Next</a>
+                  @endif
+              @endif
             </div>
           </div>
         </div>
@@ -95,13 +78,13 @@
     </div>
     <div class="col-md-4 grid-margin">
       <div class="card __online_users" data-aos="fade-up" data-aos-delay="500">
-          <div class="card-header bg-transparent border-0" data-aos="fade-up" data-aos-delay="450"><h4 class="mt-4">Users</h4></div>
+          <div class="card-header bg-transparent border-0" data-aos="fade-up" data-aos-delay="450"><h4 class="mt-4">Users <small id="__user_count">(--)</small></h4></div>
           <div class="card-body">
             <div class="__online_users_list text-center"></div>
-            
           </div>
       </div>
     </div>
+</div>
 </div>
 @endsection
 
@@ -109,6 +92,7 @@
 <script defer>
   window.onload = ()=>{
       const onlineUserOutput = document.querySelector('.__online_users_list');
+      const userCount = document.querySelector('#__user_count');
       // const channel = Echo.channel(`public.onlineusers.1`)
 
       // channel.subscribed(() => {
@@ -127,11 +111,11 @@
 
       // get all user online
       async function loadUserOnline(){
-
         await axios.get('/load-user-online')
             .then(function (response) {
                 if(response.status == 200){
                     onlineUserOutput.innerHTML = response.data.online_users;
+                    userCount.innerHTML = `(${response.data.all_users})`;
                 }
             })
             .catch(function (error) {

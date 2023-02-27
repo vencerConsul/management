@@ -111,12 +111,6 @@
                         </ul>
                     </div>
                     </li>
-                    <li class="nav-item" data-aos="fade-up" data-aos-delay="900">
-                        <a class="nav-link" href="pages/documentation/documentation.html">
-                        <i class="icon-paper menu-icon"></i>
-                        <span class="menu-title">Documentation</span>
-                        </a>
-                    </li>
                     <hr class="hr-divider">
                 </ul>
                 <div class="p-2">
@@ -147,6 +141,17 @@
                 </nav>
                 <div class="main-panel">
                     @yield('content')
+
+                    <div class="continer px-4 mb-4">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <img src="{{asset('/images/logo.png')}}" style="width:100px;" alt="logo"/>
+                                <h4 class="mt-3">{{ config('app.name') }}</h4>
+                                <p>© {{date('Y')}} {{ config('app.name') }}. All rights reserved.</p>
+                                <small>Buy me a Coffee <a href="https://www.buymeacoffee.com/olermovenzC"><i class="ti-cup"></i></a></small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

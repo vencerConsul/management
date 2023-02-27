@@ -18,6 +18,7 @@ Route::group(['middleware' => ['guest']], function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function(){
+    Route::match(['get'], 'home', function(){ return redirect('/dashboard'); }); // disabled default home shit
 
     Route::get('/check-firsttime-login', [App\Http\Controllers\InformationController::class, 'checkFirstTime'])->name('check.first.timer');
     Route::get('/basic-information', [App\Http\Controllers\InformationController::class, 'createinformation'])->name('information.create');
@@ -29,8 +30,14 @@ Route::middleware('auth')->group(function(){
 
         Route::get('/load-user-online', [App\Http\Controllers\DashboardController::class, 'loadUsersOnline']); // view
 
-        Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendance');
-        Route::get('/timesheet', [App\Http\Controllers\TimeSheetController::class, 'index'])->name('timesheet');
+        Route::middleware('is_approved')->group(function(){
+            //attendace
+            Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendance');
+            // timesheet
+            Route::get('/timesheet', [App\Http\Controllers\TimeSheetController::class, 'index'])->name('timesheet');
+            Route::get('/load-time-sheet-data', [App\Http\Controllers\TimeSheetController::class, 'loadTimeSheetData']); // api call
+            Route::post('/time-sheet/toggle', [App\Http\Controllers\TimeSheetController::class, 'toggleTimeSheet']); // api event toggle
+        });
         
         Route::middleware('is_admin')->group(function(){
             Route::get('/users', [App\Http\Controllers\UsersController::class, 'users'])->name('users'); // view
@@ -50,8 +57,7 @@ Route::middleware('auth')->group(function(){
             // attendance
             Route::get('/attendance-logs', [App\Http\Controllers\HandleAttendanceController::class, 'index'])->name('attendance.logs');
             //timesheet
-            Route::get('/timesheet-logs', [App\Http\Controllers\HandleTimeSheetController::class, 'index'])->name('timesheet.logs');
-            Route::get('/time-sheet-users-logs', [App\Http\Controllers\HandleTimeSheetController::class, 'loadTimeSheet']); // api call
+            Route::get('/timesheet-logs', [App\Http\Controllers\HandleTimeSheetController::class, 'index'])->name('timesheet.logs'); // view
         });
     });
 

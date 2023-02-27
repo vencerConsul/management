@@ -6,6 +6,7 @@ use App\Events\UserOnline;
 use App\Models\Informations;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -16,11 +17,16 @@ class DashboardController extends Controller
     }
 
     public function index(){
-        return view('dashboard');
+        $usersByDepartment = User::with('informations')
+                                ->selectRaw('informations.department, count(*) as count')
+                                ->join('informations', 'users.id', '=', 'informations.user_id')
+                                ->groupBy('informations.department')
+                                ->paginate(7);
+
+        return view('dashboard', compact(['usersByDepartment']));
     }
 
     public function loadUsersOnline(){
-        // $users = User::with('informations')->orderBy('updated_at', 'DESC')->where('online', 1)->get();
         $users = User::with('informations')->orderBy('online', 'DESC')->get();
         
         $html = '';
@@ -28,7 +34,7 @@ class DashboardController extends Controller
             foreach ($users as $row) {
                 $html .= '<div class="__online_users_content">
                                 <div class="d-flex align-items-center gap-3">
-                                    <img class="img-fluid '.($row->online ? 'online' : '').'" src="'.$row->avatar_url.'" alt="'.$row->name.'">
+                                    <a '.(Auth::user()->role == 1 ? 'href="'.route('users.manage', $row->id).'"' : '').'><img class="img-fluid '.($row->online ? 'online' : '').'" src="'.$row->avatar_url.'" alt="'.$row->name.'"></a>
                                     <div class="text-left">
                                         <p class="m-0">'.$row->name.'</p>
                                         <small>'.$row->informations->title.'</small>
@@ -52,6 +58,7 @@ class DashboardController extends Controller
 
         return response()->json([
             'online_users' => $html,
+            'all_users' => $users->count()
         ], 200);
     }
 }

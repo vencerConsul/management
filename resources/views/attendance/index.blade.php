@@ -9,13 +9,13 @@
             <div class="row">
                 <div class="col-5 col-xl-9 mb-4 mb-xl-0">
                     <h2 class="font-weight-normal" data-aos="fade-up" data-aos-delay="100">Attendance</h2>
-                    <h6 class="font-weight-normal mb-0" data-aos="fade-up" data-aos-delay="200">List of Users Log for today</h6>
+                    <h6 class="font-weight-normal mb-0" data-aos="fade-up" data-aos-delay="200">Showing up is the first step to success.</h6>
                 </div>
                 <div class="col-7 col-xl-3 mb-8">
-                    <div class="input-group flex-nowrap">
+                    <div class="input-group flex-nowrap" data-aos="fade-up" data-aos-delay="100">
                         <span class="input-group-text bg-transparent" id="addon-wrapping"><i class="ti-search"></i></span>
                         <input type="search" class="form-control py-1" id="search_users" oninput="showUsers('/show-users')" placeholder="Search for Users">
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -23,7 +23,17 @@
     <div class="row">
         <div class="col-md-12 grid-margin">
             <div class="table-responsive" id="showUsers">
-                
+
+                <div class="v-100 text-center" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card">
+                        <div class="card-body">
+                            <img class="img-fluid" src="{{asset('/images/attendance/under-construction.jpg')}}" alt="Under constructiont">
+                            <h3 class="font-weight-normal mt-4">Under Development</h3>
+                            <p>Stay tuned, something great is coming.</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="text-center mt-2 d-flex align-items-center justify-content-between" data-aos="fade-down" data-aos-delay="900">
                 <div class="page_of"></div>
@@ -36,7 +46,7 @@
 @endsection
 
 @section('scripts')
-  <script>
+  {{-- <script>
     let page = 0;
     
     async function showUsers(url){
@@ -84,5 +94,5 @@
     }
 
      showUsers('/show-users');
-  </script>
+  </script> --}}
 @endsection

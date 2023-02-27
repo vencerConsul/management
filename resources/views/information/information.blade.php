@@ -148,7 +148,9 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-10"></div>
+                            <div class="col-lg-10">
+                                <small class="d-flex align-items-center gap-3"><i class="ti-info-alt" style="font-size:20px"></i> We take the confidentiality of your information seriously, and only users with admin permissions can edit your personal data.</small>
+                            </div>
                             <div class="col-lg-2">
                                 @if($information)
                                 <button type="submit" class="btn btn-block btn-info">Update</button>

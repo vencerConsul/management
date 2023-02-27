@@ -7,8 +7,8 @@
     <div class="row">
         <div class="col-md-12 grid-margin">
             <div class="row">
-                <div class="col-2 mb-4 mb-xl-0 user-status">
-                    <a href="{{ route('users') }}" class="btn d-flex align-items-center gap-2" data-aos="fade-up" data-aos-delay="100"><i class="ti-arrow-left"></i> Back</a>
+                <div class="col-1 mb-4 mb-xl-0 user-status">
+                    <a href="{{ route('users') }}" class="btn btn-info text-secondary bg-transparent border-0 d-flex align-items-center gap-2" data-aos="fade-up" data-aos-delay="100"><i class="ti-arrow-left"></i> Back</a>
                 </div>
             </div>
         </div>
@@ -120,7 +120,7 @@
 
             {{-- assign role section --}}
             <h3 class="font-weight-normal my-4" data-aos="fade-up" data-aos-delay="400">Role and Status</h3>
-            <div class="card py-4 assign-role" data-aos="fade-up" data-aos-delay="500">
+            <div class="card py-4 assign-role" data-aos="fade-up" data-aos-delay="450">
                 <div class="card-body">
                     <form action="{{route('users.assign.role', $user->id)}}" method="POST">
                         @csrf
@@ -221,8 +221,8 @@
             {{-- end assign role section --}}
 
             {{-- danger section --}}
-            <h3 class="font-weight-normal my-4" data-aos="fade-up" data-aos-delay="400">Danger Zone</h3>
-            <div class="card py-4 danger-zone" data-aos="fade-up" data-aos-delay="500">
+            <h3 class="font-weight-normal my-4" data-aos="fade-up" data-aos-delay="100">Danger Zone</h3>
+            <div class="card py-4 danger-zone" data-aos="fade-up" data-aos-delay="200">
                 <div class="card-body">
                     <form action="{{route('users.archive', $user->id)}}" method="POST">
                         @csrf

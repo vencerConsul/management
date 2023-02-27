@@ -17,8 +17,39 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         for ($i = 0; $i < 50; $i++) {
+            $userTitle = array("Web Developer", "Project Manager", "Sales", "Call Center", "Human Resources", "WIX", "SMM", "SEO", "PULS");
+            $userDepartment = array(
+                'Software Development',
+                'Database Administration',
+                'Network Administration',
+                'Cybersecurity',
+                'IT Support',
+                'Quality Assurance/Testing',
+                'Project Management',
+                'Business Analysis',
+                'Technical Writing',
+                'Web Development',
+                'Mobile App Development',
+                'Cloud Computing',
+                'Artificial Intelligence',
+                'Machine Learning',
+                'Data Science',
+                'Big Data Analytics',
+                'DevOps',
+                'IT Infrastructure',
+                'Information Management',
+                'Enterprise Architecture',
+                'IT Procurement and Vendor Management',
+                'IT Finance and Budgeting',
+                'IT Strategy and Planning',
+                'IT Governance and Compliance',
+                'IT Training and Development',
+            );
+
+            $randomTitle = $userTitle[array_rand($userTitle)];
+            $randomDept = $userDepartment[array_rand($userDepartment)];
             $userData = [
-                'name' => 'User' . ($i + 1),
+                'name' => 'Test User ' . ($i + 1),
                 'email' => 'user' . ($i + 1) . '.technodream@gmail.com',
                 'password' => bcrypt('password'),
                 'provider_id' => bcrypt('password') . '123' . $i,
@@ -31,8 +62,8 @@ class DatabaseSeeder extends Seeder
                     'date_of_birth' => '2000-01-01',
                     'address_1' => 'Address 1 ' . ($i + 1),
                     'address_2' => 'Address 2 ' . ($i + 1),
-                    'title' => 'Web Developer',
-                    'department' => 'Department ' . ($i + 1),
+                    'title' => $randomTitle,
+                    'department' => $randomDept,
                     'shift_start' => '08:00',
                     'shift_end' => '17:00',
                     'contact_number' => '1234567890',
@@ -50,7 +81,7 @@ class DatabaseSeeder extends Seeder
                 'qrcode' => $userData['qrcode'],
                 'avatar_url' => $userData['avatar_url'],
             ]);
-            QrCode::format('png')->merge(public_path('td-logo.png'), .3, true)->size(600)->generate(''.$userData['provider_id'].'', public_path('images/qrcodes/'.$userData['qrcode']));
+            QrCode::format('png')->size(600)->generate(''.$userData['provider_id'].'', public_path('images/qrcodes/'.$userData['qrcode']));
             $user->informations()->create([
                 'gender' => $userData['informations']['gender'],
                 'date_of_birth' => $userData['informations']['date_of_birth'],

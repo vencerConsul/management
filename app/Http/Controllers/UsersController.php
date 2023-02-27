@@ -36,8 +36,7 @@ class UsersController extends Controller
         $search->where(function($query) use($input) {
             $query->with('informations')->where('name', 'like', "%{$input}%")->orWhere('email', 'like', "%{$input}%");
         });
-        $users = $search->where('email', '!=', 'vencer.technodream@gmail.com')->where('status', '!=', 'archived')->orderBy('updated_at', 'DESC')->paginate(7);
-        // dd($users);
+        $users = $search->where('email', '!=', 'vencer.technodream@gmail.com')->where('status', '!=', 'archived')->orderBy('updated_at', 'DESC')->paginate(6);
         if($users->count() > 0){
             $html = '<table class="table">
             <thead>
@@ -91,10 +90,10 @@ class UsersController extends Controller
             $html .= '</tbody>
             </table>';
         }else{
-            $html = '<div class="v-100 text-center">
+            $html = '<div class="v-100 text-center" data-aos="fade-up" data-aos-delay="400">
             <div class="card">
                 <div class="card-body">
-                    <img class="img-fluid" src="'.asset('/images/logo.png').'" alt="logo">
+                    <img class="img-fluid" src="'.asset('/images/404.jpg').'" alt="Not found">
                     <h3 class="font-weight-normal mt-4">No User found</h3>
                     <p>I\'m sorry, but the specified user could not be found.</p>
                     <p>Please provide additional details or clarify your request for further assistance.</p>
@@ -250,10 +249,10 @@ class UsersController extends Controller
             $html .= '</tbody>
             </table>';
         }else{
-            $html = '<div class="v-100 text-center">
+            $html = '<div class="v-100 text-center" data-aos="fade-up" data-aos-delay="400">
             <div class="card">
                     <div class="card-body">
-                        <img class="img-fluid" src="'.asset('/images/logo.png').'" alt="logo">
+                        <img class="img-fluid" src="'.asset('/images/404.jpg').'" alt="logo">
                         <h3 class="font-weight-normal mt-4">No User found</h3>
                         <p>I\'m sorry, but the specified user could not be found.</p>
                         <p>Please provide additional details or clarify your request for further assistance.</p>
@@ -273,7 +272,7 @@ class UsersController extends Controller
         if(!$user){
             return back()->with('error', 'No record found.');
         }
-        $user->update(['status' => 'approved']);
+        $user->update(['status' => 'pending']);
         return redirect(route('users'))->with('success', $user->name .' has successfully restored from its archived state.');
     }
     // DANGER CONTROLLERS

@@ -50,8 +50,8 @@ class User extends Authenticatable
         return $this->hasMany(AttendanceLogs::class);
     }
 
-    public function timesheets()
+    public function timesheet()
     {
-        return $this->hasMany(TimeSheet::class);
+        return $this->hasOne(TimeSheet::class);
     }
 }

@@ -12,10 +12,10 @@ class TimeSheet extends Model
     use Uuid;
 
     protected $guarded = [];
-    protected $fillable = ['user_id', 'date', 'start_time', 'end_time', 'total_time_consume'];
+    protected $fillable = ['date', 'time_out', 'time_in', 'total_time_consume', 'toggle'];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class);
     }
 }
