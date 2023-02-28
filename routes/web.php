@@ -19,6 +19,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware('auth')->group(function(){
     Route::match(['get'], 'home', function(){ return redirect('/dashboard'); }); // disabled default home shit
+    Route::match(['get'], 'laravel-websockets', function(){ return redirect('/dashboard'); }); // disabled default websocket statistic shit
 
     Route::get('/check-firsttime-login', [App\Http\Controllers\InformationController::class, 'checkFirstTime'])->name('check.first.timer');
     Route::get('/basic-information', [App\Http\Controllers\InformationController::class, 'createinformation'])->name('information.create');

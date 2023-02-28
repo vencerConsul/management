@@ -104,6 +104,9 @@
             const timesheetOutput = document.querySelector('#loadTimeSheetData');
             const totalBreak = document.querySelector('#totalBreak');
             const timeType = document.querySelector('#timeType');
+            const breakButton = document.getElementById('time-button');
+
+            // paginations
             const paginationLink = document.querySelector('#pagination_link')
             const page_of = document.querySelector('.page_of')
             const page_total = document.querySelector('.page_total')
@@ -124,6 +127,8 @@
                         timesheetOutput.innerHTML = data.data.table;
                         totalBreak.innerHTML = data.data.breakData.totalBreak;
                         timeType.innerHTML = data.data.breakData.timeType;
+                        breakButton.innerHTML = data.data.breakData.toggle;
+
                         let pagination = data.data.pagination.links;
                         if(data.data.pagination.total > 7){
                             paginationLink.innerHTML = '';
