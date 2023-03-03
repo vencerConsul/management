@@ -92,25 +92,6 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item" data-aos="fade-up" data-aos-delay="700">
-                    <a class="nav-link" data-toggle="collapse" href="#__attendance" aria-expanded="false" aria-controls="__attendance">
-                        <i class="icon-columns menu-icon"></i>
-                        <span class="menu-title">Attendance</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="__attendance">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('attendance')}}"><i class="ti-link menu-icon"></i> My Attendance</a>
-                            </li>
-                            @if(Auth::user()->role == 1)
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('attendance.logs')}}"><i class="ti-link menu-icon"></i> Attendance Logs</a>
-                            </li>
-                            @endif
-                        </ul>
-                    </div>
-                    </li>
                     <hr class="hr-divider">
                 </ul>
                 <div class="p-2">
@@ -171,7 +152,6 @@
     <script> AOS.init(); </script>
     @auth
     <script src="{{ asset('js/axios.js') }}"></script>
-    <script src="{{asset('js/instascan.js')}}"></script>
     <script>
         var sessionTimeout = {{ config('session.lifetime') }} * 60; 
             var countdownTimer = setInterval(function() {

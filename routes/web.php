@@ -1,6 +1,5 @@
 <?php
 
-use App\Events\UserOnline;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
@@ -32,8 +31,6 @@ Route::middleware('auth')->group(function(){
         Route::get('/load-user-online', [App\Http\Controllers\DashboardController::class, 'loadUsersOnline']); // view
 
         Route::middleware('is_approved')->group(function(){
-            //attendace
-            Route::get('/attendance', [App\Http\Controllers\AttendanceController::class, 'index'])->name('attendance');
             // timesheet
             Route::get('/timesheet', [App\Http\Controllers\TimeSheetController::class, 'index'])->name('timesheet');
             Route::get('/load-time-sheet-data', [App\Http\Controllers\TimeSheetController::class, 'loadTimeSheetData']); // api call
@@ -55,8 +52,6 @@ Route::middleware('auth')->group(function(){
             Route::post('/users-archive/{userID}', [App\Http\Controllers\UsersController::class, 'archiveUsers'])->name('users.archive');
             Route::post('/users-delete/{userID}', [App\Http\Controllers\UsersController::class, 'deleteUsers'])->name('users.delete');
             Route::post('/users-unarchive/{userID}', [App\Http\Controllers\UsersController::class, 'unarchiveUsers'])->name('users.unarchive');
-            // attendance
-            Route::get('/attendance-logs', [App\Http\Controllers\HandleAttendanceController::class, 'index'])->name('attendance.logs');
             //timesheet
             Route::get('/timesheet-logs', [App\Http\Controllers\HandleTimeSheetController::class, 'index'])->name('timesheet.logs'); // view
         });
