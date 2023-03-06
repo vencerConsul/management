@@ -34,7 +34,7 @@ class DashboardController extends Controller
             foreach ($users as $row) {
                 $html .= '<div class="__online_users_content">
                                 <div class="d-flex align-items-center gap-3">
-                                    <a '.(Auth::user()->role == 1 ? 'href="'.route('users.manage', $row->id).'"' : '').'><img class="img-fluid '.($row->online ? 'online' : '').'" src="'.$row->avatar_url.'" alt="'.$row->name.'"></a>
+                                    <a '.(Auth::user()->role == 1 ? 'href="'.route('users.manage', $row->id).'"' : '').'><img class="'.($row->online ? 'online' : '').'" src="'.$row->avatar_url.'" alt="'.$row->name.'"></a>
                                     <div class="text-left">
                                         <p class="m-0">'.$row->name.'</p>
                                         <small>'.$row->informations->title.'</small>

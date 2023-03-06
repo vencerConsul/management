@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Informations;
 use App\Models\TimeSheet;
 use App\Models\User;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,19 +19,20 @@ class TimeSheetController extends Controller
     public function index(){
         return view('timesheet');
     }
-
+    
     public function loadTimeSheetData(){
+        $checkUserShift = Informations::where('user_id', Auth::id())->first();
+        $start_time = new DateTime(date('H:i', strtotime($checkUserShift->shift_start  . '+1 hour')));
         $timesheetsLoop = TimeSheet::where('user_id', Auth::id())->where('date', date('Y-m-d'))->orderBy('updated_at', 'DESC')->paginate(7);
         
-        $totalBreak = 0;
-        $toggle = '';
+        $totalSeconds = 0;
         if($timesheetsLoop->count() > 0){
             $html = '<table class="table">
             <thead>
             <tr class="t-row-head" data-aos="fade-up" data-aos-delay="100">
                 <th>Time Out</th>
                 <th>Time In</th>
-                <th>Total Time</th>
+                <th>Time Consume</th>
                 <th></th>
             </tr>
             </thead>
@@ -37,8 +40,7 @@ class TimeSheetController extends Controller
 
             $delay = 1;
             foreach ($timesheetsLoop as $timesheetRow) {
-                $totalBreak = (int)$totalBreak + (int)$timesheetRow->total_time_consume;
-                $toggle = $timesheetRow->toggle;
+                $totalSeconds = (int)$totalSeconds + (int)$timesheetRow->total_time_consume;
                 $delay++;
                 $html .= '
                     <tr class="t-row" data-aos="fade-up" data-aos-delay="'.$delay.'00">
@@ -46,7 +48,8 @@ class TimeSheetController extends Controller
                         <td class="text-uppercase">'.(empty($timesheetRow->time_in) ? '--:--' : date('h:i a', strtotime($timesheetRow->time_in))).'</td>
                         <td class="text-capitalize">';
                         if($timesheetRow->total_time_consume){
-                $html .= '<p>'.($timesheetRow->total_time_consume < 60 ? $timesheetRow->total_time_consume . 'sec' : $timesheetRow->total_time_consume . 'min').'</p>';
+                            $calculatedTime = $this->convertSeconds($timesheetRow->total_time_consume);
+                $html .= '<p>'.$calculatedTime['overBreakTime'].' </p>';
                         }
                 $html .= '</td>
                         <td>
@@ -67,43 +70,35 @@ class TimeSheetController extends Controller
         </div>';
         }
 
-        if($totalBreak >= 60){
-            $timeType = 'Minute'. ($totalBreak >= 120 ? 's' : '');
-        }elseif($totalBreak >= 3600){
-            $timeType = 'Hour'. ($totalBreak >= 7200 ? 's' : '');
-        }else{
-            $timeType = 'Sec'. ($totalBreak >= 2 ? 's' : '');
-        }
-
+        $totalBreak = $this->convertSeconds($totalSeconds);
+        $timeLog = auth()->user()->timesheet()->latest()->first();
+        $toggle = (empty($timeLog->toggle) ? 'Break Out' : $timeLog->toggle);
         return response()->json([
             'table' => $html,
             'breakData' => array(
-                'totalBreak' => $totalBreak,
-                'timeType' => $timeType,
-                'toggle' => $toggle
+                'totalBreak' => $totalBreak['break'],
+                'timeType' => $totalBreak['type'],
+                'remaining' => $totalBreak['remaining'],
+                'obType' => $totalBreak['obType'],
+                'seconds' => $totalBreak['seconds'],
+                'toggle' => $this->userCanBreak() ? $toggle : 'Refresh at ' . $start_time->format('h:i A')
             ),
             'pagination' => $timesheetsLoop
         ], 200);
     }
 
-
     public function toggleTimeSheet(Request $request){
         $user = User::findOrFail(Auth::id());
-        $regex = '/^\d{4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}$/';
-        $dateTime = $request->dateTime;
+        $dateTime = date('Y-n-j H:i:s');
 
-        if (!preg_match($regex, $dateTime)) {
+        if (!$request->_token == csrf_token() || !$this->userCanBreak()) {
             return response()->json([
-                'message' => 'Time In'
+                'message' => 'Unable to perform any actions.'
             ], 422);
         } 
-        
-        $timeSheetQuery = TimeSheet::where('user_id', $user->id)
-                                    ->whereDate('date', '=', date('Y-m-d'))
-                                    ->where('time_out', '!=', '')
-                                    ->first();
-        // dif the user has no time out and time in {insert to database with time_out data}
-        if (!$timeSheetQuery) {
+        $timeLog = auth()->user()->timesheet()->latest()->first();
+
+        if (!$timeLog) {
             $newTimeSheet = new TimeSheet();
             $newTimeSheet->user_id = $user->id;
             $newTimeSheet->date = date('Y-m-d');
@@ -113,14 +108,15 @@ class TimeSheetController extends Controller
             return response()->json([
                 'message' => 'Time Out'
             ], 200);
-        } else { // else update the current user who time out and set the time in
+        } else { 
 
-            if(!$timeSheetQuery->time_in){
+            $latestTimeIn = auth()->user()->timesheet()->latest()->first();
+            if ($latestTimeIn && !$latestTimeIn->time_in) {
+                $timeOut = Carbon::createFromFormat('H:i:s', date('H:i:s', strtotime($latestTimeIn->time_out)));
                 $timeIn = Carbon::createFromFormat('H:i:s', date('H:i:s', strtotime($dateTime)));
-                $timeOut = Carbon::createFromFormat('H:i:s', date('H:i:s', strtotime($timeSheetQuery->time_out)));
 
                 $totalTimeConsumeInSeconds = $timeOut->diffInSeconds($timeIn);
-                $timeSheetQuery->update([
+                $latestTimeIn->update([
                     'time_in' => $dateTime,
                     'toggle' => 'Break Out',
                     'total_time_consume' => $totalTimeConsumeInSeconds
@@ -128,8 +124,61 @@ class TimeSheetController extends Controller
                 return response()->json([
                     'message' => 'Time In'
                 ], 200);
+            }else{
+                $newTimeSheet = new TimeSheet();
+                $newTimeSheet->user_id = $user->id;
+                $newTimeSheet->date = date('Y-m-d');
+                $newTimeSheet->toggle = 'Break In';
+                $newTimeSheet->time_out = $dateTime;
+                $newTimeSheet->save();
+                return response()->json([
+                    'message' => 'Time Out'
+                ], 200);
             }
-            
         }
+    }
+
+    public function userCanBreak(){
+        $checkUserShift = Informations::where('user_id', Auth::id())->first();
+        $current_time = new DateTime;
+        $start_time = new DateTime(date('H:i', strtotime($checkUserShift->shift_start  . '+1 hour')));
+        $end_time = new DateTime($checkUserShift->shift_end);
+        $userCanBreak = $current_time >= $start_time && $current_time <= $end_time;
+
+        return $userCanBreak;
+    }
+
+    public function convertSeconds($totalSeconds){
+        $remainingTimeInSeconds = intval(abs($totalSeconds) - 3600); // subtract one hour (3600 seconds)
+        $remainingMinutes = intval(abs($remainingTimeInSeconds) / 60); // calculate remaining minutes
+        $overBreak = 0;
+        if($totalSeconds >= 60){
+            $timeType = 'Minute'. ($totalSeconds >= 120 ? 's' : '');
+            $toMinute = $totalSeconds / 60;
+            $totalBreak = intval($toMinute);
+        }
+        if($totalSeconds >= 3600){
+            $timeType = 'Hour'. ($totalSeconds >= 7200 ? 's' : '');
+            $toHour = $totalSeconds / 3600;
+            $totalBreak = intval($toHour);
+        }
+        if($totalSeconds < 60){
+            $timeType = 'Sec'. ($totalSeconds >= 2 ? 's' : '');
+            $totalBreak = intval($totalSeconds);
+        }
+
+        $remaining = ($remainingMinutes >= 60 ? 1 .' Hour' : $remainingMinutes . ' ' . 'Minute'. ($totalBreak >= 120 ? '' : 's'));
+        $obType = ($totalSeconds > 3600 ? 'Overbreak' : 'Remaining');
+
+        $overBreak = ($totalSeconds > 3600 ? $totalBreak . ' Hour ' . $remaining : $totalBreak . ' ' . $timeType );
+        
+        return array(
+            'break' => $totalBreak, 
+            'type' => $timeType, 
+            'remaining' => $remaining, 
+            'obType'=>$obType, 
+            'seconds' => $totalSeconds,
+            'overBreakTime' => $overBreak
+        );
     }
 }

@@ -45,13 +45,8 @@ class User extends Authenticatable
         return $this->hasOne(Informations::class);
     }
 
-    public function attendanceLogs()
-    {
-        return $this->hasMany(AttendanceLogs::class);
-    }
-
     public function timesheet()
     {
-        return $this->hasOne(TimeSheet::class);
+        return $this->hasMany(TimeSheet::class);
     }
 }

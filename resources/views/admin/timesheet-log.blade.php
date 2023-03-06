@@ -97,17 +97,17 @@
         </div>
         <div class="col-md-8 grid-margin">
             <h4 class="my-4">Users on Break</h4>
-            <div class="table-responsive" id="loadUsers">
+            <div class="table-responsive" id="timeSheetData">
                 
-                <div class="v-100 text-center" data-aos="fade-up" data-aos-delay="400">
+                {{-- <div class="v-100 text-center" data-aos="fade-up" data-aos-delay="400">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" id="timeSheetData">
                             <img class="img-fluid" src="{{asset('/images/attendance/under-construction.jpg')}}" alt="Under constructiont">
                             <h3 class="font-weight-normal mt-4">Under Development</h3>
                             <p>Stay tuned, something great is coming.</p>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
             </div>
             <div class="text-center mt-2 d-flex align-items-center justify-content-between" data-aos="fade-down" data-aos-delay="900">
@@ -122,53 +122,95 @@
 @endsection
 
 @section('scripts')
-    {{-- <script>
-        let page = 0;
+    <script>
+        const breakButton = document.querySelector('#time-button');
         
-        async function loadUsers(url){
-            let usersOutput = document.querySelector('#loadUsers');
-            let searchInput = document.querySelector('#search_users');
-            const paginationLink = document.querySelector('#pagination_link')
-            const page_of = document.querySelector('.page_of')
-            const page_total = document.querySelector('.page_total')
-
-            usersOutput.innerHTML = `<div class="text-center">
+        async function loadTimeSheetData(url){
+            const timesheetOutput = document.querySelector('#timeSheetData');
+            timesheetOutput.innerHTML = `<div class="text-center">
                 <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
                 </div>`;
 
-            let URL = searchInput.value == '' ? url : url + `?search_input=${searchInput.value}`
+            let URL = url
 
             await axios.get(URL)
                 .then(function (response) {
+                    let data = response;
                     if(response.status == 200){
-                        let data = response.data;
-                        usersOutput.innerHTML = data.table;
-                        let pagination = data.pagination.links;
-                        if(data.pagination.total > 0){
-                            paginationLink.innerHTML = '';
-                            pagination.forEach(elem => {
-                                if(elem.url != null){
-                                    paginationLink.innerHTML += `<li style="cursor:pointer;" class="page-item ${elem.active ? 'active' : '' } ">
-                                    <a onclick="loadUsers('${elem.url}')" class="page-link">${elem.label}</a>
-                                </li>`;
-                                }
-                            });
-                            page_of.innerHTML = `Page ${data.pagination.current_page} of ${data.pagination.last_page}`;
-                            page_total.innerHTML = `Total of ${data.pagination.total}`;
-                        }else{
-                            paginationLink.innerHTML = '';
-                            page_of.innerHTML = '';
-                            page_total.innerHTML = '';
-                        }
+                        // if (data.data.breakData.toggle === 'Break Out') {
+                        //     breakButton.classList.remove('btn-danger')
+                        //     breakButton.classList.add('btn-info')
+                        // } else {
+                        //     breakButton.classList.remove('btn-info')
+                        //     breakButton.classList.add('btn-danger')
+                        // }
+
+                        timesheetOutput.innerHTML = data.data.table;
+                        // totalBreak.innerHTML = data.data.breakData.totalBreak;
+                        // timeType.innerHTML = data.data.breakData.timeType;
+                        // remaining.innerHTML = data.data.breakData.remaining;
+                        // breakButton.innerHTML = data.data.breakData.toggle;
+                        // overbreak.innerHTML = data.data.breakData.obType;
+                        // if(data.data.breakData.seconds > 3600){
+                        //     totalUserLog.style.border = '5px solid #ff3c3c';
+                        //     remaining.style.color = '#ff3c3c';
+                        // }else{
+                        //     totalUserLog.style.border = '5px solid #fff';
+                        // }
+
+                        // let pagination = data.data.pagination.links;
+                        // if(data.data.pagination.total > 7){
+                        //     paginationLink.innerHTML = '';
+                        //     pagination.forEach(elem => {
+                        //         if(elem.url != null){
+                        //             paginationLink.innerHTML += `<li style="cursor:pointer;" class="page-item ${elem.active ? 'active' : '' } ">
+                        //             <a onclick="loadTimeSheetData('${elem.url}')" class="page-link">${elem.label}</a>
+                        //         </li>`;
+                        //         }
+                        //     });
+                        //     page_of.innerHTML = `Page ${data.pagination.current_page} of ${data.pagination.last_page}`;
+                        //     page_total.innerHTML = `Total of ${data.pagination.total}`;
+                        // }else{
+                        //     paginationLink.innerHTML = '';
+                        //     page_of.innerHTML = '';
+                        //     page_total.innerHTML = '';
+                        // }
                     }
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
         }
+        loadTimeSheetData('/load-time-sheet-data');
 
-        loadUsers('/time-sheet-users-logs');
-    </script> --}}
+        // function toggleTimeSheet() {
+        //     breakButton.classList.add('disabled')
+        //     axios.post('/time-sheet/toggle', { _token: `{{csrf_token()}}` })
+        //         .then(function (response) {
+        //             if(response.status == 200){
+        //                 loadTimeSheetData('/load-time-sheet-data');
+        //                 breakButton.classList.remove('disabled')
+        //             }
+        //         })
+        //         .catch(function (error) {
+        //             message(error.response.data.message)
+        //         });
+        // }
+
+        // function message(message){
+        //     const msg = `<div class="alert alert-dismissible a-error" role="alert">
+        //         <div class="d-flex align-items-center">
+        //             <strong class="alert-danger"><i class="ti-hand-stop"></i></strong>
+        //             <div>
+        //                 <strong>Error</strong>
+        //                 <p class="mt-2">${message}</p>
+        //             </div>
+        //         </div>
+        //         <i class="ti-close close-alert-btn" data-bs-dismiss="alert" aria-label="Close"></i>
+        //     </div>`;
+        //     document.querySelector('#message').innerHTML = msg;
+        // }
+    </script>
 @endsection

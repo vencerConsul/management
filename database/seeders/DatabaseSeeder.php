@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
                 'role' => 0,
                 'status' => 'pending',
                 'qrcode' => 'user' . ($i + 1) . '.technodream@gmail.com.png',
-                'avatar_url' => 'https://via.placeholder.com/800x600.png/'.sprintf('%06X', mt_rand(0, 0xFFFFFF)).'?text=User' .($i + 1),
+                'avatar_url' => 'https://picsum.photos/id/'.$i.'/300/300',
                 'informations' => [
                     'gender' => ($i % 2 == 0) ? 'Male' : 'Female',
                     'date_of_birth' => '2000-01-01',

@@ -45,8 +45,8 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="p-2 text-center">
-                                    <h4 data-aos="fade-up" data-aos-delay="400">1 Hour</h4>
-                                    <p data-aos="fade-up" data-aos-delay="500">Remaining</p>
+                                    <h4 data-aos="fade-up" data-aos-delay="400" id="remaining">1 Hour</h4>
+                                    <p data-aos="fade-up" data-aos-delay="500" id="overbreak">Remaining</p>
                                 </div>
                             </div>
                         </div>
@@ -94,17 +94,24 @@
     </div>
     {{-- End Users logs section --}}
 </div>
+
+<span id="message"></span>
 @endsection
 
 @section('scripts')
     <script>
         let page = 0;
+        const breakButton = document.querySelector('#time-button');
         
         async function loadTimeSheetData(url){
             const timesheetOutput = document.querySelector('#loadTimeSheetData');
             const totalBreak = document.querySelector('#totalBreak');
             const timeType = document.querySelector('#timeType');
-            const breakButton = document.getElementById('time-button');
+            const remaining = document.querySelector('#remaining');
+            
+            const overbreak = document.querySelector('#overbreak');
+
+            const totalUserLog = document.querySelector('.__user_timesheet_container .__total_user_log');
 
             // paginations
             const paginationLink = document.querySelector('#pagination_link')
@@ -121,13 +128,28 @@
 
             await axios.get(URL)
                 .then(function (response) {
-                    console.log(response);
                     let data = response;
                     if(response.status == 200){
+                        if (data.data.breakData.toggle === 'Break Out') {
+                            breakButton.classList.remove('btn-danger')
+                            breakButton.classList.add('btn-info')
+                        } else {
+                            breakButton.classList.remove('btn-info')
+                            breakButton.classList.add('btn-danger')
+                        }
+
                         timesheetOutput.innerHTML = data.data.table;
                         totalBreak.innerHTML = data.data.breakData.totalBreak;
                         timeType.innerHTML = data.data.breakData.timeType;
+                        remaining.innerHTML = data.data.breakData.remaining;
                         breakButton.innerHTML = data.data.breakData.toggle;
+                        overbreak.innerHTML = data.data.breakData.obType;
+                        if(data.data.breakData.seconds > 3600){
+                            totalUserLog.style.border = '5px solid #ff3c3c';
+                            remaining.style.color = '#ff3c3c';
+                        }else{
+                            totalUserLog.style.border = '5px solid #fff';
+                        }
 
                         let pagination = data.data.pagination.links;
                         if(data.data.pagination.total > 7){
@@ -155,32 +177,32 @@
         loadTimeSheetData('/load-time-sheet-data');
 
         function toggleTimeSheet() {
-            var button = document.getElementById('time-button');
-            var currentTime = new Date();
-            var dateTime = currentTime.getFullYear() + '-' +
-                            (currentTime.getMonth()+1) + '-' +
-                            currentTime.getDate() + ' ' +
-                            currentTime.getHours() + ':' +
-                            currentTime.getMinutes() + ':' +
-                            currentTime.getSeconds();
-
-            axios.post('/time-sheet/toggle', { dateTime: dateTime })
+            breakButton.classList.add('disabled')
+            axios.post('/time-sheet/toggle', { _token: `{{csrf_token()}}` })
                 .then(function (response) {
                     if(response.status == 200){
-                        if (button.innerText === 'Break Out') {
-                            button.innerText = 'Break in';
-                            button.removeEventListener('click', toggleTimeSheet);
-                            button.addEventListener('click', toggleTimeSheet);
-                        } else {
-                            button.innerText = 'Break Out';
-                            button.removeEventListener('click', toggleTimeSheet);
-                        }
                         loadTimeSheetData('/load-time-sheet-data');
+                        breakButton.classList.remove('disabled')
                     }
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    message(error.response.data.message)
                 });
-            }
+        }
+
+        function message(message){
+            const msg = `<div class="alert alert-dismissible a-error" role="alert">
+                <div class="d-flex align-items-center">
+                    <strong class="alert-danger"><i class="ti-hand-stop"></i></strong>
+                    <div>
+                        <strong>Error</strong>
+                        <p class="mt-2">${message}</p>
+                    </div>
+                </div>
+                <i class="ti-close close-alert-btn" data-bs-dismiss="alert" aria-label="Close"></i>
+            </div>`;
+            document.querySelector('#message').innerHTML = msg;
+        }
+        
     </script>
 @endsection

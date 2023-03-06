@@ -17,7 +17,7 @@ class CreateTimeSheetsTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('user_id');
             $table->date('date');
-            $table->time('time_out');
+            $table->time('time_out')->nullable();
             $table->time('time_in')->nullable();
             $table->integer('total_time_consume')->nullable();
             $table->string('toggle')->default('Break Out');

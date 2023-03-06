@@ -129,7 +129,7 @@
                                 <img src="{{asset('/images/logo.png')}}" style="width:100px;" alt="logo"/>
                                 <h4 class="mt-3">{{ config('app.name') }}</h4>
                                 <p>© {{date('Y')}} {{ config('app.name') }}. All rights reserved.</p>
-                                <small>Buy me a Coffee <a href="https://www.buymeacoffee.com/olermovenzC"><i class="ti-cup"></i></a></small>
+                                <small>Buy me a Coffee <a href="https://www.buymeacoffee.com/olermovenzC" target="_blank"><i class="ti-cup"></i></a></small>
                             </div>
                         </div>
                     </div>
