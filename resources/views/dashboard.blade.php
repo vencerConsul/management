@@ -76,7 +76,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3 grid-margin">
+    <div class="col-lg-3 grid-margin col-md-12">
       <div class="card __online_users" data-aos="fade-up" data-aos-delay="500">
           <div class="card-header bg-transparent border-0" data-aos="fade-up" data-aos-delay="450"><h4 class="mt-4">Users <small id="__user_count">(--)</small></h4></div>
           <div class="card-body">

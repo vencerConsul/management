@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
@@ -55,7 +54,7 @@ Route::middleware('auth')->group(function(){
             Route::post('/users-unarchive/{userID}', [App\Http\Controllers\UsersController::class, 'unarchiveUsers'])->name('users.unarchive');
             //timesheet
             Route::get('/timesheet-logs', [App\Http\Controllers\HandleTimeSheetController::class, 'index'])->name('timesheet.logs'); // view
-            Route::get('/load-time-sheet-data', [App\Http\Controllers\HandleTimeSheetController::class, 'loadTimeSheet']); // view
+            Route::get('/load-time-sheet-data-admin', [App\Http\Controllers\HandleTimeSheetController::class, 'loadTimeSheet']); // view
         });
     });
 

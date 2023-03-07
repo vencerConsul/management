@@ -129,6 +129,7 @@
             await axios.get(URL)
                 .then(function (response) {
                     let data = response;
+                    console.log(response.data);
                     if(response.status == 200){
                         if (data.data.breakData.toggle === 'Break Out') {
                             breakButton.classList.remove('btn-danger')
@@ -178,6 +179,7 @@
 
         function toggleTimeSheet() {
             breakButton.classList.add('disabled')
+            breakButton.innerHTML = 'Calculating';
             axios.post('/time-sheet/toggle', { _token: `{{csrf_token()}}` })
                 .then(function (response) {
                     if(response.status == 200){

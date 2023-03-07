@@ -96,6 +96,7 @@ class TimeSheetController extends Controller
                 'message' => 'Unable to perform any actions.'
             ], 422);
         } 
+
         $timeLog = auth()->user()->timesheet()->latest()->first();
 
         if (!$timeLog) {
@@ -112,14 +113,15 @@ class TimeSheetController extends Controller
 
             $latestTimeIn = auth()->user()->timesheet()->latest()->first();
             if ($latestTimeIn && !$latestTimeIn->time_in) {
+                sleep(1);
                 $timeOut = Carbon::createFromFormat('H:i:s', date('H:i:s', strtotime($latestTimeIn->time_out)));
                 $timeIn = Carbon::createFromFormat('H:i:s', date('H:i:s', strtotime($dateTime)));
 
-                $totalTimeConsumeInSeconds = $timeOut->diffInSeconds($timeIn);
                 $latestTimeIn->update([
+                    'total_time_consume' => $timeOut->diffInSeconds($timeIn),
                     'time_in' => $dateTime,
                     'toggle' => 'Break Out',
-                    'total_time_consume' => $totalTimeConsumeInSeconds
+                    
                 ]);
                 return response()->json([
                     'message' => 'Time In'

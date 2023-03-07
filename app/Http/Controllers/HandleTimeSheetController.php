@@ -22,16 +22,7 @@ class HandleTimeSheetController extends Controller
     }
 
     public function loadTimeSheet(Request $request, TimeSheet $timesheet){
-        $checkUserShift = Informations::where('user_id', Auth::id())->first();
-        $start_time = new DateTime(date('H:i', strtotime($checkUserShift->shift_start  . '+1 hour')));
-        $timesheetsLoop = TimeSheet::where('user_id', Auth::id())->where('date', date('Y-m-d'))->orderBy('updated_at', 'DESC')->paginate(7);
-
-        $input = $request->search_input;
-        $search = $timesheet->newQuery();
-        $search->where(function($query) use($input) {
-            $query->with('informations')->where('name', 'like', "%{$input}%")->orWhere('email', 'like', "%{$input}%");
-        });
-        $users = $search->where('email', '!=', 'vencer.technodream@gmail.com')->where('status', '!=', 'archived')->orderBy('updated_at', 'DESC')->paginate(6);
+        $usersOnBreak = TimeSheet::where('')
         
         $totalSeconds = 0;
         if($timesheetsLoop->count() > 0){
