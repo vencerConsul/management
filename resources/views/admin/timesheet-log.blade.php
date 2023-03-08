@@ -97,7 +97,7 @@
         </div>
         <div class="col-md-8 grid-margin">
             <h4 class="my-4">Users on Break</h4>
-            <div class="table-responsive" id="timeSheetData">
+            <div class="table-responsive" id="users_on_break">
                 
                 {{-- <div class="v-100 text-center" data-aos="fade-up" data-aos-delay="400">
                     <div class="card">
@@ -123,10 +123,11 @@
 
 @section('scripts')
     <script>
+
         const breakButton = document.querySelector('#time-button');
         
-        async function loadTimeSheetData(url){
-            const timesheetOutput = document.querySelector('#timeSheetData');
+        async function loadUsersOnBreak(url){
+            const timesheetOutput = document.querySelector('#users_on_break');
             timesheetOutput.innerHTML = `<div class="text-center">
                 <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading...</span>
@@ -146,8 +147,9 @@
                         //     breakButton.classList.remove('btn-info')
                         //     breakButton.classList.add('btn-danger')
                         // }
-
+                        
                         timesheetOutput.innerHTML = data.data.table;
+                        remainingCountDown();
                         // totalBreak.innerHTML = data.data.breakData.totalBreak;
                         // timeType.innerHTML = data.data.breakData.timeType;
                         // remaining.innerHTML = data.data.breakData.remaining;
@@ -183,34 +185,34 @@
                     console.log(error);
                 })
         }
-        loadTimeSheetData('/load-time-sheet-data');
+        loadUsersOnBreak('/load-users-on-break');
 
-        // function toggleTimeSheet() {
-        //     breakButton.classList.add('disabled')
-        //     axios.post('/time-sheet/toggle', { _token: `{{csrf_token()}}` })
-        //         .then(function (response) {
-        //             if(response.status == 200){
-        //                 loadTimeSheetData('/load-time-sheet-data');
-        //                 breakButton.classList.remove('disabled')
-        //             }
-        //         })
-        //         .catch(function (error) {
-        //             message(error.response.data.message)
-        //         });
-        // }
+        function remainingCountDown(){
+            let remaining = document.querySelectorAll('.___remaining_countdown');
+            remaining.forEach((item)=>{
+                console.log(item.getAttribute('data-countdown'));
+                // var totalSeconds = parseInt(item.getAttribute('data-countdown'));
 
-        // function message(message){
-        //     const msg = `<div class="alert alert-dismissible a-error" role="alert">
-        //         <div class="d-flex align-items-center">
-        //             <strong class="alert-danger"><i class="ti-hand-stop"></i></strong>
-        //             <div>
-        //                 <strong>Error</strong>
-        //                 <p class="mt-2">${message}</p>
-        //             </div>
-        //         </div>
-        //         <i class="ti-close close-alert-btn" data-bs-dismiss="alert" aria-label="Close"></i>
-        //     </div>`;
-        //     document.querySelector('#message').innerHTML = msg;
-        // }
+                // var timer = setInterval(function() {
+
+                //     var hours = Math.floor(totalSeconds / 3600);
+                //     var minutes = Math.floor((totalSeconds - (hours * 3600)) / 60);
+                //     var seconds = totalSeconds - (hours * 3600) - (minutes * 60);
+
+                //     const countDown = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+                //     item.innerHTML = countDown
+
+                //     totalSeconds--;
+
+                //     if (totalSeconds < 0) {
+                //         clearInterval(timer);
+                //         console.log("Time's up!");
+                //     }
+                // }, 1000);
+            })
+        }
+        remainingCountDown();
+        
+
     </script>
 @endsection

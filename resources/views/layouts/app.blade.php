@@ -36,7 +36,7 @@
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{route('information.create')}}">
-                                        <i class="ti-link menu-icon"></i> Settings
+                                        <i class="ti-control-record menu-icon"></i> Settings
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -60,6 +60,23 @@
                     </li>
                     @if(Auth::user()->role == 1)
                     <li class="nav-item" data-aos="fade-up" data-aos-delay="600">
+                        <a class="nav-link" data-toggle="collapse" href="#departments" aria-expanded="false" aria-controls="departments">
+                            <i class="ti-tag menu-icon"></i>
+                                <span class="menu-title">Department</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="departments">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href=""><i class="ti-control-record menu-icon"></i> All Departments</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href=""><i class="ti-control-record menu-icon"></i> Add Departments</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item" data-aos="fade-up" data-aos-delay="600">
                         <a class="nav-link" data-toggle="collapse" href="#manage__users" aria-expanded="false" aria-controls="manage__users">
                             <i class="ti-user menu-icon"></i>
                                 <span class="menu-title">Manage Users</span>
@@ -68,10 +85,10 @@
                         <div class="collapse" id="manage__users">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{route('users')}}"><i class="ti-link menu-icon"></i> All Users</a>
+                                    <a class="nav-link" href="{{route('users')}}"><i class="ti-control-record menu-icon"></i> All Users</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{route('archive')}}"><i class="ti-link menu-icon"></i> Archive Users</a>
+                                    <a class="nav-link" href="{{route('archive')}}"><i class="ti-control-record menu-icon"></i> Archive Users</a>
                                 </li>
                             </ul>
                         </div>
@@ -85,9 +102,9 @@
                         </a>
                         <div class="collapse" id="__timesheet">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="{{route('timesheet')}}"><i class="ti-link menu-icon"></i> Timesheet</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="{{route('timesheet')}}"><i class="ti-control-record menu-icon"></i> Timesheet</a></li>
                                 @if(Auth::user()->role == 1)
-                                <li class="nav-item"> <a class="nav-link" href="{{route('timesheet.logs')}}"><i class="ti-link menu-icon"></i> Timesheet Logs</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="{{route('timesheet.logs')}}"><i class="ti-control-record menu-icon"></i> Timesheet Logs</a></li>
                                 @endif
                             </ul>
                         </div>

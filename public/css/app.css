@@ -10838,7 +10838,7 @@ body::-webkit-scrollbar-track {
 
 body::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background: #1376da;
+  background: #003972;
 }
 
 .__home .card {
@@ -10894,7 +10894,7 @@ body::-webkit-scrollbar-thumb {
 
 .sidebar::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background: #1376da;
+  background: #003972;
 }
 
 .sidebar {
@@ -10925,6 +10925,10 @@ body::-webkit-scrollbar-thumb {
 }
 .sub-menu .nav-item:hover .nav-link {
   color: #080808 !important;
+}
+
+.sidebar .nav:not(.sub-menu) > .nav-item:hover > .nav-link, .sidebar .nav:not(.sub-menu) > .nav-item:hover[aria-expanded=true] {
+  background: #004b97 !important;
 }
 
 [aria-expanded=true] i {
@@ -10970,6 +10974,10 @@ body::-webkit-scrollbar-thumb {
   font-size: clamp(1rem, 0.7794rem + 0.3922vw, 1.25rem);
 }
 
+.sidebar .nav .nav-item.active > .nav-link {
+  background: #004b97 !important;
+}
+
 .sidebar .nav:not(.sub-menu) {
   margin-top: 4.45rem !important;
 }
@@ -11003,7 +11011,7 @@ body::-webkit-scrollbar-thumb {
 
 .btn-info {
   color: #fff;
-  background-color: #146dc5 !important;
+  background-color: #004b97 !important;
   border-color: unset !important;
   border-radius: 8px !important;
 }
@@ -11077,7 +11085,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .a-info {
-  border-left: 2px solid #307ff7 !important;
+  border-left: 2px solid #004b97 !important;
 }
 
 .a-warning {
@@ -11131,7 +11139,7 @@ table tr.t-row {
   transition: 0.3s;
 }
 table tr.t-row:hover {
-  background: rgba(19, 118, 218, 0.0509803922);
+  background: rgba(0, 57, 114, 0.0509803922);
   transition: 0.3s;
 }
 table tr.t-row td {
@@ -11153,7 +11161,7 @@ table td a {
 }
 table td .show-options {
   cursor: pointer;
-  background: rgba(19, 118, 218, 0.2117647059);
+  background: rgba(219, 237, 255, 0.7);
   padding: 10px;
   border-radius: 50%;
 }
@@ -11163,14 +11171,14 @@ table td .show-options {
 }
 .user-status .approved {
   background: #ffffff;
-  border-left: 5px solid #1376da !important;
+  border-left: 5px solid #003972 !important;
   font-weight: 600;
   border: 1px solid #f1f1f1;
   border-radius: 0.25rem;
 }
 .user-status .pending {
   background: #ffffff;
-  border-left: 5px solid #1376da !important;
+  border-left: 5px solid #003972 !important;
   font-weight: 600;
   border: 1px solid #f1f1f1;
   border-radius: 0.25rem;
@@ -11181,7 +11189,7 @@ table td .show-options {
 
 .qrcode {
   background: #ffffff;
-  border-left: 5px solid #1376da !important;
+  border-left: 5px solid #003972 !important;
   font-weight: 600;
   border: 1px solid #f1f1f1;
   border-radius: 0.25rem;
@@ -11194,7 +11202,7 @@ img.mu-profile {
   width: 120px;
   -o-object-fit: cover;
      object-fit: cover;
-  border: 4px solid rgba(20, 109, 197, 0.3803921569);
+  border: 4px solid rgba(0, 75, 151, 0.3803921569);
 }
 
 .col-lg-2.mu-container {
@@ -11254,7 +11262,7 @@ hr.hr-divider {
 }
 .manage-users .radio-icon input[type=radio]:checked + label i {
   color: #ffffff;
-  background: #146dc5;
+  background: #004b97;
 }
 
 ul#pagination_link {
@@ -11278,12 +11286,13 @@ li.page-item a {
 
 .page-item.active .page-link {
   border-radius: 8px;
+  background-color: #004b97 !important;
 }
 
 .__total_user_log_container .__total_user_log {
   width: 200px;
   height: 200px;
-  background: rgba(19, 118, 218, 0.2705882353);
+  background: rgb(232, 239, 247);
   border-radius: 50%;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   display: flex;
@@ -11311,7 +11320,7 @@ li.page-item a {
 .__user_timesheet_container .__total_user_log {
   width: 200px;
   height: 200px;
-  background: rgba(19, 118, 218, 0.2705882353);
+  background: rgb(232, 239, 247);
   border-radius: 50%;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   display: flex;
@@ -11332,7 +11341,7 @@ li.page-item a {
   transition: 0.3s;
 }
 .__user_timesheet_container .__time_adjustment_request_container i:hover {
-  background: #1376da;
+  background: #003972;
   color: #ffffff;
 }
 .__user_timesheet_container .__time_adjustment_request_container .__time_adjustment_request_list {
@@ -11366,7 +11375,7 @@ li.page-item a {
 }
 .__online_users .card-body::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background: #1376da;
+  background: #003972;
 }
 .__online_users .__online_users_content {
   display: flex;

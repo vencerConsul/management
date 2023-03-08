@@ -54,7 +54,7 @@ Route::middleware('auth')->group(function(){
             Route::post('/users-unarchive/{userID}', [App\Http\Controllers\UsersController::class, 'unarchiveUsers'])->name('users.unarchive');
             //timesheet
             Route::get('/timesheet-logs', [App\Http\Controllers\HandleTimeSheetController::class, 'index'])->name('timesheet.logs'); // view
-            Route::get('/load-time-sheet-data-admin', [App\Http\Controllers\HandleTimeSheetController::class, 'loadTimeSheet']); // view
+            Route::get('/load-users-on-break', [App\Http\Controllers\HandleTimeSheetController::class, 'loadUsersOnBreak']); // view
         });
     });
 

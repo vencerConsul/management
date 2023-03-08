@@ -21,34 +21,45 @@ class HandleTimeSheetController extends Controller
         return view('admin.timesheet-log');
     }
 
-    public function loadTimeSheet(Request $request, TimeSheet $timesheet){
-        $usersOnBreak = TimeSheet::where('')
+    public function loadUsersOnBreak(Request $request, TimeSheet $timesheet){
+        $usersOnBreak = TimeSheet::where('toggle', 'Break In')->orderBy('updated_at', 'DESC')->paginate(7);
         
         $totalSeconds = 0;
-        if($timesheetsLoop->count() > 0){
+        if($usersOnBreak->count() > 0){
             $html = '<table class="table">
             <thead>
             <tr class="t-row-head" data-aos="fade-up" data-aos-delay="100">
+                <th>Name</th>
                 <th>Time Out</th>
-                <th>Time In</th>
-                <th>Time Consume</th>
+                <th>Remaining</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>';
 
             $delay = 1;
-            foreach ($timesheetsLoop as $timesheetRow) {
-                $totalSeconds = (int)$totalSeconds + (int)$timesheetRow->total_time_consume;
+            foreach ($usersOnBreak as $usersOnBreakRow) {
+                $getTimeSheetData = TimeSheet::where('user_id', $usersOnBreakRow->user->id)->groupBy('user_id')
+                ->selectRaw('user_id, sum(total_time_consume) as total_time_consume')
+                ->first();
+
                 $delay++;
                 $html .= '
                     <tr class="t-row" data-aos="fade-up" data-aos-delay="'.$delay.'00">
-                        <td class="text-uppercase">'.date('h:i a', strtotime($timesheetRow->time_out)).'</td>
-                        <td class="text-uppercase">'.(empty($timesheetRow->time_in) ? '--:--' : date('h:i a', strtotime($timesheetRow->time_in))).'</td>
+                        <td class="d-flex align-items-center gap-3">
+                            <img src="'.$usersOnBreakRow->user->avatar_url.'" alt="image"/>
+                            <div>
+                            <p>'.$usersOnBreakRow->user->name.'</p>
+                            <p>'.$usersOnBreakRow->user->informations->title.'</p>
+                            </div>
+                        </td>
+                        <td class="text-uppercase">'.date('h:i a', strtotime($usersOnBreakRow->time_out)).'</td>
                         <td class="text-capitalize">';
-                        if($timesheetRow->total_time_consume){
-                            $calculatedTime = $this->convertSeconds($timesheetRow->total_time_consume);
-                $html .= '<p>'.$calculatedTime['overBreakTime'].' </p>';
+                        if($getTimeSheetData->total_time_consume){
+                            $calculatedTime = $this->convertSeconds($getTimeSheetData->total_time_consume);
+                            $html .= '<p class="___remaining_countdown" data-countdown="'.$usersOnBreakRow->time_out.'">'.$getTimeSheetData->total_time_consume > 3600 ? 'Overbreak' : $calculatedTime['remaining'].' </p>';
+                        }else{
+                            $html .= '<p class="___remaining_countdown" data-countdown="3600">1 Hour</p>';
                         }
                 $html .= '</td>
                         <td>
@@ -62,38 +73,28 @@ class HandleTimeSheetController extends Controller
                 <div class="card-body">
                     <img class="img-fluid" src="'.asset('/images/timesheet/no-timesheet.jpg').'" alt="No time sheet">
                     <h3 class="font-weight-normal mt-4">Start a break</h3>
-                    <p>Give yourself permission to rest, it\'s okay to take a break.</p>
-                    <p>Recharge your batteries, and come back stronger</p>
+                    <p>No users on break</p>
                 </div>
             </div>
         </div>';
         }
 
-        $totalBreak = $this->convertSeconds($totalSeconds);
-        $timeLog = auth()->user()->timesheet()->latest()->first();
-        $toggle = (empty($timeLog->toggle) ? 'Break Out' : $timeLog->toggle);
+        // $totalBreak = $this->convertSeconds($totalSeconds);
+        // $timeLog = auth()->user()->timesheet()->latest()->first();
+        // $toggle = (empty($timeLog->toggle) ? 'Break Out' : $timeLog->toggle);
         return response()->json([
             'table' => $html,
-            'breakData' => array(
-                'totalBreak' => $totalBreak['break'],
-                'timeType' => $totalBreak['type'],
-                'remaining' => $totalBreak['remaining'],
-                'obType' => $totalBreak['obType'],
-                'seconds' => $totalBreak['seconds'],
-                'toggle' => $this->userCanBreak() ? $toggle : 'Refresh at ' . $start_time->format('h:i A')
-            ),
-            'pagination' => $timesheetsLoop
+            // 'breakData' => array(
+            //     'totalBreak' => $totalBreak['break'],
+            //     'timeType' => $totalBreak['type'],
+            //     'remaining' => $totalBreak['remaining'],
+            //     'obType' => $totalBreak['obType'],
+            //     'seconds' => $totalBreak['seconds'],
+            //     'toggle' => $this->userCanBreak() ? $toggle : 'Refresh at ' . $start_time->format('h:i A')
+            // ),
+            'on_break' => $usersOnBreak->count(),
+            'pagination' => $usersOnBreak
         ], 200);
-    }
-
-    public function userCanBreak(){
-        $checkUserShift = Informations::where('user_id', Auth::id())->first();
-        $current_time = new DateTime;
-        $start_time = new DateTime(date('H:i', strtotime($checkUserShift->shift_start  . '+1 hour')));
-        $end_time = new DateTime($checkUserShift->shift_end);
-        $userCanBreak = $current_time >= $start_time && $current_time <= $end_time;
-
-        return $userCanBreak;
     }
 
     public function convertSeconds($totalSeconds){

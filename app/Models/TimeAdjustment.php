@@ -6,21 +6,17 @@ use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TimeSheet extends Model
+class TimeAdjustment extends Model
 {
     use HasFactory;
+
     use Uuid;
 
     protected $guarded = [];
     protected $fillable = ['date', 'time_out', 'time_in', 'total_time_consume', 'toggle'];
 
-    public function user()
+    public function timesheet()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function timesheetadjustment()
-    {
-        return $this->hasMany(timesheetadjustment::class);
+        return $this->belongsTo(TimeSheet::class);
     }
 }

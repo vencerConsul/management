@@ -27,7 +27,7 @@ body::-webkit-scrollbar-track {
  
 body::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: #1376da;
+    background: #003972;
 }
 
 // home
@@ -87,7 +87,7 @@ body::-webkit-scrollbar-thumb {
  
 .sidebar::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: #1376da;
+    background: #003972;
 }
 .sidebar{
     position: fixed;
@@ -122,9 +122,10 @@ body::-webkit-scrollbar-thumb {
         color: #080808 !important;
     }
 }
-// a.nav-link:hover i {
-//     color: #1376da !important;
-// }
+.sidebar .nav:not(.sub-menu) > .nav-item:hover > .nav-link, .sidebar .nav:not(.sub-menu) > .nav-item:hover[aria-expanded="true"] {
+    background: #004b97 !important;
+}
+
 [aria-expanded="true"] i{
     color: #ffffff !important;
 }
@@ -165,6 +166,9 @@ body::-webkit-scrollbar-thumb {
         font-size: clamp(1rem, 0.7794rem + 0.3922vw, 1.25rem);
     }
 }
+.sidebar .nav .nav-item.active > .nav-link {
+    background: #004b97 !important;
+}
 .sidebar .nav:not(.sub-menu){
     margin-top: 4.45rem !important;
 }
@@ -197,7 +201,7 @@ body::-webkit-scrollbar-thumb {
 }
 .btn-info {
     color: #fff;
-    background-color: #146dc5 !important;
+    background-color: #004b97 !important;
     border-color: unset !important;
     border-radius: 8px !important;
 }
@@ -272,7 +276,7 @@ body::-webkit-scrollbar-thumb {
     border-left: 2px solid #ff6b6b !important;
 }
 .a-info{
-    border-left: 2px solid #307ff7 !important;
+    border-left: 2px solid #004b97 !important;
 }
 .a-warning{
     border-left: 2px solid #ee842e !important;
@@ -304,7 +308,6 @@ select.round {
     outline: 0;
   }
 
-//   table
 .input-group.flex-nowrap {
     background: #ffffff;
     border-radius: 30px;
@@ -319,6 +322,7 @@ select.round {
     }
 }
 
+// tables
 table {
     tr.t-row-head {
         background: #ffffff;
@@ -335,7 +339,7 @@ table {
         transition: 0.3s;
 
         &:hover{
-            background: #1376da0d;
+            background: #0039720d;
             transition: 0.3s;
         }
 
@@ -360,7 +364,7 @@ table {
 
         .show-options{
             cursor: pointer;
-            background: #1376da36;
+            background: rgb(219 237 255 / 70%);
             padding: 10px;
             border-radius: 50%;
         }
@@ -373,14 +377,14 @@ table {
 
     .approved{
         background: #ffffff;
-        border-left: 5px solid #1376da !important;
+        border-left: 5px solid #003972 !important;
         font-weight: 600;
         border: 1px solid #f1f1f1;
         border-radius: 0.25rem;
     }
     .pending{
         background: #ffffff;
-        border-left: 5px solid #1376da !important;
+        border-left: 5px solid #003972 !important;
         font-weight: 600;
         border: 1px solid #f1f1f1;
         border-radius: 0.25rem;
@@ -391,7 +395,7 @@ table {
 }
 .qrcode{
     background: #ffffff;
-    border-left: 5px solid #1376da !important;
+    border-left: 5px solid #003972 !important;
     font-weight: 600;
     border: 1px solid #f1f1f1;
     border-radius: 0.25rem;
@@ -402,7 +406,7 @@ img.mu-profile {
     height: 120px;
     width: 120px;
     object-fit: cover;
-    border: 4px solid #146dc561;
+    border: 4px solid #004b9761;
 }
 .col-lg-2.mu-container {
     border-right: 1px solid #f1f1f1;
@@ -465,7 +469,7 @@ hr.hr-divider {
       
       .radio-icon input[type="radio"]:checked + label i {
         color: #ffffff;
-        background: #146dc5;
+        background: #004b97;
       }
       
 }
@@ -490,6 +494,7 @@ li.page-item a {
 }
 .page-item.active .page-link{
     border-radius: 8px;
+    background-color: #004b97 !important;
 }
 
 
@@ -498,7 +503,7 @@ li.page-item a {
     .__total_user_log {
         width: 200px;
         height: 200px;
-        background: #1376da45;
+        background: rgb(232 239 247);
         border-radius: 50%;
         box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
         display: flex;
@@ -531,7 +536,7 @@ li.page-item a {
     .__total_user_log {
         width: 200px;
         height: 200px;
-        background: #1376da45;
+        background: rgb(232 239 247);
         border-radius: 50%;
         box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
         display: flex;
@@ -556,7 +561,7 @@ li.page-item a {
             transition: 0.3s;
 
             &:hover{
-                background: #1376da;
+                background: #003972;
                 color: #ffffff;
             }
         }
@@ -601,7 +606,7 @@ li.page-item a {
      
     .card-body::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        background: #1376da;
+        background: #003972;
     }
 
     .__online_users_content {

@@ -37,6 +37,7 @@ return array(
     'App\\Http\\Middleware\\UserMiddleware' => $baseDir . '/app/Http/Middleware/UserMiddleware.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Models\\Informations' => $baseDir . '/app/Models/Informations.php',
+    'App\\Models\\TimeAdjustment' => $baseDir . '/app/Models/TimeAdjustment.php',
     'App\\Models\\TimeSheet' => $baseDir . '/app/Models/TimeSheet.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',

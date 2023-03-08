@@ -23,7 +23,7 @@
                         <h3>Total Break</h3>
                         <div class="__total_user_log">
                             <p data-aos="fade-in" data-aos-delay="700" id="totalBreak">0</p>
-                            <small class="mt-4" id="timeType">Sec</small>
+                            <small class="mt-4 font-weight-bold" id="timeType">Sec</small>
                         </div>
                         <p class="p-2">
                             {{ date('l, F j, Y') }}
@@ -100,7 +100,6 @@
 
 @section('scripts')
     <script>
-        let page = 0;
         const breakButton = document.querySelector('#time-button');
         
         async function loadTimeSheetData(url){
@@ -129,7 +128,6 @@
             await axios.get(URL)
                 .then(function (response) {
                     let data = response;
-                    console.log(response.data);
                     if(response.status == 200){
                         if (data.data.breakData.toggle === 'Break Out') {
                             breakButton.classList.remove('btn-danger')
@@ -146,10 +144,10 @@
                         breakButton.innerHTML = data.data.breakData.toggle;
                         overbreak.innerHTML = data.data.breakData.obType;
                         if(data.data.breakData.seconds > 3600){
-                            totalUserLog.style.border = '5px solid #ff3c3c';
+                            totalUserLog.style.background = 'rgb(247 195 195)';
                             remaining.style.color = '#ff3c3c';
                         }else{
-                            totalUserLog.style.border = '5px solid #fff';
+                            totalUserLog.style.background = '#fff';
                         }
 
                         let pagination = data.data.pagination.links;
