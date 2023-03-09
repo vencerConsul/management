@@ -190,7 +190,7 @@
         function remainingCountDown(){
             let remaining = document.querySelectorAll('.___remaining_countdown');
             remaining.forEach((item)=>{
-                console.log(item.getAttribute('data-countdown'));
+                // console.log(item.getAttribute('data-countdown'));
                 // var totalSeconds = parseInt(item.getAttribute('data-countdown'));
 
                 // var timer = setInterval(function() {

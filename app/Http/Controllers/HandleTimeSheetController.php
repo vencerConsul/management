@@ -57,7 +57,9 @@ class HandleTimeSheetController extends Controller
                         <td class="text-capitalize">';
                         if($getTimeSheetData->total_time_consume){
                             $calculatedTime = $this->convertSeconds($getTimeSheetData->total_time_consume);
-                            $html .= '<p class="___remaining_countdown" data-countdown="'.$usersOnBreakRow->time_out.'">'.$getTimeSheetData->total_time_consume > 3600 ? 'Overbreak' : $calculatedTime['remaining'].' </p>';
+                            // $current_time = date('Y-m-d H:i:s');
+                            // $consume = date('H:i:s', $getTimeSheetData->total_time_consume);
+                            $html .= '<p class="___remaining_countdown" data-countdown="'.$getTimeSheetData->total_time_consume.'">'.($getTimeSheetData->total_time_consume > 3600 ? 'Overbreak' : $calculatedTime['remaining']).' </p>';
                         }else{
                             $html .= '<p class="___remaining_countdown" data-countdown="3600">1 Hour</p>';
                         }
