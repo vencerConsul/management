@@ -40,6 +40,7 @@ class ComposerStaticInitc1bbaf0b765570713d28097353376cff
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
+        '2678778370ecbdd62f0e4fc70eb072ea' => __DIR__ . '/../..' . '/app/Helper/Helper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -630,6 +631,7 @@ class ComposerStaticInitc1bbaf0b765570713d28097353376cff
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Events\\UserOnline' => __DIR__ . '/../..' . '/app/Events/UserOnline.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Helper\\Helper' => __DIR__ . '/../..' . '/app/Helper/Helper.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',

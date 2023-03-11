@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Helper;
 use App\Models\Informations;
 use App\Models\TimeSheet;
 use App\Models\User;
@@ -71,8 +72,12 @@ class TimeSheetController extends Controller
         }
 
         $totalBreak = $this->convertSeconds($totalSeconds);
+        $totalBreak2 = Helper::calculateTotalConsume($totalSeconds);
+        $remainingTime = Helper::calculateRemainingTime($totalSeconds);
+        dd($totalBreak2);
         $timeLog = auth()->user()->timesheet()->latest()->first();
         $toggle = (empty($timeLog->toggle) ? 'Break Out' : $timeLog->toggle);
+        $isUserCanStartToBreak = Helper::userCanBreak();
         return response()->json([
             'table' => $html,
             'breakData' => array(
@@ -81,7 +86,7 @@ class TimeSheetController extends Controller
                 'remaining' => $totalBreak['remaining'],
                 'obType' => $totalBreak['obType'],
                 'seconds' => $totalBreak['seconds'],
-                'toggle' => $this->userCanBreak() ? $toggle : 'Refresh at ' . $start_time->format('h:i A')
+                'toggle' => $isUserCanStartToBreak ? $toggle : 'Refresh at ' . $start_time->format('h:i A')
             ),
             'pagination' => $timesheetsLoop
         ], 200);
@@ -140,16 +145,6 @@ class TimeSheetController extends Controller
         }
     }
 
-    public function userCanBreak(){
-        $checkUserShift = Informations::where('user_id', Auth::id())->first();
-        $current_time = new DateTime;
-        $start_time = new DateTime(date('H:i', strtotime($checkUserShift->shift_start  . '+1 hour')));
-        $end_time = new DateTime($checkUserShift->shift_end);
-        $userCanBreak = $current_time >= $start_time && $current_time <= $end_time;
-
-        return $userCanBreak;
-    }
-
     public function convertSeconds($totalSeconds){
         $remainingTimeInSeconds = intval(abs($totalSeconds) - 3600); // subtract one hour (3600 seconds)
         $remainingMinutes = intval(abs($remainingTimeInSeconds) / 60); // calculate remaining minutes
@@ -173,14 +168,14 @@ class TimeSheetController extends Controller
         $obType = ($totalSeconds > 3600 ? 'Overbreak' : 'Remaining');
 
         $overBreak = ($totalSeconds > 3600 ? $totalBreak . ' Hour ' . $remaining : $totalBreak . ' ' . $timeType );
-        
+
         return array(
             'break' => $totalBreak, 
             'type' => $timeType, 
             'remaining' => $remaining, 
             'obType'=>$obType, 
             'seconds' => $totalSeconds,
-            'overBreakTime' => $overBreak
+            'overBreakTime' => $overBreak,
         );
     }
 }

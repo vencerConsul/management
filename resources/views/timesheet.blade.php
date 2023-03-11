@@ -39,8 +39,8 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="p-2 text-center border-start border-end">
-                                    <h4 data-aos="fade-up" data-aos-delay="400">1 Hour</h4>
-                                    <p data-aos="fade-up" data-aos-delay="500">Break</p>
+                                    <h4 data-aos="flip-up" data-aos-delay="400">1 Hour</h4>
+                                    <p data-aos="flip-up" data-aos-delay="500">Break</p>
                                 </div>
                             </div>
                             <div class="col-lg-4">
