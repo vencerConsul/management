@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route; 
 
 Auth::routes();
 Route::match(['get'], 'login', function(){ return redirect('/'); })->name('login');
@@ -35,6 +35,10 @@ Route::middleware('auth')->group(function(){
             Route::get('/timesheet', [App\Http\Controllers\TimeSheetController::class, 'index'])->name('timesheet');
             Route::get('/load-time-sheet-data', [App\Http\Controllers\TimeSheetController::class, 'loadTimeSheetData']); // api call
             Route::post('/time-sheet/toggle', [App\Http\Controllers\TimeSheetController::class, 'toggleTimeSheet']); // api event toggle
+            Route::post('/show-timesheet-adjustment', [App\Http\Controllers\TimeSheetController::class, 'showTimesheetAdjustment']); // api 
+            Route::post('/submit-adjustment-request', [App\Http\Controllers\TimeSheetController::class, 'submitAdjustmentRequest'])->name('submit.time.adjustment'); // api
+            Route::post('/load-time-adjustment-request', [App\Http\Controllers\TimeSheetController::class, 'loadAdjustmentRequest']); // api
+
         });
         
         Route::middleware('is_admin')->group(function(){

@@ -17,19 +17,22 @@ class Helper
         $seconds %= 60;
 
         if ($hours > 0) {
-            $time_string = sprintf('%d hour'.($hours > 0 ? 's' : '').' %d min'.($minutes > 0 ? 's' : '').' %d sec'.($seconds > 0 ? 's' : '').'', $hours, $minutes, $seconds);
+            $time_string = sprintf('%d hour'.($hours > 1 ? 's' : '').' %d min'.($minutes > 1 ? 's' : '').' %d sec'.($seconds > 1 ? 's' : '').'', $hours, $minutes, $seconds);
             $type = 'Hour'. ($hours > 1 ? 's' : '');
+            $totalConsume = $hours;
         } elseif ($minutes > 0) {
-            $time_string = sprintf('%d min'.($minutes > 0 ? 's' : '').' %d sec'.($seconds > 0 ? 's' : '').'', $minutes, $seconds);
+            $time_string = sprintf('%d min'.($minutes > 1 ? 's' : '').' %d sec'.($minutes > 1 ? 's' : '').'', $minutes, $seconds);
             $type = 'minute'. ($minutes > 1 ? 's' : '');
+            $totalConsume = $minutes;
         } else {
-            $time_string = sprintf('%d sec'.($seconds > 0 ? 's' : '').' ', $seconds);
+            $time_string = sprintf('%d sec'.($seconds > 1 ? 's' : '').' ', $seconds);
             $type = 'second'. ($seconds > 1 ? 's' : '');
+            $totalConsume = $seconds;
         }
 
         return array(
             'tableTotalConsume' => $time_string, // table row
-            'totalConsume' => $time_string, // total consume
+            'totalConsume' => $totalConsume, // total consume
             'hours' => $hours,
             'minutes' => $minutes,
             'seconds' => $seconds,
@@ -38,24 +41,40 @@ class Helper
     }
 
     public static function calculateRemainingTime($totalSeconds){
-        $seconds = $totalSeconds; // Replace this with the number of seconds you want to convert
+        $seconds = $totalSeconds; 
 
         $remaining_seconds = 3600 - $seconds;
-        $hours = floor($remaining_seconds / 3600);
+        $hours = (int) floor($remaining_seconds / 3600);
         $remaining_seconds %= 3600;
         $minutes = floor($remaining_seconds / 60);
         $remaining_seconds %= 60;
 
-        if ($hours > 0) {
-            $time_string = sprintf('%d hour %d mins %d sec', $hours, $minutes, $remaining_seconds);
+        if ($remaining_seconds < 0) {
+            $totalHours = (int)preg_replace("/-/", "", $hours) - 1;
+            // If remaining time is negative, show total time of overbreak
+            if ($totalHours > 0) {
+                $time_string = sprintf('%d hour %d mins %d sec', abs($hours), abs($minutes), abs($remaining_seconds));
+            } else {
+                $time_string = sprintf('%d mins %d sec', abs($minutes), abs($remaining_seconds));
+            }
+        } elseif ($hours > 0) {
+            if($hours == 1){
+                $time_string = '1 hour';
+            }else{
+                $time_string = sprintf('%d hour %d mins %d sec', $hours, $minutes, $remaining_seconds);
+            }
         } elseif ($minutes > 0) {
             $time_string = sprintf('%d mins %d sec', $minutes, $remaining_seconds);
         } else {
-            $time_string = sprintf('%d sec', $remaining_seconds);
+            $time_string = sprintf('%d sec'.($totalSeconds > 1 ? 's' : '').'', $remaining_seconds);
         }
 
+        $overbreak = ($remaining_seconds < 0 ? 'Overbreak' : 'Remaining');
+
         return [
-            'remaining' => $time_string
+            'remaining' => $time_string,
+            'obType' => $overbreak,
+            'is_overbreak' => ($remaining_seconds < 0 ? true : false)
         ];
     }
 
@@ -65,9 +84,6 @@ class Helper
         $start_time = new DateTime(date('H:i', strtotime($checkUserShift->shift_start  . '+1 hour')));
         $end_time = new DateTime($checkUserShift->shift_end);
         $userCanBreak = $current_time >= $start_time && $current_time <= $end_time;
-        if(!$userCanBreak){
-            return false;
-        }
-        return true;
+        return $userCanBreak;
     }
 }

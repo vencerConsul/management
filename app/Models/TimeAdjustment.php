@@ -13,10 +13,10 @@ class TimeAdjustment extends Model
     use Uuid;
 
     protected $guarded = [];
-    protected $fillable = ['date', 'time_out', 'time_in', 'total_time_consume', 'toggle'];
+    protected $fillable = ['time_sheet_id', 'time_out', 'time_in', 'total_time_consume', 'reason'];
 
     public function timesheet()
     {
-        return $this->belongsTo(TimeSheet::class);
+        return $this->belongsTo(TimeSheet::class, 'time_sheet_id');
     }
 }

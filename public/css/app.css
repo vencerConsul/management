@@ -11332,21 +11332,22 @@ li.page-item a {
   font-size: 50px;
   font-weight: 900;
 }
-.__user_timesheet_container .__time_adjustment_request_container i {
+.__user_timesheet_container .__time_adjustment_request_container .__time_adjustment_request_list {
+  padding: 20px;
+  background: #e8eff7;
+  border-radius: 8px;
+}
+
+.request-adjustment i {
   cursor: pointer;
   background: rgba(19, 118, 218, 0.2117647059);
   padding: 10px;
   border-radius: 50%;
   transition: 0.3s;
 }
-.__user_timesheet_container .__time_adjustment_request_container i:hover {
+.request-adjustment i:hover {
   background: #003972;
   color: #ffffff;
-}
-.__user_timesheet_container .__time_adjustment_request_container .__time_adjustment_request_list {
-  padding: 20px;
-  background: #e8eff7;
-  border-radius: 8px;
 }
 
 .table-responsive::-webkit-scrollbar {

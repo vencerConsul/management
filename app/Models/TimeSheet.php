@@ -19,8 +19,8 @@ class TimeSheet extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function timesheetadjustment()
+    public function timeadjustments()
     {
-        return $this->hasMany(timesheetadjustment::class);
+        return $this->hasMany(TimeAdjustment::class);
     }
 }

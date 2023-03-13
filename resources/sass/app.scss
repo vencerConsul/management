@@ -552,24 +552,26 @@ li.page-item a {
 
     .__time_adjustment_request_container{
 
-        i{
-            cursor: pointer;
-            background: rgba(19, 118, 218, 0.2117647059);
-            padding: 10px;
-            border-radius: 50%;
-            transition: 0.3s;
-
-            &:hover{
-                background: #003972;
-                color: #ffffff;
-            }
-        }
-
         .__time_adjustment_request_list {
             padding: 20px;
             background: #e8eff7;
             border-radius: 8px;
 
+        }
+    }
+}
+
+.request-adjustment{
+    i{
+        cursor: pointer;
+        background: rgba(19, 118, 218, 0.2117647059);
+        padding: 10px;
+        border-radius: 50%;
+        transition: 0.3s;
+
+        &:hover{
+            background: #003972;
+            color: #ffffff;
         }
     }
 }
@@ -585,6 +587,7 @@ li.page-item a {
 .table-responsive::-webkit-scrollbar-thumb {
     display: none;
 }
+
 
 // online users
 .__online_users{

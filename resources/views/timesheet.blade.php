@@ -33,19 +33,19 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="p-2 text-center">
-                                    <h4 data-aos="fade-up" data-aos-delay="400">{{ date('h:i A', strtotime(Auth::user()->informations->shift_start . '+1 hour')) }}</h4>
+                                    <h6 data-aos="fade-up" data-aos-delay="400">{{ date('h:i A', strtotime(Auth::user()->informations->shift_start . '+1 hour')) }}</h6>
                                     <p data-aos="fade-up" data-aos-delay="500">Break Resume</p>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="p-2 text-center border-start border-end">
-                                    <h4 data-aos="flip-up" data-aos-delay="400">1 Hour</h4>
+                                    <h6 data-aos="flip-up" data-aos-delay="400">1 Hour</h6>
                                     <p data-aos="flip-up" data-aos-delay="500">Break</p>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="p-2 text-center">
-                                    <h4 data-aos="fade-up" data-aos-delay="400" id="remaining">1 Hour</h4>
+                                    <h6 data-aos="fade-up" data-aos-delay="400" id="remaining">1 Hour</h6>
                                     <p data-aos="fade-up" data-aos-delay="500" id="overbreak">Remaining</p>
                                 </div>
                             </div>
@@ -57,24 +57,10 @@
                     <div class="__time_adjustment_request_container mt-4">
                         <div class="d-flex justify-content-between align-items-center my-3">
                             <h4 class="my-2" data-aos="fade-up" data-aos-delay="600">Request time adjustment</h4>
-                            <i class="ti-plus"></i>
+                            <span class="badge rounded-pill bg-info">2</span>
                         </div>
-                        <div class="__time_adjustment_request_list d-flex align-items-center justify-content-between mb-2 gap-4" data-aos="fade-up" data-aos-delay="600">
-                            <div>
-                                <p class="m-0 font-weight-bold">10:23 PM</p>
-                                <small class="badge bg-warning text-dark">Pending</small>
-                            </div>
-                            <div>
-                                @php
-                                    $paragraph = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, saepe? awd awd awd awd awd awd awd awdawd ';
-                                @endphp
-                                @if(strlen($paragraph) > 50)
-                                    <p>{{ substr($paragraph, 0, 50) }}</p>
-                                @else
-                                    {{ $paragraph }}
-                                @endif
-                            </div>
-                            <button class="btn btn-sm btn-info">Edit</button>
+                        <div id="request_time_adjustment_list">
+                            
                         </div>
                     </div>
                 </div>
@@ -95,11 +81,26 @@
     {{-- End Users logs section --}}
 </div>
 
+<div class="modal fade" id="request_time_adjustment">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body d-flex flex-column align-items-center text-center">
+                <form action="{{route('submit.time.adjustment')}}" method="POST" id="adjustment_form_action"></form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <span id="message"></span>
 @endsection
 
 @section('scripts')
     <script>
+        window.onload = () =>{
+            loadTimeSheetData('/load-time-sheet-data');
+            loadTimeAdjustmentRequest();
+        }
+
         const breakButton = document.querySelector('#time-button');
         
         async function loadTimeSheetData(url){
@@ -143,7 +144,7 @@
                         remaining.innerHTML = data.data.breakData.remaining;
                         breakButton.innerHTML = data.data.breakData.toggle;
                         overbreak.innerHTML = data.data.breakData.obType;
-                        if(data.data.breakData.seconds > 3600){
+                        if(data.data.breakData.is_overbreak){
                             totalUserLog.style.background = 'rgb(247 195 195)';
                             remaining.style.color = '#ff3c3c';
                         }else{
@@ -173,12 +174,11 @@
                     console.log(error);
                 })
         }
-        loadTimeSheetData('/load-time-sheet-data');
 
-        function toggleTimeSheet() {
+        async function toggleTimeSheet() {
             breakButton.classList.add('disabled')
             breakButton.innerHTML = 'Calculating';
-            axios.post('/time-sheet/toggle', { _token: `{{csrf_token()}}` })
+            await axios.post('/time-sheet/toggle', { _token: `{{csrf_token()}}` })
                 .then(function (response) {
                     if(response.status == 200){
                         loadTimeSheetData('/load-time-sheet-data');
@@ -186,16 +186,49 @@
                     }
                 })
                 .catch(function (error) {
-                    message(error.response.data.message)
+                    message(error.response.data.message, 'error')
                 });
         }
 
-        function message(message){
-            const msg = `<div class="alert alert-dismissible a-error" role="alert">
+        async function showTimeAdjustmentModal(id){
+            const adjustmentFormBody = document.querySelector('#adjustment_form_action');
+            await axios.post('/show-timesheet-adjustment/', { _token: `{{csrf_token()}}`, ID: `${id}` })
+                .then(function (response) {
+                    adjustmentFormBody.innerHTML = '';
+                    if(response.status == 200){
+                        let request_time_adjustment_modal = new bootstrap.Modal(document.getElementById('request_time_adjustment'))
+                        request_time_adjustment_modal.show()
+                        adjustmentFormBody.innerHTML = response.data.adjustment_form;
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    // message(error.response.data.message, 'error')
+                });
+        }
+
+        async function loadTimeAdjustmentRequest(){
+            let request_time_adjustment_list = document.querySelector('#request_time_adjustment_list');
+            await axios.post('/load-time-adjustment-request', { _token: `{{csrf_token()}}` })
+                .then(function (response) {
+                    if(response.status == 200){
+                        request_time_adjustment_list.innerHTML = response.data.adjustment_request;
+                        // console.log(response);
+                    }
+                })
+                .catch(function (error) {
+                    message(error.response.data.message, 'error')
+                });
+        }
+
+        function message(message, status){
+            const msg = `<div class="alert alert-dismissible a-${status == 'success' ? 'success' : 'error'}" role="alert">
                 <div class="d-flex align-items-center">
-                    <strong class="alert-danger"><i class="ti-hand-stop"></i></strong>
+                    <strong class="alert-${status == 'success' ? 'success' : 'danger'}">
+                        ${status == 'success' ? '<i class="ti-check"></i>' : '<i class="ti-hand-stop"></i>'}
+                        </strong>
                     <div>
-                        <strong>Error</strong>
+                        <strong>${status == 'success' ? 'Success' : 'Error'}</strong>
                         <p class="mt-2">${message}</p>
                     </div>
                 </div>

@@ -15,14 +15,15 @@ class CreateTimeAdjustmentsTable extends Migration
     {
         Schema::create('time_adjustments', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('timesheet_id');
-            $table->date('date');
+            $table->uuid('time_sheet_id');
             $table->time('time_out')->nullable();
             $table->time('time_in')->nullable();
+            $table->integer('total_time_consume')->nullable();
             $table->string('adjustment_status')->default('pending');
+            $table->string('reason');
             $table->timestamps();
 
-            $table->foreign('timesheet_id')->references('id')->on('time_sheets')->onDelete('cascade');
+            $table->foreign('time_sheet_id')->references('id')->on('time_sheets')->onDelete('cascade');
         });
     }
 
